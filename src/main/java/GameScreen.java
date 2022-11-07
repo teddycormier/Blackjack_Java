@@ -141,13 +141,107 @@ public class GameScreen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void stand_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stand_buttonActionPerformed
-//        int sum = 0;
-//        for (int number : player_cards){
-//            sum += number;
-//        }
-//        if ((sum <= 21) && (sum > dealers_hand))
-//        {
-//            }
+        int player_sum = 0;
+        for (int number : player_cards){
+            player_sum += number;
+        }
+        int dealer_sum = 0;
+        for (int number: dealer_cards){
+            dealer_sum += number;
+        }
+        if ((player_sum < 21) && (player_sum > dealer_sum))
+        {
+            try {
+                JOptionPane.showMessageDialog
+                (null,"You beat the dealer", "", JOptionPane.OK_OPTION);
+                
+                dealer_cards.clear();
+                dealer_cards.add(DeckResponse.getCardFromDeck());
+                int new_dealer_card_loss1 = dealer_cards.get(0);
+                dealer_cards.add(DeckResponse.getCardFromDeck());
+                int new_dealer_card_loss2 = dealer_cards.get(1);
+                int new_dealer_sum = 0;
+                for (int number : dealer_cards){
+                    new_dealer_sum += number;
+                }
+                System.out.println("Dealer's Starting Cards: " + "\n" + new_dealer_card_loss1 + "\n" + new_dealer_card_loss2 + "\n" + "Dealer Current Hand Total: " + new_dealer_sum + "\n");
+        
+                player_cards.clear();
+                player_cards.add(DeckResponse.getCardFromDeck());
+                int new_card_after_win1 = player_cards.get(0);
+                player_cards.add(DeckResponse.getCardFromDeck());
+                int new_card_after_win2 = player_cards.get(1);
+                int new_sum = 0;
+                for (int number : player_cards){
+                    new_sum += number;
+                }
+                System.out.println("Starting Cards: " + "\n" + new_card_after_win1 + "\n" + new_card_after_win2 + "\n" + "Current Hand Total: " + new_sum + "\n");
+            } catch (IOException ex) {
+                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if ((dealer_sum < 21) && (dealer_sum > player_sum))
+        {
+            try {
+                JOptionPane.showMessageDialog
+                (null,"You lost to the dealer", "", JOptionPane.OK_OPTION);
+                
+                dealer_cards.clear();
+                dealer_cards.add(DeckResponse.getCardFromDeck());
+                int new_dealer_card_loss1 = dealer_cards.get(0);
+                dealer_cards.add(DeckResponse.getCardFromDeck());
+                int new_dealer_card_loss2 = dealer_cards.get(1);
+                int new_dealer_sum = 0;
+                for (int number : dealer_cards){
+                    new_dealer_sum += number;
+                }
+                System.out.println("Dealer's Starting Cards: " + "\n" + new_dealer_card_loss1 + "\n" + new_dealer_card_loss2 + "\n" + "Dealer Current Hand Total: " + new_dealer_sum + "\n");
+        
+                player_cards.clear();
+                player_cards.add(DeckResponse.getCardFromDeck());
+                int new_card_after_win1 = player_cards.get(0);
+                player_cards.add(DeckResponse.getCardFromDeck());
+                int new_card_after_win2 = player_cards.get(1);
+                int new_sum = 0;
+                for (int number : player_cards){
+                    new_sum += number;
+                }
+                System.out.println("Starting Cards: " + "\n" + new_card_after_win1 + "\n" + new_card_after_win2 + "\n" + "Current Hand Total: " + new_sum + "\n");
+            } catch (IOException ex) {
+                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if ((dealer_sum == player_sum))
+        {
+            try {
+                JOptionPane.showMessageDialog
+                (null,"It's a push", "", JOptionPane.OK_OPTION);
+                
+                dealer_cards.clear();
+                dealer_cards.add(DeckResponse.getCardFromDeck());
+                int new_dealer_card_loss1 = dealer_cards.get(0);
+                dealer_cards.add(DeckResponse.getCardFromDeck());
+                int new_dealer_card_loss2 = dealer_cards.get(1);
+                int new_dealer_sum = 0;
+                for (int number : dealer_cards){
+                    new_dealer_sum += number;
+                }
+                System.out.println("Dealer's Starting Cards: " + "\n" + new_dealer_card_loss1 + "\n" + new_dealer_card_loss2 + "\n" + "Dealer Current Hand Total: " + new_dealer_sum + "\n");
+        
+                player_cards.clear();
+                player_cards.add(DeckResponse.getCardFromDeck());
+                int new_card_after_win1 = player_cards.get(0);
+                player_cards.add(DeckResponse.getCardFromDeck());
+                int new_card_after_win2 = player_cards.get(1);
+                int new_sum = 0;
+                for (int number : player_cards){
+                    new_sum += number;
+                }
+                System.out.println("Starting Cards: " + "\n" + new_card_after_win1 + "\n" + new_card_after_win2 + "\n" + "Current Hand Total: " + new_sum + "\n");
+            } catch (IOException ex) {
+                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_stand_buttonActionPerformed
 
     private void rules_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rules_buttonActionPerformed
@@ -170,19 +264,57 @@ public class GameScreen extends javax.swing.JFrame {
                 System.out.println(number);
             }
             System.out.println("Current Hand Total: " + sum + "\n");
-            
-//            if (sum > 21){
-//                cards.clear();
-//                cards.add(DeckResponse.getCardFromDeck());
-//                int card1 = cards.get(0);
-//                cards.add(DeckResponse.getCardFromDeck());
-//                int card2 = cards.get(1);
-//                int new_sum = 0;
-//                for (int number : cards){
-//                    new_sum += number;
-//        }
-//        System.out.println("Starting Cards: " + "\n" + card1 + "\n" + card2 + "\n" + "Current Hand Total: " + new_sum + "\n"); 
-//            }
+            if (sum == 21){
+                JOptionPane.showMessageDialog(null,
+                "BLACKJACK", "", JOptionPane.OK_OPTION);
+                
+                dealer_cards.clear();
+                dealer_cards.add(DeckResponse.getCardFromDeck());
+                int new_dealer_card_loss1 = dealer_cards.get(0);
+                dealer_cards.add(DeckResponse.getCardFromDeck());
+                int new_dealer_card_loss2 = dealer_cards.get(1);
+                int new_dealer_sum = 0;
+                for (int number : dealer_cards){
+                    new_dealer_sum += number;
+                }
+                System.out.println("Dealer's Starting Cards: " + "\n" + new_dealer_card_loss1 + "\n" + new_dealer_card_loss2 + "\n" + "Dealer Current Hand Total: " + new_dealer_sum + "\n");
+                
+                player_cards.clear();
+                player_cards.add(DeckResponse.getCardFromDeck());
+                int new_card_after_win1 = player_cards.get(0);
+                player_cards.add(DeckResponse.getCardFromDeck());
+                int new_card_after_win2 = player_cards.get(1);
+                int new_sum = 0;
+                for (int number : player_cards){
+                    new_sum += number;
+                }
+                System.out.println("Starting Cards: " + "\n" + new_card_after_win1 + "\n" + new_card_after_win2 + "\n" + "Current Hand Total: " + new_sum + "\n");
+            }
+            if (sum > 21){
+                JOptionPane.showMessageDialog(null,
+                "Bust" + "\n" + "Dealer Wins Hand", "", JOptionPane.OK_OPTION);
+                
+                dealer_cards.clear();
+                dealer_cards.add(DeckResponse.getCardFromDeck());
+                int new_dealer_card_win1 = dealer_cards.get(0);
+                dealer_cards.add(DeckResponse.getCardFromDeck());
+                int new_dealer_card_win2 = dealer_cards.get(1);
+                int new_dealer_sum = 0;
+                for (int number : dealer_cards){
+                    new_dealer_sum += number;
+                }
+                System.out.println("Dealer's Starting Cards: " + "\n" + new_dealer_card_win1 + "\n" + new_dealer_card_win2 + "\n" + "Dealer Current Hand Total: " + new_dealer_sum + "\n");
+                player_cards.clear();
+                player_cards.add(DeckResponse.getCardFromDeck());
+                int new_card_after_loss1 = player_cards.get(0);
+                player_cards.add(DeckResponse.getCardFromDeck());
+                int new_card_after_loss2 = player_cards.get(1);
+                int new_sum = 0;
+                for (int number : player_cards){
+                    new_sum += number;
+                }
+                System.out.println("Starting Cards: " + "\n" + new_card_after_loss1 + "\n" + new_card_after_loss2 + "\n" + "Current Hand Total: " + new_sum + "\n");
+            }
         } catch (IOException ex) {
             Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
         }
