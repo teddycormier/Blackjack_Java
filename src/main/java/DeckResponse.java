@@ -21,14 +21,13 @@ public class DeckResponse {
 //    boolean success;
     CardResponse[] cards;
     
-    public static int getStartingCards() throws MalformedURLException, IOException{
+    public static int getCardFromDeck() throws MalformedURLException, IOException{
         Gson gson = new Gson();
-        URL cardsAPI = new URL("https://www.deckofcardsapi.com/api/deck/new/draw/?count=2");
-        BufferedReader in = new BufferedReader(
-        new InputStreamReader(cardsAPI.openStream()));
+        URL cardsAPI = new URL("https://www.deckofcardsapi.com/api/deck/new/draw/?count=1");
+        BufferedReader in = new BufferedReader
+        (new InputStreamReader(cardsAPI.openStream()));
         DeckResponse loadedItem = gson.fromJson(in, DeckResponse.class);
         String first_card_value = loadedItem.cards[0].value;
-        String second_card_value = loadedItem.cards[1].value;
        
         if (null != first_card_value)switch(first_card_value) {
             case "JACK" -> {
@@ -44,46 +43,16 @@ public class DeckResponse {
                 first_card_value = val;
                 }
             case "ACE" -> {
-                String[] options = { "11", "1"};
+                String[] options = { "1", "11"};
                 var selection = JOptionPane.showOptionDialog
-                (null, "Select desired value:", "CHOICE", 0, 2, null, options, options[0]);
+                (null, "You've drawn an ACE." + "\n" + "Select desired value:", "CHOICE", 0, 2, null, options, options[0]);
                     if (selection == 0) {
-                      String val = "11";
-                      first_card_value = val;
-                    }
-                    if (selection == 1) { 
                       String val = "1";
                       first_card_value = val;
                     }
-                }
-            default -> {
-            }
-        }
-        
-        if (null != second_card_value)switch(second_card_value) {
-            case "JACK" -> {
-                String val = "10";
-                second_card_value = val;
-                }
-            case "QUEEN" -> {
-                String val = "10";
-                second_card_value = val;
-                }
-            case "KING" -> {
-                String val = "10";
-                second_card_value = val;
-                }
-            case "ACE" -> {
-                String[] options = { "11", "1"};
-                var selection = JOptionPane.showOptionDialog
-                (null, "Select desired value:", "CHOICE", 0, 2, null, options, options[0]);
-                    if (selection == 0) {
-                      String val = "11";
-                      second_card_value = val;
-                    }
                     if (selection == 1) { 
-                      String val = "1";
-                      second_card_value = val;
+                      String val = "11";
+                      first_card_value = val;
                     }
                 }
             default -> {
@@ -91,60 +60,57 @@ public class DeckResponse {
         }
                
         int first_value = Integer.parseInt(first_card_value);
-        int second_value = Integer.parseInt(second_card_value);
-        int total_value = first_value + second_value;
-        
-        return total_value;
+        return first_value;
     }
     
-    public static int getDrawCard() throws MalformedURLException, IOException{
-        Gson gson = new Gson();
-        URL cardsAPI = new URL("https://www.deckofcardsapi.com/api/deck/new/draw/?count=1");
-        BufferedReader in = new BufferedReader(
-        new InputStreamReader(cardsAPI.openStream()));
-        DeckResponse loadedItem = gson.fromJson(in, DeckResponse.class);
-        String card_value = loadedItem.cards[0].value;
-        
-        System.out.println(card_value);
-        
-        if (null != card_value)switch(card_value) {
-            case "JACK" -> {
-                String val = "10";
-                card_value = val;
-                }
-            case "QUEEN" -> {
-                String val = "10";
-                card_value = val;
-                }
-            case "KING" -> {
-                String val = "10";
-                card_value = val;
-                }
-            case "ACE" -> {
-                String[] options = { "11", "1"};
-                var selection = JOptionPane.showOptionDialog
-                (null, "Select desired value:", "CHOICE", 0, 2, null, options, options[0]);
-                    if (selection == 0) {
-                      String val = "11";
-                      card_value = val;
-                    }
-                    if (selection == 1) { 
-                      String val = "1";
-                      card_value = val;
-                    }
-                }
-            default -> {
-            }
-        }
-        
-        int value = Integer.parseInt(card_value);
-        
-        return value;
-    }
+//    public static int getDrawCard() throws MalformedURLException, IOException{
+//        Gson gson = new Gson();
+//        URL cardsAPI = new URL("https://www.deckofcardsapi.com/api/deck/new/draw/?count=2");
+//        BufferedReader in = new BufferedReader(
+//        new InputStreamReader(cardsAPI.openStream()));
+//        DeckResponse loadedItem = gson.fromJson(in, DeckResponse.class);
+//        String first_card_value = loadedItem.cards[0].value;
+//        
+//        System.out.println(card_value);
+//        
+//        if (null != card_value)switch(card_value) {
+//            case "JACK" -> {
+//                String val = "10";
+//                card_value = val;
+//                }
+//            case "QUEEN" -> {
+//                String val = "10";
+//                card_value = val;
+//                }
+//            case "KING" -> {
+//                String val = "10";
+//                card_value = val;
+//                }
+//            case "ACE" -> {
+//                String[] options = { "11", "1"};
+//                var selection = JOptionPane.showOptionDialog
+//                (null, "Select desired value:", "CHOICE", 0, 2, null, options, options[0]);
+//                    if (selection == 0) {
+//                      String val = "11";
+//                      card_value = val;
+//                    }
+//                    if (selection == 1) { 
+//                      String val = "1";
+//                      card_value = val;
+//                    }
+//                }
+//            default -> {
+//            }
+//        }
+//        
+//        int value = Integer.parseInt(card_value);
+//        
+//        return value;
+//    }
     
     public static String getCardImage() throws MalformedURLException, IOException{
         Gson gson = new Gson();
-        URL cardsAPI = new URL("https://www.deckofcardsapi.com/api/deck/new/draw/?count=2");
+        URL cardsAPI = new URL("https://www.deckofcardsapi.com/api/deck/new/draw/?count=1");
         BufferedReader in = new BufferedReader(
         new InputStreamReader(cardsAPI.openStream()));
         DeckResponse loadedItem = gson.fromJson(in, DeckResponse.class);

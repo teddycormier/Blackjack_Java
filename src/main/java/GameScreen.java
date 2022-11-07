@@ -1,5 +1,10 @@
 
+import com.google.gson.Gson;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,16 +24,35 @@ public class GameScreen extends javax.swing.JFrame {
      * Creates new form GameScreen
      * @throws java.io.IOException
      */
+    ArrayList<Integer> player_cards = new ArrayList<Integer>();
+    ArrayList<Integer> dealer_cards = new ArrayList<Integer>();
+    
     public GameScreen() throws IOException {
         initComponents();
-        System.out.print("Deck Count: " + CardDeck.getDeckCount() + "\n");
-        System.out.println("Starting Card Total: " + DeckResponse.getStartingCards() + "\n");       
-//        System.out.println("Card Drawn: " + CardDeck.getDrawCard() + "\n");
+        
+        dealer_cards.add(DeckResponse.getCardFromDeck());
+        int dealer_card1 = dealer_cards.get(0);
+        dealer_cards.add(DeckResponse.getCardFromDeck());
+        int dealer_card2 = dealer_cards.get(1);
+        int dealer_sum = 0;
+        for (int number : dealer_cards){
+            dealer_sum += number;
+        }
+        System.out.println("Dealer's Starting Cards: " + "\n" + dealer_card1 + "\n" + dealer_card2 + "\n" + "Dealer Current Hand Total: " + dealer_sum + "\n");  
+        
+        player_cards.add(DeckResponse.getCardFromDeck());
+        int player_card1 = player_cards.get(0);
+        player_cards.add(DeckResponse.getCardFromDeck());
+        int player_card2 = player_cards.get(1);
+        int player_sum = 0;
+        for (int number : player_cards){
+            player_sum += number;
+        }
+        System.out.println("Player's Starting Cards: " + "\n" + player_card1 + "\n" + player_card2 + "\n" + "Player Current Hand Total: " + player_sum + "\n");       
     }
     
     RulesScreen rulesScreen = new RulesScreen();
-    String current_pile = null;
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -117,7 +141,13 @@ public class GameScreen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void stand_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stand_buttonActionPerformed
-        // TODO add your handling code here:
+//        int sum = 0;
+//        for (int number : player_cards){
+//            sum += number;
+//        }
+//        if ((sum <= 21) && (sum > dealers_hand))
+//        {
+//            }
     }//GEN-LAST:event_stand_buttonActionPerformed
 
     private void rules_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rules_buttonActionPerformed
@@ -128,12 +158,31 @@ public class GameScreen extends javax.swing.JFrame {
 
     private void hit_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hit_buttonActionPerformed
         try {
-            int card_value = DeckResponse.getDrawCard();
+            player_cards.add(DeckResponse.getCardFromDeck());
             String card_image = DeckResponse.getCardImage();
-//            int total_hand_value = PlayerHand.getHandValue();
             System.out.println(card_image);
-            System.out.println("New Card Value: " + card_value + "\n");
-//            System.out.println("Total Hand Value: " + total_hand_value + "\n");
+            int sum = 0;
+            for (int number : player_cards){
+                sum += number;
+            }
+            System.out.println("Current Cards: ");
+            for (int number : player_cards){
+                System.out.println(number);
+            }
+            System.out.println("Current Hand Total: " + sum + "\n");
+            
+//            if (sum > 21){
+//                cards.clear();
+//                cards.add(DeckResponse.getCardFromDeck());
+//                int card1 = cards.get(0);
+//                cards.add(DeckResponse.getCardFromDeck());
+//                int card2 = cards.get(1);
+//                int new_sum = 0;
+//                for (int number : cards){
+//                    new_sum += number;
+//        }
+//        System.out.println("Starting Cards: " + "\n" + card1 + "\n" + card2 + "\n" + "Current Hand Total: " + new_sum + "\n"); 
+//            }
         } catch (IOException ex) {
             Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
         }

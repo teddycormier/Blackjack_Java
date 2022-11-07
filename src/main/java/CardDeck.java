@@ -22,11 +22,11 @@ public class CardDeck {
         return deck_count;
     }
 
-    public static int getHandTotal() throws MalformedURLException, IOException{
-        
-        return DeckResponse.getStartingCards() + DeckResponse.getDrawCard();
-    }
-    
+//    public static int getHandTotal() throws MalformedURLException, IOException{
+//        
+//        return DeckResponse.getStartingCards() + DeckResponse.getDrawCard();
+//    }
+//    
 }
 
 
