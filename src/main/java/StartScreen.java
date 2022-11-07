@@ -45,9 +45,7 @@ public class StartScreen extends javax.swing.JFrame {
         setBackground(new java.awt.Color(51, 153, 0));
         setBounds(new java.awt.Rectangle(0, 25, 505, 340));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setMaximumSize(new java.awt.Dimension(505, 340));
         setMinimumSize(new java.awt.Dimension(505, 340));
-        setPreferredSize(new java.awt.Dimension(505, 340));
         setSize(new java.awt.Dimension(505, 340));
         getContentPane().setLayout(null);
 
