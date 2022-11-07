@@ -52,7 +52,7 @@ public class GameScreen extends javax.swing.JFrame {
         for (int number : player_cards){
             player_sum += number;
         }
-        System.out.println("Player's Starting Cards: " + "\n" + player_card1 + "\n" + player_card2 + "\n" + "Player Current Hand Total: " + player_sum + "\n");       
+        System.out.println("Player's Starting Cards: " + "\n" + player_card1 + "\n" + player_card2 + "\n" + "Player Current Hand Total: " + player_sum + "\n");           
     }
     
     RulesScreen rulesScreen = new RulesScreen();
