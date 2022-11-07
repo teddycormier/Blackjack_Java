@@ -34,12 +34,11 @@ public class GameScreen extends javax.swing.JFrame {
         int dealer_card1 = dealer_cards.get(0);
         dealer_cards.add(DeckResponse.getCardFromDeck());
         int dealer_card2 = dealer_cards.get(1);
+        dealer_card_1.setText(String.valueOf(dealer_card1));
+        dealer_card_2.setText(String.valueOf(dealer_card2));
         int dealer_sum = 0;
         for (int number : dealer_cards){
             dealer_sum += number;
-        }
-        if (dealer_cards.get(0) == 11){
-            
         }
         System.out.println("Dealer's Starting Cards: " + "\n" + dealer_card1 + "\n" + dealer_card2 + "\n" + "Dealer Current Hand Total: " + dealer_sum + "\n");  
         
@@ -47,6 +46,8 @@ public class GameScreen extends javax.swing.JFrame {
         int player_card1 = player_cards.get(0);
         player_cards.add(DeckResponse.getCardFromDeck());
         int player_card2 = player_cards.get(1);
+        player_card_1.setText(String.valueOf(player_card1));
+        player_card_2.setText(String.valueOf(player_card2));
         int player_sum = 0;
         for (int number : player_cards){
             player_sum += number;
@@ -124,19 +125,28 @@ public class GameScreen extends javax.swing.JFrame {
         });
         getContentPane().add(rules_button);
         rules_button.setBounds(440, 10, 60, 20);
+
+        player_card_1.setForeground(new java.awt.Color(255, 255, 255));
         getContentPane().add(player_card_1);
-        player_card_1.setBounds(50, 220, 0, 0);
+        player_card_1.setBounds(50, 220, 80, 30);
+
+        player_card_2.setForeground(new java.awt.Color(255, 255, 255));
         getContentPane().add(player_card_2);
-        player_card_2.setBounds(190, 220, 0, 0);
+        player_card_2.setBounds(180, 230, 80, 30);
+
+        player_card_3.setForeground(new java.awt.Color(255, 255, 255));
         getContentPane().add(player_card_3);
-        player_card_3.setBounds(340, 220, 0, 0);
+        player_card_3.setBounds(330, 240, 90, 30);
+
+        dealer_card_1.setForeground(new java.awt.Color(255, 255, 255));
         getContentPane().add(dealer_card_1);
-        dealer_card_1.setBounds(50, 30, 0, 0);
+        dealer_card_1.setBounds(50, 30, 100, 30);
+
+        dealer_card_2.setForeground(new java.awt.Color(255, 255, 255));
         getContentPane().add(dealer_card_2);
-        dealer_card_2.setBounds(190, 30, 0, 0);
+        dealer_card_2.setBounds(190, 30, 100, 30);
 
         bgr_image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/BlackJackFelt3.png"))); // NOI18N
-        bgr_image.setMixingCutoutShape(null);
         getContentPane().add(bgr_image);
         bgr_image.setBounds(0, 0, 510, 340);
 
@@ -204,6 +214,11 @@ public class GameScreen extends javax.swing.JFrame {
                 for (int number : player_cards){
                     new_sum += number;
                 }
+                player_card_1.setText(String.valueOf(new_card_after_win1));
+                player_card_2.setText(String.valueOf(new_card_after_win2));
+                player_card_3.setText("");
+                dealer_card_1.setText(String.valueOf(new_dealer_card_loss1));
+                dealer_card_2.setText(String.valueOf(new_dealer_card_loss2));
                 System.out.println("Starting Cards: " + "\n" + new_card_after_win1 + "\n" + new_card_after_win2 + "\n" + "Current Hand Total: " + new_sum + "\n");
             } catch (IOException ex) {
                 Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
@@ -235,6 +250,11 @@ public class GameScreen extends javax.swing.JFrame {
                 for (int number : player_cards){
                     new_sum += number;
                 }
+                player_card_1.setText(String.valueOf(new_card_after_win1));
+                player_card_2.setText(String.valueOf(new_card_after_win2));
+                player_card_3.setText("");
+                dealer_card_1.setText(String.valueOf(new_dealer_card_loss1));
+                dealer_card_2.setText(String.valueOf(new_dealer_card_loss2));
                 System.out.println("Starting Cards: " + "\n" + new_card_after_win1 + "\n" + new_card_after_win2 + "\n" + "Current Hand Total: " + new_sum + "\n");
             } catch (IOException ex) {
                 Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
@@ -266,6 +286,11 @@ public class GameScreen extends javax.swing.JFrame {
                 for (int number : player_cards){
                     new_sum += number;
                 }
+                player_card_1.setText(String.valueOf(new_card_after_win1));
+                player_card_2.setText(String.valueOf(new_card_after_win2));
+                player_card_3.setText("");
+                dealer_card_1.setText(String.valueOf(new_dealer_card_loss1));
+                dealer_card_2.setText(String.valueOf(new_dealer_card_loss2));
                 System.out.println("Starting Cards: " + "\n" + new_card_after_win1 + "\n" + new_card_after_win2 + "\n" + "Current Hand Total: " + new_sum + "\n");
             } catch (IOException ex) {
                 Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
@@ -297,6 +322,11 @@ public class GameScreen extends javax.swing.JFrame {
                 for (int number : player_cards){
                     new_sum += number;
                 }
+                player_card_1.setText(String.valueOf(new_card_after_win1));
+                player_card_2.setText(String.valueOf(new_card_after_win2));
+                player_card_3.setText("");
+                dealer_card_1.setText(String.valueOf(new_dealer_card_loss1));
+                dealer_card_2.setText(String.valueOf(new_dealer_card_loss2));
                 System.out.println("Starting Cards: " + "\n" + new_card_after_win1 + "\n" + new_card_after_win2 + "\n" + "Current Hand Total: " + new_sum + "\n");
             } catch (IOException ex) {
                 Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
@@ -327,6 +357,11 @@ public class GameScreen extends javax.swing.JFrame {
                 for (int number : player_cards){
                     new_sum += number;
                 }
+                player_card_1.setText(String.valueOf(new_card_after_win1));
+                player_card_2.setText(String.valueOf(new_card_after_win2));
+                player_card_3.setText("");
+                dealer_card_1.setText(String.valueOf(new_dealer_card_loss1));
+                dealer_card_2.setText(String.valueOf(new_dealer_card_loss2));
                 System.out.println("Starting Cards: " + "\n" + new_card_after_win1 + "\n" + new_card_after_win2 + "\n" + "Current Hand Total: " + new_sum + "\n");
             } catch (IOException ex) {
                 Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
@@ -357,6 +392,11 @@ public class GameScreen extends javax.swing.JFrame {
                 for (int number : player_cards){
                     new_sum += number;
                 }
+                player_card_1.setText(String.valueOf(new_card_after_win1));
+                player_card_2.setText(String.valueOf(new_card_after_win2));
+                player_card_3.setText("");
+                dealer_card_1.setText(String.valueOf(new_dealer_card1));
+                dealer_card_2.setText(String.valueOf(new_dealer_card2));
                 System.out.println("Starting Cards: " + "\n" + new_card_after_win1 + "\n" + new_card_after_win2 + "\n" + "Current Hand Total: " + new_sum + "\n");
             } catch (IOException ex) {
                 Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
@@ -388,6 +428,11 @@ public class GameScreen extends javax.swing.JFrame {
                 for (int number : player_cards){
                     new_sum += number;
                 }
+                player_card_1.setText(String.valueOf(new_card_after_win1));
+                player_card_2.setText(String.valueOf(new_card_after_win2));
+                player_card_3.setText("");
+                dealer_card_1.setText(String.valueOf(new_dealer_card_loss1));
+                dealer_card_2.setText(String.valueOf(new_dealer_card_loss2));
                 System.out.println("Starting Cards: " + "\n" + new_card_after_win1 + "\n" + new_card_after_win2 + "\n" + "Current Hand Total: " + new_sum + "\n");
             } catch (IOException ex) {
                 Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
@@ -402,9 +447,12 @@ public class GameScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_rules_buttonActionPerformed
 
     private void hit_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hit_buttonActionPerformed
+
         try {
             player_cards.add(DeckResponse.getCardFromDeck());
+            int new_card = player_cards.get(2);
             String card_image = DeckResponse.getCardImage();
+            player_card_3.setText(String.valueOf(new_card));
             System.out.println(card_image);
             int sum = 0;
             for (int number : player_cards){
@@ -439,6 +487,11 @@ public class GameScreen extends javax.swing.JFrame {
                 for (int number : player_cards){
                     new_sum += number;
                 }
+                player_card_1.setText(String.valueOf(new_card_after_win1));
+                player_card_2.setText(String.valueOf(new_card_after_win2));
+                player_card_3.setText("");
+                dealer_card_1.setText(String.valueOf(new_dealer_card_loss1));
+                dealer_card_2.setText(String.valueOf(new_dealer_card_loss2));
                 System.out.println("Starting Cards: " + "\n" + new_card_after_win1 + "\n" + new_card_after_win2 + "\n" + "Current Hand Total: " + new_sum + "\n");
             }
             if (sum > 21){
@@ -464,6 +517,11 @@ public class GameScreen extends javax.swing.JFrame {
                 for (int number : player_cards){
                     new_sum += number;
                 }
+                player_card_1.setText(String.valueOf(new_card_after_loss1));
+                player_card_2.setText(String.valueOf(new_card_after_loss2));
+                player_card_3.setText("");
+                dealer_card_1.setText(String.valueOf(new_dealer_card_win1));
+                dealer_card_2.setText(String.valueOf(new_dealer_card_win2));
                 System.out.println("Starting Cards: " + "\n" + new_card_after_loss1 + "\n" + new_card_after_loss2 + "\n" + "Current Hand Total: " + new_sum + "\n");
             }
         } catch (IOException ex) {
