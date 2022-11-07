@@ -141,6 +141,7 @@ public class GameScreen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void stand_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stand_buttonActionPerformed
+
         int player_sum = 0;
         for (int number : player_cards){
             player_sum += number;
@@ -148,6 +149,28 @@ public class GameScreen extends javax.swing.JFrame {
         int dealer_sum = 0;
         for (int number: dealer_cards){
             dealer_sum += number;
+        }
+        if (dealer_sum < 17){
+            try {
+                dealer_cards.add(DeckResponse.getCardFromDeck());
+                int dealer_card3 = dealer_cards.get(2);
+                int dealer_sum2 = dealer_sum + dealer_card3;
+                System.out.println("Dealer had to hit." + "\n" + "New Dealer Total: " + "\n" + dealer_sum2 + "\n");
+                if (dealer_sum2 < 17){
+                    dealer_cards.add(DeckResponse.getCardFromDeck());
+                    int dealer_card4 = dealer_cards.get(3);
+                    int dealer_sum3 = dealer_sum2 + dealer_card4;
+                    System.out.println("Dealer had to hit." + "\n" + "New Dealer Total: " + "\n" + dealer_sum3 + "\n");
+                    if (dealer_sum3 < 17){
+                        dealer_cards.add(DeckResponse.getCardFromDeck());
+                        int dealer_card5 = dealer_cards.get(4);
+                        int dealer_sum4 = dealer_sum3 + dealer_card5;
+                        System.out.println("Dealer had to hit." + "\n" + "New Dealer Total: " + "\n" + dealer_sum4 + "\n");
+                    }
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         if ((player_sum < 21) && (player_sum > dealer_sum))
         {
