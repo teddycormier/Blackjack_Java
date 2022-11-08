@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -26,9 +27,22 @@ public class GameScreen extends javax.swing.JFrame {
      */
     ArrayList<Integer> player_cards = new ArrayList<Integer>();
     ArrayList<Integer> dealer_cards = new ArrayList<Integer>();
+    ArrayList<String> card_suits = new ArrayList<String>();
+    ArrayList<String> card_faces = new ArrayList<String>();
     
     public GameScreen() throws IOException {
         initComponents();
+        
+        // ----------------
+        card_suits.add("H");
+        card_suits.add("C");
+        card_suits.add("S");
+        card_suits.add("D");
+        // ----------------
+        card_faces.add("J");
+        card_faces.add("Q");
+        card_faces.add("K");
+        // ----------------
         
         dealer_cards.add(DeckResponse.getCardFromDeck());
         int dealer_card1 = dealer_cards.get(0);
@@ -451,9 +465,37 @@ public class GameScreen extends javax.swing.JFrame {
         try {
             player_cards.add(DeckResponse.getCardFromDeck());
             int new_card = player_cards.get(2);
-            String card_image = DeckResponse.getCardImage();
             player_card_3.setText(String.valueOf(new_card));
-            System.out.println(card_image);
+            
+            //-----------------------------------------------------
+            String https = "https://deckofcardsapi.com/static/img/";
+            int tmp_convert = new_card;
+            Collections.shuffle(card_suits);
+            Collections.shuffle(card_faces);
+            if (tmp_convert == 10){
+                String card_num = card_faces.get(0);
+                String card_suit = card_suits.get(0);
+                String file_type = ".png";
+                String total_URL = https + card_num + card_suit + file_type;
+//                player_card_3.setIcon(total_URL);
+                System.out.println(total_URL);
+            }
+            else if (tmp_convert != 10){
+                String card_num = String.valueOf(tmp_convert);
+                String card_suit = card_suits.get(0);
+                String file_type = ".png";
+                String total_URL = https + card_num + card_suit + file_type;
+                System.out.println(total_URL);
+            }
+            else if ((tmp_convert == 1) || (tmp_convert == 11)){
+                String card_num = "A";
+                String card_suit = card_suits.get(0);
+                String file_type = ".png";
+                String total_URL = https + card_num + card_suit + file_type;
+                System.out.println(total_URL);
+            }
+            //-----------------------------------------------------
+            
             int sum = 0;
             for (int number : player_cards){
                 sum += number;
