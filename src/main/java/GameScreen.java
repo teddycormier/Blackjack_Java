@@ -1,10 +1,5 @@
 
-import com.google.gson.Gson;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,12 +19,13 @@ public class GameScreen extends javax.swing.JFrame {
      * Creates new form GameScreen
      * @throws java.io.IOException
      */
-    ArrayList<Integer> player_cards = new ArrayList<Integer>();
-    ArrayList<Integer> dealer_cards = new ArrayList<Integer>();
     
-    public GameScreen() throws IOException {
-        initComponents();
-        
+    public RulesScreen rulesScreen;
+    
+    private ArrayList<Integer> player_cards = new ArrayList<Integer>();
+    private ArrayList<Integer> dealer_cards = new ArrayList<Integer>();
+    
+    private void newSetOfCards() throws IOException{
         dealer_cards.add(DeckResponse.getCardFromDeck());
         int dealer_card1 = dealer_cards.get(0);
         dealer_cards.add(DeckResponse.getCardFromDeck());
@@ -55,8 +51,56 @@ public class GameScreen extends javax.swing.JFrame {
         System.out.println("Player's Starting Cards: " + "\n" + player_card1 + "\n" + player_card2 + "\n" + "Player Current Hand Total: " + player_sum + "\n");           
     }
     
-    RulesScreen rulesScreen = new RulesScreen();
+    private void newCardsAfterBeatingDealer() throws IOException{
+        JOptionPane.showMessageDialog
+        (null,"You beat the dealer", "", JOptionPane.OK_OPTION);
+
+        dealer_cards.clear();
+        player_cards.clear();
+        newSetOfCards();
+    }
     
+    private void newCardsAfterLosingToDealer() throws IOException{
+        JOptionPane.showMessageDialog
+        (null,"You lost to the dealer", "", JOptionPane.OK_OPTION);
+
+        dealer_cards.clear();
+        player_cards.clear();
+        newSetOfCards();
+    }
+    
+    private void newCardsAfterPlayerHitBlackjack() throws IOException{
+        JOptionPane.showMessageDialog
+        (null,"BLACKJACK", "", JOptionPane.OK_OPTION);
+
+        dealer_cards.clear();
+        player_cards.clear();
+        newSetOfCards();
+    }
+    
+    private void newCardsAfterDealerHitBlackjack() throws IOException{
+        JOptionPane.showMessageDialog
+        (null,"DEALER HIT BLACKJACK", "", JOptionPane.OK_OPTION);
+
+        dealer_cards.clear();
+        player_cards.clear();
+        newSetOfCards();
+    }
+    
+    private void newCardsAfterPush() throws IOException{
+        JOptionPane.showMessageDialog
+        (null,"It's a push", "", JOptionPane.OK_OPTION);
+
+        dealer_cards.clear();
+        player_cards.clear();
+        newSetOfCards();
+    }
+    
+    public GameScreen() throws IOException {
+        initComponents();
+        newSetOfCards();
+        rulesScreen = new RulesScreen();
+    }    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -68,7 +112,7 @@ public class GameScreen extends javax.swing.JFrame {
 
         stand_button = new javax.swing.JButton();
         hit_button = new javax.swing.JButton();
-        rules_button = new javax.swing.JButton();
+        button_rules = new javax.swing.JButton();
         player_card_1 = new javax.swing.JLabel();
         player_card_2 = new javax.swing.JLabel();
         player_card_3 = new javax.swing.JLabel();
@@ -111,20 +155,20 @@ public class GameScreen extends javax.swing.JFrame {
         getContentPane().add(hit_button);
         hit_button.setBounds(420, 180, 68, 22);
 
-        rules_button.setBackground(new java.awt.Color(204, 204, 204));
-        rules_button.setFont(new java.awt.Font("Times New Roman", 3, 12)); // NOI18N
-        rules_button.setText("Rules");
-        rules_button.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        rules_button.setMaximumSize(new java.awt.Dimension(30, 30));
-        rules_button.setMinimumSize(new java.awt.Dimension(30, 30));
-        rules_button.setPreferredSize(new java.awt.Dimension(30, 30));
-        rules_button.addActionListener(new java.awt.event.ActionListener() {
+        button_rules.setBackground(new java.awt.Color(204, 204, 204));
+        button_rules.setFont(new java.awt.Font("Times New Roman", 3, 12)); // NOI18N
+        button_rules.setText("Rules");
+        button_rules.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        button_rules.setMaximumSize(new java.awt.Dimension(30, 30));
+        button_rules.setMinimumSize(new java.awt.Dimension(30, 30));
+        button_rules.setPreferredSize(new java.awt.Dimension(30, 30));
+        button_rules.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rules_buttonActionPerformed(evt);
+                button_rulesActionPerformed(evt);
             }
         });
-        getContentPane().add(rules_button);
-        rules_button.setBounds(440, 10, 60, 20);
+        getContentPane().add(button_rules);
+        button_rules.setBounds(440, 10, 60, 20);
 
         player_card_1.setForeground(new java.awt.Color(255, 255, 255));
         getContentPane().add(player_card_1);
@@ -191,35 +235,7 @@ public class GameScreen extends javax.swing.JFrame {
         if ((dealer_sum > 21) && (player_sum <= 21))
         {
             try {
-                JOptionPane.showMessageDialog
-                (null,"You beat the dealer", "", JOptionPane.OK_OPTION);
-                
-                dealer_cards.clear();
-                dealer_cards.add(DeckResponse.getCardFromDeck());
-                int new_dealer_card_loss1 = dealer_cards.get(0);
-                dealer_cards.add(DeckResponse.getCardFromDeck());
-                int new_dealer_card_loss2 = dealer_cards.get(1);
-                int new_dealer_sum = 0;
-                for (int number : dealer_cards){
-                    new_dealer_sum += number;
-                }
-                System.out.println("Dealer's Starting Cards: " + "\n" + new_dealer_card_loss1 + "\n" + new_dealer_card_loss2 + "\n" + "Dealer Current Hand Total: " + new_dealer_sum + "\n");
-        
-                player_cards.clear();
-                player_cards.add(DeckResponse.getCardFromDeck());
-                int new_card_after_win1 = player_cards.get(0);
-                player_cards.add(DeckResponse.getCardFromDeck());
-                int new_card_after_win2 = player_cards.get(1);
-                int new_sum = 0;
-                for (int number : player_cards){
-                    new_sum += number;
-                }
-                player_card_1.setText(String.valueOf(new_card_after_win1));
-                player_card_2.setText(String.valueOf(new_card_after_win2));
-                player_card_3.setText("");
-                dealer_card_1.setText(String.valueOf(new_dealer_card_loss1));
-                dealer_card_2.setText(String.valueOf(new_dealer_card_loss2));
-                System.out.println("Starting Cards: " + "\n" + new_card_after_win1 + "\n" + new_card_after_win2 + "\n" + "Current Hand Total: " + new_sum + "\n");
+                newCardsAfterBeatingDealer();
             } catch (IOException ex) {
                 Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -227,71 +243,15 @@ public class GameScreen extends javax.swing.JFrame {
         if ((player_sum < 21) && (dealer_sum < 21) && (player_sum > dealer_sum))
         {
             try {
-                JOptionPane.showMessageDialog
-                (null,"You beat the dealer", "", JOptionPane.OK_OPTION);
-                
-                dealer_cards.clear();
-                dealer_cards.add(DeckResponse.getCardFromDeck());
-                int new_dealer_card_loss1 = dealer_cards.get(0);
-                dealer_cards.add(DeckResponse.getCardFromDeck());
-                int new_dealer_card_loss2 = dealer_cards.get(1);
-                int new_dealer_sum = 0;
-                for (int number : dealer_cards){
-                    new_dealer_sum += number;
-                }
-                System.out.println("Dealer's Starting Cards: " + "\n" + new_dealer_card_loss1 + "\n" + new_dealer_card_loss2 + "\n" + "Dealer Current Hand Total: " + new_dealer_sum + "\n");
-        
-                player_cards.clear();
-                player_cards.add(DeckResponse.getCardFromDeck());
-                int new_card_after_win1 = player_cards.get(0);
-                player_cards.add(DeckResponse.getCardFromDeck());
-                int new_card_after_win2 = player_cards.get(1);
-                int new_sum = 0;
-                for (int number : player_cards){
-                    new_sum += number;
-                }
-                player_card_1.setText(String.valueOf(new_card_after_win1));
-                player_card_2.setText(String.valueOf(new_card_after_win2));
-                player_card_3.setText("");
-                dealer_card_1.setText(String.valueOf(new_dealer_card_loss1));
-                dealer_card_2.setText(String.valueOf(new_dealer_card_loss2));
-                System.out.println("Starting Cards: " + "\n" + new_card_after_win1 + "\n" + new_card_after_win2 + "\n" + "Current Hand Total: " + new_sum + "\n");
+                newCardsAfterBeatingDealer();
             } catch (IOException ex) {
                 Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         if ((dealer_sum < 21) && (player_sum < 21) && (dealer_sum > player_sum))
         {
-            try {
-                JOptionPane.showMessageDialog
-                (null,"You lost to the dealer", "", JOptionPane.OK_OPTION);
-                
-                dealer_cards.clear();
-                dealer_cards.add(DeckResponse.getCardFromDeck());
-                int new_dealer_card_loss1 = dealer_cards.get(0);
-                dealer_cards.add(DeckResponse.getCardFromDeck());
-                int new_dealer_card_loss2 = dealer_cards.get(1);
-                int new_dealer_sum = 0;
-                for (int number : dealer_cards){
-                    new_dealer_sum += number;
-                }
-                System.out.println("Dealer's Starting Cards: " + "\n" + new_dealer_card_loss1 + "\n" + new_dealer_card_loss2 + "\n" + "Dealer Current Hand Total: " + new_dealer_sum + "\n");
-        
-                player_cards.clear();
-                player_cards.add(DeckResponse.getCardFromDeck());
-                int new_card_after_win1 = player_cards.get(0);
-                player_cards.add(DeckResponse.getCardFromDeck());
-                int new_card_after_win2 = player_cards.get(1);
-                int new_sum = 0;
-                for (int number : player_cards){
-                    new_sum += number;
-                }
-                player_card_1.setText(String.valueOf(new_card_after_win1));
-                player_card_2.setText(String.valueOf(new_card_after_win2));
-                player_card_3.setText("");
-                dealer_card_1.setText(String.valueOf(new_dealer_card_loss1));
-                dealer_card_2.setText(String.valueOf(new_dealer_card_loss2));
-                System.out.println("Starting Cards: " + "\n" + new_card_after_win1 + "\n" + new_card_after_win2 + "\n" + "Current Hand Total: " + new_sum + "\n");
+            try { 
+                newCardsAfterLosingToDealer();
             } catch (IOException ex) {
                 Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -299,152 +259,34 @@ public class GameScreen extends javax.swing.JFrame {
         if ((player_sum > 21) && (dealer_sum <= 21))
         {
             try {
-                JOptionPane.showMessageDialog
-                (null,"You lost to the dealer", "", JOptionPane.OK_OPTION);
-                
-                dealer_cards.clear();
-                dealer_cards.add(DeckResponse.getCardFromDeck());
-                int new_dealer_card_loss1 = dealer_cards.get(0);
-                dealer_cards.add(DeckResponse.getCardFromDeck());
-                int new_dealer_card_loss2 = dealer_cards.get(1);
-                int new_dealer_sum = 0;
-                for (int number : dealer_cards){
-                    new_dealer_sum += number;
-                }
-                System.out.println("Dealer's Starting Cards: " + "\n" + new_dealer_card_loss1 + "\n" + new_dealer_card_loss2 + "\n" + "Dealer Current Hand Total: " + new_dealer_sum + "\n");
-        
-                player_cards.clear();
-                player_cards.add(DeckResponse.getCardFromDeck());
-                int new_card_after_win1 = player_cards.get(0);
-                player_cards.add(DeckResponse.getCardFromDeck());
-                int new_card_after_win2 = player_cards.get(1);
-                int new_sum = 0;
-                for (int number : player_cards){
-                    new_sum += number;
-                }
-                player_card_1.setText(String.valueOf(new_card_after_win1));
-                player_card_2.setText(String.valueOf(new_card_after_win2));
-                player_card_3.setText("");
-                dealer_card_1.setText(String.valueOf(new_dealer_card_loss1));
-                dealer_card_2.setText(String.valueOf(new_dealer_card_loss2));
-                System.out.println("Starting Cards: " + "\n" + new_card_after_win1 + "\n" + new_card_after_win2 + "\n" + "Current Hand Total: " + new_sum + "\n");
+                newCardsAfterLosingToDealer();
             } catch (IOException ex) {
                 Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
         if (player_sum == 21){
             try {
-                JOptionPane.showMessageDialog
-                (null,"BLACKJACK", "", JOptionPane.OK_OPTION);
-                
-                dealer_cards.clear();
-                dealer_cards.add(DeckResponse.getCardFromDeck());
-                int new_dealer_card_loss1 = dealer_cards.get(0);
-                dealer_cards.add(DeckResponse.getCardFromDeck());
-                int new_dealer_card_loss2 = dealer_cards.get(1);
-                int new_dealer_sum = 0;
-                for (int number : dealer_cards){
-                    new_dealer_sum += number;
-                }
-                System.out.println("Dealer's Starting Cards: " + "\n" + new_dealer_card_loss1 + "\n" + new_dealer_card_loss2 + "\n" + "Dealer Current Hand Total: " + new_dealer_sum + "\n");
-        
-                player_cards.clear();
-                player_cards.add(DeckResponse.getCardFromDeck());
-                int new_card_after_win1 = player_cards.get(0);
-                player_cards.add(DeckResponse.getCardFromDeck());
-                int new_card_after_win2 = player_cards.get(1);
-                int new_sum = 0;
-                for (int number : player_cards){
-                    new_sum += number;
-                }
-                player_card_1.setText(String.valueOf(new_card_after_win1));
-                player_card_2.setText(String.valueOf(new_card_after_win2));
-                player_card_3.setText("");
-                dealer_card_1.setText(String.valueOf(new_dealer_card_loss1));
-                dealer_card_2.setText(String.valueOf(new_dealer_card_loss2));
-                System.out.println("Starting Cards: " + "\n" + new_card_after_win1 + "\n" + new_card_after_win2 + "\n" + "Current Hand Total: " + new_sum + "\n");
+                newCardsAfterPlayerHitBlackjack();
             } catch (IOException ex) {
                 Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         if (dealer_sum == 21){
-            try {
-                JOptionPane.showMessageDialog
-                (null,"DEALER HIT BLACKJACK", "", JOptionPane.OK_OPTION);
-                
-                dealer_cards.clear();
-                dealer_cards.add(DeckResponse.getCardFromDeck());
-                int new_dealer_card1 = dealer_cards.get(0);
-                dealer_cards.add(DeckResponse.getCardFromDeck());
-                int new_dealer_card2 = dealer_cards.get(1);
-                int new_dealer_sum = 0;
-                for (int number : dealer_cards){
-                    new_dealer_sum += number;
+                try {
+                    newCardsAfterDealerHitBlackjack();
+                } catch (IOException ex) {
+                    Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                System.out.println("Dealer's Starting Cards: " + "\n" + new_dealer_card1 + "\n" + new_dealer_card2 + "\n" + "Dealer Current Hand Total: " + new_dealer_sum + "\n");
-        
-                player_cards.clear();
-                player_cards.add(DeckResponse.getCardFromDeck());
-                int new_card_after_win1 = player_cards.get(0);
-                player_cards.add(DeckResponse.getCardFromDeck());
-                int new_card_after_win2 = player_cards.get(1);
-                int new_sum = 0;
-                for (int number : player_cards){
-                    new_sum += number;
-                }
-                player_card_1.setText(String.valueOf(new_card_after_win1));
-                player_card_2.setText(String.valueOf(new_card_after_win2));
-                player_card_3.setText("");
-                dealer_card_1.setText(String.valueOf(new_dealer_card1));
-                dealer_card_2.setText(String.valueOf(new_dealer_card2));
-                System.out.println("Starting Cards: " + "\n" + new_card_after_win1 + "\n" + new_card_after_win2 + "\n" + "Current Hand Total: " + new_sum + "\n");
-            } catch (IOException ex) {
-                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
         if ((dealer_sum == player_sum))
         {
-            try {
-                JOptionPane.showMessageDialog
-                (null,"It's a push", "", JOptionPane.OK_OPTION);
-                
-                dealer_cards.clear();
-                dealer_cards.add(DeckResponse.getCardFromDeck());
-                int new_dealer_card_loss1 = dealer_cards.get(0);
-                dealer_cards.add(DeckResponse.getCardFromDeck());
-                int new_dealer_card_loss2 = dealer_cards.get(1);
-                int new_dealer_sum = 0;
-                for (int number : dealer_cards){
-                    new_dealer_sum += number;
+                try {
+                   newCardsAfterPush();
+                } catch (IOException ex) {
+                    Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                System.out.println("Dealer's Starting Cards: " + "\n" + new_dealer_card_loss1 + "\n" + new_dealer_card_loss2 + "\n" + "Dealer Current Hand Total: " + new_dealer_sum + "\n");
-        
-                player_cards.clear();
-                player_cards.add(DeckResponse.getCardFromDeck());
-                int new_card_after_win1 = player_cards.get(0);
-                player_cards.add(DeckResponse.getCardFromDeck());
-                int new_card_after_win2 = player_cards.get(1);
-                int new_sum = 0;
-                for (int number : player_cards){
-                    new_sum += number;
-                }
-                player_card_1.setText(String.valueOf(new_card_after_win1));
-                player_card_2.setText(String.valueOf(new_card_after_win2));
-                player_card_3.setText("");
-                dealer_card_1.setText(String.valueOf(new_dealer_card_loss1));
-                dealer_card_2.setText(String.valueOf(new_dealer_card_loss2));
-                System.out.println("Starting Cards: " + "\n" + new_card_after_win1 + "\n" + new_card_after_win2 + "\n" + "Current Hand Total: " + new_sum + "\n");
-            } catch (IOException ex) {
-                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        }
         }
     }//GEN-LAST:event_stand_buttonActionPerformed
-
-    private void rules_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rules_buttonActionPerformed
-        rulesScreen.setLocationRelativeTo(null);
-        rulesScreen.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_rules_buttonActionPerformed
 
     private void hit_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hit_buttonActionPerformed
 
@@ -529,6 +371,12 @@ public class GameScreen extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_hit_buttonActionPerformed
 
+    private void button_rulesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_rulesActionPerformed
+        rulesScreen.setLocationRelativeTo(null);
+        rulesScreen.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_button_rulesActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -559,13 +407,13 @@ public class GameScreen extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bgr_image;
+    private javax.swing.JButton button_rules;
     private javax.swing.JLabel dealer_card_1;
     private javax.swing.JLabel dealer_card_2;
     private javax.swing.JButton hit_button;
     private javax.swing.JLabel player_card_1;
     private javax.swing.JLabel player_card_2;
     private javax.swing.JLabel player_card_3;
-    private javax.swing.JButton rules_button;
     private javax.swing.JButton stand_button;
     // End of variables declaration//GEN-END:variables
 }

@@ -69,11 +69,6 @@
       </Constraints>
     </Component>
     <Container class="javax.swing.JScrollPane" name="text_pane">
-      <Properties>
-        <Property name="bounds" type="java.awt.Rectangle" editor="org.netbeans.beaninfo.editors.RectangleEditor">
-          <Rectangle value="[10, 38, 485, 260]"/>
-        </Property>
-      </Properties>
       <AuxValues>
         <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
       </AuxValues>
