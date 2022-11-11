@@ -15,10 +15,10 @@ public class StartScreen extends javax.swing.JFrame {
     /**
      * Creates new form Start
      */
-    public StartScreen() throws IOException {
+    public StartScreen() throws IOException{
         initComponents();
+
     }
-    
     GameScreen gameScreen = new GameScreen();
     
 
@@ -84,6 +84,7 @@ public class StartScreen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void start_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_start_buttonActionPerformed
+
     gameScreen.setLocationRelativeTo(null);
     gameScreen.setVisible(true);
     this.setVisible(false);

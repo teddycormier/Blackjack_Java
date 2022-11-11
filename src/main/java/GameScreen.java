@@ -1,6 +1,7 @@
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -19,36 +20,39 @@ public class GameScreen extends javax.swing.JFrame {
      * Creates new form GameScreen
      * @throws java.io.IOException
      */
+    ArrayList<Integer> player_cards = new ArrayList<Integer>();
+    ArrayList<Integer> dealer_cards = new ArrayList<Integer>();
+    ArrayList<String> card_suits = new ArrayList<String>();
+    ArrayList<String> card_faces = new ArrayList<String>();
     
-    public RulesScreen rulesScreen;
-    
-    private ArrayList<Integer> player_cards = new ArrayList<Integer>();
-    private ArrayList<Integer> dealer_cards = new ArrayList<Integer>();
-    
-    private void newSetOfCards() throws IOException{
-        dealer_cards.add(DeckResponse.getCardFromDeck());
-        int dealer_card1 = dealer_cards.get(0);
-        dealer_cards.add(DeckResponse.getCardFromDeck());
-        int dealer_card2 = dealer_cards.get(1);
-        dealer_card_1.setText(String.valueOf(dealer_card1));
-        dealer_card_2.setText(String.valueOf(dealer_card2));
-        int dealer_sum = 0;
-        for (int number : dealer_cards){
-            dealer_sum += number;
+    private void newSetOfCards(){
+        try {
+            dealer_cards.add(DeckResponse.getCardFromDeck());
+            int dealer_card1 = dealer_cards.get(0);
+            dealer_cards.add(DeckResponse.getCardFromDeck());
+            int dealer_card2 = dealer_cards.get(1);
+            dealer_card_1.setText(String.valueOf(dealer_card1));
+            dealer_card_2.setText(String.valueOf(dealer_card2));
+            int dealer_sum = 0;
+            for (int number : dealer_cards){
+                dealer_sum += number;
+            }
+            System.out.println("Dealer's Starting Cards: " + "\n" + dealer_card1 + "\n" + dealer_card2 + "\n" + "Dealer Current Hand Total: " + dealer_sum + "\n");
+            
+            player_cards.add(DeckResponse.getCardFromDeck());
+            int player_card1 = player_cards.get(0);
+            player_cards.add(DeckResponse.getCardFromDeck());
+            int player_card2 = player_cards.get(1);
+            player_card_1.setText(String.valueOf(player_card1));
+            player_card_2.setText(String.valueOf(player_card2));
+            int player_sum = 0;
+            for (int number : player_cards){
+                player_sum += number;
+            }
+            System.out.println("Player's Starting Cards: " + "\n" + player_card1 + "\n" + player_card2 + "\n" + "Player Current Hand Total: " + player_sum + "\n");
+        } catch (IOException ex) {
+            Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println("Dealer's Starting Cards: " + "\n" + dealer_card1 + "\n" + dealer_card2 + "\n" + "Dealer Current Hand Total: " + dealer_sum + "\n");  
-        
-        player_cards.add(DeckResponse.getCardFromDeck());
-        int player_card1 = player_cards.get(0);
-        player_cards.add(DeckResponse.getCardFromDeck());
-        int player_card2 = player_cards.get(1);
-        player_card_1.setText(String.valueOf(player_card1));
-        player_card_2.setText(String.valueOf(player_card2));
-        int player_sum = 0;
-        for (int number : player_cards){
-            player_sum += number;
-        }
-        System.out.println("Player's Starting Cards: " + "\n" + player_card1 + "\n" + player_card2 + "\n" + "Player Current Hand Total: " + player_sum + "\n");           
     }
     
     private void newCardsAfterBeatingDealer() throws IOException{
@@ -99,8 +103,21 @@ public class GameScreen extends javax.swing.JFrame {
     public GameScreen() throws IOException {
         initComponents();
         newSetOfCards();
-        rulesScreen = new RulesScreen();
-    }    
+        
+        // ----------------
+        card_suits.add("H");
+        card_suits.add("C");
+        card_suits.add("S");
+        card_suits.add("D");
+        // ----------------
+        card_faces.add("J");
+        card_faces.add("Q");
+        card_faces.add("K");
+        // ----------------
+    }
+    
+    
+       
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -293,9 +310,37 @@ public class GameScreen extends javax.swing.JFrame {
         try {
             player_cards.add(DeckResponse.getCardFromDeck());
             int new_card = player_cards.get(2);
-            String card_image = DeckResponse.getCardImage();
             player_card_3.setText(String.valueOf(new_card));
-            System.out.println(card_image);
+            
+            //-----------------------------------------------------
+            String https = "https://deckofcardsapi.com/static/img/";
+            int tmp_convert = new_card;
+            Collections.shuffle(card_suits);
+            Collections.shuffle(card_faces);
+            if (tmp_convert == 10){
+                String card_num = card_faces.get(0);
+                String card_suit = card_suits.get(0);
+                String file_type = ".png";
+                String total_URL = https + card_num + card_suit + file_type;
+//                player_card_3.setIcon(total_URL);
+                System.out.println(total_URL);
+            }
+            else if (tmp_convert != 10){
+                String card_num = String.valueOf(tmp_convert);
+                String card_suit = card_suits.get(0);
+                String file_type = ".png";
+                String total_URL = https + card_num + card_suit + file_type;
+                System.out.println(total_URL);
+            }
+            else if ((tmp_convert == 1) || (tmp_convert == 11)){
+                String card_num = "A";
+                String card_suit = card_suits.get(0);
+                String file_type = ".png";
+                String total_URL = https + card_num + card_suit + file_type;
+                System.out.println(total_URL);
+            }
+            //-----------------------------------------------------
+            
             int sum = 0;
             for (int number : player_cards){
                 sum += number;
@@ -372,9 +417,9 @@ public class GameScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_hit_buttonActionPerformed
 
     private void button_rulesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_rulesActionPerformed
-        rulesScreen.setLocationRelativeTo(null);
-        rulesScreen.setVisible(true);
-        this.setVisible(false);
+//        rulesScreen.setLocationRelativeTo(null);
+//        rulesScreen.setVisible(true);
+//        this.setVisible(false);x
     }//GEN-LAST:event_button_rulesActionPerformed
 
     /**

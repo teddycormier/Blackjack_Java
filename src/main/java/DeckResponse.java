@@ -28,6 +28,7 @@ public class DeckResponse {
         (new InputStreamReader(cardsAPI.openStream()));
         DeckResponse loadedItem = gson.fromJson(in, DeckResponse.class);
         String first_card_value = loadedItem.cards[0].value;
+        String first_card_code = loadedItem.cards[0].code;
        
         if (null != first_card_value)switch(first_card_value) {
             case "JACK" -> {
@@ -61,22 +62,6 @@ public class DeckResponse {
                
         int first_value = Integer.parseInt(first_card_value);
         return first_value;
-    }
-    
-    
-    public static String getCardImage() throws MalformedURLException, IOException{
-        Gson gson = new Gson();
-        URL cardsAPI = new URL("https://www.deckofcardsapi.com/api/deck/new/draw/?count=1");
-        BufferedReader in = new BufferedReader(
-        new InputStreamReader(cardsAPI.openStream()));
-        DeckResponse loadedItem = gson.fromJson(in, DeckResponse.class);
-        String first_image_code = loadedItem.cards[0].code;
-        
-        String first_image_url = ("https://deckofcardsapi.com/static/img/" + first_image_code + ".png");
-        
-        System.out.println(first_image_url);
-        
-        return first_image_url;
     }
 }
 
