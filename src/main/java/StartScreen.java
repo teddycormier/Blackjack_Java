@@ -11,7 +11,6 @@ import java.io.IOException;
  * @author teddycormier
  */
 public class StartScreen extends javax.swing.JFrame {
-
     /**
      * Creates new form Start
      */
@@ -35,23 +34,22 @@ public class StartScreen extends javax.swing.JFrame {
         header_label = new javax.swing.JLabel();
         start_button = new javax.swing.JButton();
         header_background = new javax.swing.JButton();
-        bgr_image = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("START");
-        setBackground(new java.awt.Color(51, 153, 0));
+        setBackground(new java.awt.Color(0, 0, 0));
         setBounds(new java.awt.Rectangle(0, 25, 505, 340));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setMinimumSize(new java.awt.Dimension(505, 340));
-        setSize(new java.awt.Dimension(505, 340));
+        setMinimumSize(new java.awt.Dimension(926, 567));
+        setSize(new java.awt.Dimension(926, 567));
         getContentPane().setLayout(null);
 
         header_label.setFont(new java.awt.Font("Phosphate", 1, 14)); // NOI18N
         header_label.setForeground(new java.awt.Color(204, 204, 204));
         header_label.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        header_label.setText("BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - ");
+        header_label.setText("BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - ");
         getContentPane().add(header_label);
-        header_label.setBounds(-4, 2, 560, 10);
+        header_label.setBounds(-4, 2, 950, 10);
 
         start_button.setBackground(new java.awt.Color(204, 204, 204));
         start_button.setFont(new java.awt.Font("Times New Roman", 0, 8)); // NOI18N
@@ -63,7 +61,7 @@ public class StartScreen extends javax.swing.JFrame {
             }
         });
         getContentPane().add(start_button);
-        start_button.setBounds(205, 210, 100, 30);
+        start_button.setBounds(420, 290, 100, 30);
 
         header_background.setBackground(new java.awt.Color(0, 51, 0));
         header_background.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -73,11 +71,7 @@ public class StartScreen extends javax.swing.JFrame {
             }
         });
         getContentPane().add(header_background);
-        header_background.setBounds(-10, -4, 550, 20);
-
-        bgr_image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/BlackJackStart.png"))); // NOI18N
-        getContentPane().add(bgr_image);
-        bgr_image.setBounds(0, 0, 509, 339);
+        header_background.setBounds(-10, -4, 940, 20);
 
         pack();
         setLocationRelativeTo(null);
@@ -87,6 +81,7 @@ public class StartScreen extends javax.swing.JFrame {
 
     gameScreen.setLocationRelativeTo(null);
     gameScreen.setVisible(true);
+
     this.setVisible(false);
     // TODO add your handling code here:
     }//GEN-LAST:event_start_buttonActionPerformed
@@ -136,7 +131,6 @@ public class StartScreen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel bgr_image;
     private javax.swing.JButton header_background;
     private javax.swing.JLabel header_label;
     private javax.swing.JColorChooser jColorChooser1;

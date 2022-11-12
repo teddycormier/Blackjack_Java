@@ -18,7 +18,6 @@ import javax.swing.JOptionPane;
  */
 public class DeckResponse {
     String deck_id;
-//    boolean success;
     CardResponse[] cards;
     
     public static int getCardFromDeck() throws MalformedURLException, IOException{
@@ -27,41 +26,42 @@ public class DeckResponse {
         BufferedReader in = new BufferedReader
         (new InputStreamReader(cardsAPI.openStream()));
         DeckResponse loadedItem = gson.fromJson(in, DeckResponse.class);
-        String first_card_value = loadedItem.cards[0].value;
-        String first_card_code = loadedItem.cards[0].code;
+        String card_value = loadedItem.cards[0].value;
        
-        if (null != first_card_value)switch(first_card_value) {
+        if (null != card_value)switch(card_value) {
             case "JACK" -> {
                 String val = "10";
-                first_card_value = val;
+                card_value = val;
                 }
             case "QUEEN" -> {
                 String val = "10";
-                first_card_value = val;
+                card_value = val;
                 }
             case "KING" -> {
                 String val = "10";
-                first_card_value = val;
+                card_value = val;
                 }
             case "ACE" -> {
-                String[] options = { "1", "11"};
-                var selection = JOptionPane.showOptionDialog
-                (null, "You've drawn an ACE." + "\n" + "Select desired value:", "CHOICE", 0, 2, null, options, options[0]);
-                    if (selection == 0) {
-                      String val = "1";
-                      first_card_value = val;
-                    }
-                    if (selection == 1) { 
-                      String val = "11";
-                      first_card_value = val;
-                    }
+                String val = "1";
+                card_value = val;
+//                String[] options = { "1", "11"};
+//                var selection = JOptionPane.showOptionDialog
+//                (null, "You've drawn an ACE." + "\n" + "Select desired value:", "CHOICE", 0, 2, null, options, options[0]);
+//                    if (selection == 0) {
+//                      String val = "1";
+//                      card_value = val;
+//                    }
+//                    if (selection == 1) { 
+//                      String val = "11";
+//                      card_value = val;
+//                    }
                 }
             default -> {
             }
         }
                
-        int first_value = Integer.parseInt(first_card_value);
-        return first_value;
+        int card_int_value = Integer.parseInt(card_value);
+        return card_int_value;
     }
 }
 

@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.ImageIcon;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -29,22 +30,39 @@ public class GameScreen extends javax.swing.JFrame {
         try {
             dealer_cards.add(DeckResponse.getCardFromDeck());
             int dealer_card1 = dealer_cards.get(0);
+            if (dealer_card1 == 1){
+                dealer_cards.set(0, 11);
+                dealer_card1 = dealer_cards.get(0);
+            }
             dealer_cards.add(DeckResponse.getCardFromDeck());
             int dealer_card2 = dealer_cards.get(1);
+            if ((dealer_card2 == 1) && (dealer_card1 != 11)){
+                dealer_cards.set(1, 11);
+                dealer_card2 = dealer_cards.get(1);
+            }
             dealer_card_1.setText(String.valueOf(dealer_card1));
             dealer_card_2.setText(String.valueOf(dealer_card2));
             int dealer_sum = 0;
             for (int number : dealer_cards){
                 dealer_sum += number;
             }
-            System.out.println("Dealer's Starting Cards: " + "\n" + dealer_card1 + "\n" + dealer_card2 + "\n" + "Dealer Current Hand Total: " + dealer_sum + "\n");
+            System.out.println("Dealer's Starting Cards: " + "\n" + "?" + "\n" + dealer_card2 + "\n" + "Dealer Current Hand Total: " + "?" + "\n");
             
             player_cards.add(DeckResponse.getCardFromDeck());
             int player_card1 = player_cards.get(0);
+            if (player_card1 == 1){
+                player_cards.set(0, 11);
+                player_card1 = player_cards.get(0);
+            }
             player_cards.add(DeckResponse.getCardFromDeck());
             int player_card2 = player_cards.get(1);
+            if ((player_card2 == 1) && (player_card1 != 11)){
+                player_cards.set(1, 11);
+                player_card2 = player_cards.get(1);
+            }
             player_card_1.setText(String.valueOf(player_card1));
             player_card_2.setText(String.valueOf(player_card2));
+             player_card_3.setText(null);
             int player_sum = 0;
             for (int number : player_cards){
                 player_sum += number;
@@ -100,6 +118,42 @@ public class GameScreen extends javax.swing.JFrame {
         newSetOfCards();
     }
     
+    private void getCardImage() throws IOException{
+        player_cards.add(DeckResponse.getCardFromDeck());
+        int new_card = player_cards.get(2);
+        String https = "https://deckofcardsapi.com/static/img/";
+        int tmp_convert = new_card;
+        Collections.shuffle(card_suits);
+        Collections.shuffle(card_faces);
+        if (tmp_convert == 10){
+            String card_num = card_faces.get(0);
+            String card_suit = card_suits.get(0);
+            String file_type = ".png";
+            String total_URL = https + card_num + card_suit + file_type;
+            ImageIcon card = new ImageIcon(total_URL);
+            player_card_3.setIcon(card);
+            System.out.println(total_URL);
+        }
+        else if (tmp_convert != 10){
+            String card_num = String.valueOf(tmp_convert);
+            String card_suit = card_suits.get(0);
+            String file_type = ".png";
+            String total_URL = https + card_num + card_suit + file_type;
+            ImageIcon card = new ImageIcon(total_URL);
+            player_card_3.setIcon(card);
+            System.out.println(total_URL);
+        }
+        else if ((tmp_convert == 1) || (tmp_convert == 11)){
+            String card_num = "A";
+            String card_suit = card_suits.get(0);
+            String file_type = ".png";
+            String total_URL = https + card_num + card_suit + file_type;
+            ImageIcon card = new ImageIcon(total_URL);
+            player_card_3.setIcon(card);
+            System.out.println(total_URL);
+        }
+    }
+    
     public GameScreen() throws IOException {
         initComponents();
         newSetOfCards();
@@ -135,11 +189,11 @@ public class GameScreen extends javax.swing.JFrame {
         player_card_3 = new javax.swing.JLabel();
         dealer_card_1 = new javax.swing.JLabel();
         dealer_card_2 = new javax.swing.JLabel();
-        bgr_image = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GAME");
-        setMinimumSize(new java.awt.Dimension(509, 340));
+        setBackground(new java.awt.Color(0, 0, 0));
+        setMinimumSize(new java.awt.Dimension(926, 567));
         getContentPane().setLayout(null);
 
         stand_button.setBackground(new java.awt.Color(204, 204, 204));
@@ -155,7 +209,7 @@ public class GameScreen extends javax.swing.JFrame {
             }
         });
         getContentPane().add(stand_button);
-        stand_button.setBounds(420, 145, 68, 22);
+        stand_button.setBounds(810, 240, 68, 22);
 
         hit_button.setBackground(new java.awt.Color(204, 204, 204));
         hit_button.setFont(new java.awt.Font("Times New Roman", 0, 13)); // NOI18N
@@ -170,7 +224,7 @@ public class GameScreen extends javax.swing.JFrame {
             }
         });
         getContentPane().add(hit_button);
-        hit_button.setBounds(420, 180, 68, 22);
+        hit_button.setBounds(810, 280, 68, 22);
 
         button_rules.setBackground(new java.awt.Color(204, 204, 204));
         button_rules.setFont(new java.awt.Font("Times New Roman", 3, 12)); // NOI18N
@@ -185,31 +239,17 @@ public class GameScreen extends javax.swing.JFrame {
             }
         });
         getContentPane().add(button_rules);
-        button_rules.setBounds(440, 10, 60, 20);
-
-        player_card_1.setForeground(new java.awt.Color(255, 255, 255));
+        button_rules.setBounds(840, 10, 60, 20);
         getContentPane().add(player_card_1);
-        player_card_1.setBounds(50, 220, 80, 30);
-
-        player_card_2.setForeground(new java.awt.Color(255, 255, 255));
+        player_card_1.setBounds(60, 390, 80, 30);
         getContentPane().add(player_card_2);
-        player_card_2.setBounds(180, 230, 80, 30);
-
-        player_card_3.setForeground(new java.awt.Color(255, 255, 255));
+        player_card_2.setBounds(190, 390, 80, 30);
         getContentPane().add(player_card_3);
-        player_card_3.setBounds(330, 240, 90, 30);
-
-        dealer_card_1.setForeground(new java.awt.Color(255, 255, 255));
+        player_card_3.setBounds(320, 390, 100, 30);
         getContentPane().add(dealer_card_1);
         dealer_card_1.setBounds(50, 30, 100, 30);
-
-        dealer_card_2.setForeground(new java.awt.Color(255, 255, 255));
         getContentPane().add(dealer_card_2);
         dealer_card_2.setBounds(190, 30, 100, 30);
-
-        bgr_image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/BlackJackFelt3.png"))); // NOI18N
-        getContentPane().add(bgr_image);
-        bgr_image.setBounds(0, 0, 510, 340);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -230,21 +270,44 @@ public class GameScreen extends javax.swing.JFrame {
                 int dealer_card3 = dealer_cards.get(2);
                 int dealer_sum2 = dealer_sum + dealer_card3;
                 dealer_sum = dealer_sum2;
-                System.out.println("Dealer had to hit." + "\n" + "New Dealer Total: " + "\n" + dealer_sum2 + "\n");
+                System.out.println("Dealer had to hit." + "\n" + "Dealer new card: " + dealer_card3 + "\n" + "New Dealer Total: " + "\n" + dealer_sum2 + "\n");
                 if (dealer_sum2 < 17){
                     dealer_cards.add(DeckResponse.getCardFromDeck());
                     int dealer_card4 = dealer_cards.get(3);
                     int dealer_sum3 = dealer_sum2 + dealer_card4;
                     dealer_sum = dealer_sum3;
-                    System.out.println("Dealer had to hit." + "\n" + "New Dealer Total: " + "\n" + dealer_sum3 + "\n");
+                    System.out.println("Dealer had to hit." + "\n" + "Dealer new card: " + dealer_card4 + "\n" + "New Dealer Total: " + "\n" + dealer_sum3 + "\n");
                     if (dealer_sum3 < 17){
                         dealer_cards.add(DeckResponse.getCardFromDeck());
                         int dealer_card5 = dealer_cards.get(4);
                         int dealer_sum4 = dealer_sum3 + dealer_card5;
                         dealer_sum = dealer_sum4;
-                        System.out.println("Dealer had to hit." + "\n" + "New Dealer Total: " + "\n" + dealer_sum4 + "\n");
+                        System.out.println("Dealer had to hit." + "\n" + "Dealer new card: " + dealer_card5 + "\n" + "New Dealer Total: " + "\n" + dealer_sum4 + "\n");
                     }
                 }
+            } catch (IOException ex) {
+                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (dealer_sum == 21){
+            try {
+                newCardsAfterDealerHitBlackjack();
+            } catch (IOException ex) {
+                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (player_sum == 21)
+        {
+            try {
+                newCardsAfterPlayerHitBlackjack();
+            } catch (IOException ex) {
+                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if ((dealer_sum == player_sum))
+        {
+            try {
+               newCardsAfterPush();
             } catch (IOException ex) {
                 Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -280,140 +343,45 @@ public class GameScreen extends javax.swing.JFrame {
             } catch (IOException ex) {
                 Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
-        if (player_sum == 21){
-            try {
-                newCardsAfterPlayerHitBlackjack();
-            } catch (IOException ex) {
-                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        if (dealer_sum == 21){
-                try {
-                    newCardsAfterDealerHitBlackjack();
-                } catch (IOException ex) {
-                    Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
-                }
-        }
-        if ((dealer_sum == player_sum))
-        {
-                try {
-                   newCardsAfterPush();
-                } catch (IOException ex) {
-                    Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
-                }
-        }
         }
     }//GEN-LAST:event_stand_buttonActionPerformed
 
     private void hit_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hit_buttonActionPerformed
 
         try {
-            player_cards.add(DeckResponse.getCardFromDeck());
-            int new_card = player_cards.get(2);
-            player_card_3.setText(String.valueOf(new_card));
-            
-            //-----------------------------------------------------
-            String https = "https://deckofcardsapi.com/static/img/";
-            int tmp_convert = new_card;
-            Collections.shuffle(card_suits);
-            Collections.shuffle(card_faces);
-            if (tmp_convert == 10){
-                String card_num = card_faces.get(0);
-                String card_suit = card_suits.get(0);
-                String file_type = ".png";
-                String total_URL = https + card_num + card_suit + file_type;
-//                player_card_3.setIcon(total_URL);
-                System.out.println(total_URL);
-            }
-            else if (tmp_convert != 10){
-                String card_num = String.valueOf(tmp_convert);
-                String card_suit = card_suits.get(0);
-                String file_type = ".png";
-                String total_URL = https + card_num + card_suit + file_type;
-                System.out.println(total_URL);
-            }
-            else if ((tmp_convert == 1) || (tmp_convert == 11)){
-                String card_num = "A";
-                String card_suit = card_suits.get(0);
-                String file_type = ".png";
-                String total_URL = https + card_num + card_suit + file_type;
-                System.out.println(total_URL);
-            }
-            //-----------------------------------------------------
-            
-            int sum = 0;
-            for (int number : player_cards){
-                sum += number;
-            }
-            System.out.println("Current Cards: ");
-            for (int number : player_cards){
-                System.out.println(number);
-            }
-            System.out.println("Current Hand Total: " + sum + "\n");
-            if (sum == 21){
-                JOptionPane.showMessageDialog(null,
-                "BLACKJACK", "", JOptionPane.OK_OPTION);
-                
-                dealer_cards.clear();
-                dealer_cards.add(DeckResponse.getCardFromDeck());
-                int new_dealer_card_loss1 = dealer_cards.get(0);
-                dealer_cards.add(DeckResponse.getCardFromDeck());
-                int new_dealer_card_loss2 = dealer_cards.get(1);
-                int new_dealer_sum = 0;
-                for (int number : dealer_cards){
-                    new_dealer_sum += number;
-                }
-                System.out.println("Dealer's Starting Cards: " + "\n" + new_dealer_card_loss1 + "\n" + new_dealer_card_loss2 + "\n" + "Dealer Current Hand Total: " + new_dealer_sum + "\n");
-                
-                player_cards.clear();
-                player_cards.add(DeckResponse.getCardFromDeck());
-                int new_card_after_win1 = player_cards.get(0);
-                player_cards.add(DeckResponse.getCardFromDeck());
-                int new_card_after_win2 = player_cards.get(1);
-                int new_sum = 0;
-                for (int number : player_cards){
-                    new_sum += number;
-                }
-                player_card_1.setText(String.valueOf(new_card_after_win1));
-                player_card_2.setText(String.valueOf(new_card_after_win2));
-                player_card_3.setText("");
-                dealer_card_1.setText(String.valueOf(new_dealer_card_loss1));
-                dealer_card_2.setText(String.valueOf(new_dealer_card_loss2));
-                System.out.println("Starting Cards: " + "\n" + new_card_after_win1 + "\n" + new_card_after_win2 + "\n" + "Current Hand Total: " + new_sum + "\n");
-            }
-            if (sum > 21){
-                JOptionPane.showMessageDialog(null,
-                "Bust" + "\n" + "Dealer Wins Hand", "", JOptionPane.OK_OPTION);
-                
-                dealer_cards.clear();
-                dealer_cards.add(DeckResponse.getCardFromDeck());
-                int new_dealer_card_win1 = dealer_cards.get(0);
-                dealer_cards.add(DeckResponse.getCardFromDeck());
-                int new_dealer_card_win2 = dealer_cards.get(1);
-                int new_dealer_sum = 0;
-                for (int number : dealer_cards){
-                    new_dealer_sum += number;
-                }
-                System.out.println("Dealer's Starting Cards: " + "\n" + new_dealer_card_win1 + "\n" + new_dealer_card_win2 + "\n" + "Dealer Current Hand Total: " + new_dealer_sum + "\n");
-                player_cards.clear();
-                player_cards.add(DeckResponse.getCardFromDeck());
-                int new_card_after_loss1 = player_cards.get(0);
-                player_cards.add(DeckResponse.getCardFromDeck());
-                int new_card_after_loss2 = player_cards.get(1);
-                int new_sum = 0;
-                for (int number : player_cards){
-                    new_sum += number;
-                }
-                player_card_1.setText(String.valueOf(new_card_after_loss1));
-                player_card_2.setText(String.valueOf(new_card_after_loss2));
-                player_card_3.setText("");
-                dealer_card_1.setText(String.valueOf(new_dealer_card_win1));
-                dealer_card_2.setText(String.valueOf(new_dealer_card_win2));
-                System.out.println("Starting Cards: " + "\n" + new_card_after_loss1 + "\n" + new_card_after_loss2 + "\n" + "Current Hand Total: " + new_sum + "\n");
-            }
+            getCardImage();
         } catch (IOException ex) {
             Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
         }
+        int new_card = player_cards.get(2);
+        player_card_3.setText(String.valueOf(new_card));
+
+        int sum = 0;
+        for (int number : player_cards){
+            sum += number;
+        }
+        System.out.println("Current Cards: ");
+        for (int number : player_cards){
+            System.out.println(number);
+        }
+        System.out.println("Current Hand Total: " + sum + "\n");
+        
+        if (sum == 21){
+            try {
+                newCardsAfterPlayerHitBlackjack();
+            } catch (IOException ex) {
+                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (sum > 21)
+        {
+            try {
+                newCardsAfterLosingToDealer();
+            } catch (IOException ex) {
+                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
     }//GEN-LAST:event_hit_buttonActionPerformed
 
     private void button_rulesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_rulesActionPerformed
@@ -451,7 +419,6 @@ public class GameScreen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel bgr_image;
     private javax.swing.JButton button_rules;
     private javax.swing.JLabel dealer_card_1;
     private javax.swing.JLabel dealer_card_2;
