@@ -34,22 +34,23 @@ public class StartScreen extends javax.swing.JFrame {
         header_label = new javax.swing.JLabel();
         start_button = new javax.swing.JButton();
         header_background = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("START");
         setBackground(new java.awt.Color(0, 0, 0));
         setBounds(new java.awt.Rectangle(0, 25, 505, 340));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setMinimumSize(new java.awt.Dimension(926, 567));
-        setSize(new java.awt.Dimension(926, 567));
+        setMinimumSize(new java.awt.Dimension(1000, 500));
+        setSize(new java.awt.Dimension(1000, 500));
         getContentPane().setLayout(null);
 
         header_label.setFont(new java.awt.Font("Phosphate", 1, 14)); // NOI18N
         header_label.setForeground(new java.awt.Color(204, 204, 204));
         header_label.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        header_label.setText("BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - ");
+        header_label.setText("BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - ");
         getContentPane().add(header_label);
-        header_label.setBounds(-4, 2, 950, 10);
+        header_label.setBounds(-24, 2, 1070, 10);
 
         start_button.setBackground(new java.awt.Color(204, 204, 204));
         start_button.setFont(new java.awt.Font("Times New Roman", 0, 8)); // NOI18N
@@ -61,7 +62,7 @@ public class StartScreen extends javax.swing.JFrame {
             }
         });
         getContentPane().add(start_button);
-        start_button.setBounds(420, 290, 100, 30);
+        start_button.setBounds(470, 280, 100, 30);
 
         header_background.setBackground(new java.awt.Color(0, 51, 0));
         header_background.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -71,7 +72,11 @@ public class StartScreen extends javax.swing.JFrame {
             }
         });
         getContentPane().add(header_background);
-        header_background.setBounds(-10, -4, 940, 20);
+        header_background.setBounds(-10, -4, 1040, 20);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sunset.png"))); // NOI18N
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(0, 0, 1000, 500);
 
         pack();
         setLocationRelativeTo(null);
@@ -134,6 +139,7 @@ public class StartScreen extends javax.swing.JFrame {
     private javax.swing.JButton header_background;
     private javax.swing.JLabel header_label;
     private javax.swing.JColorChooser jColorChooser1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JButton start_button;
     // End of variables declaration//GEN-END:variables
 }

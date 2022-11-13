@@ -1,3 +1,9 @@
+
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -8,7 +14,7 @@
  * @author teddycormier
  */
 public class RulesScreen extends javax.swing.JFrame {
-
+    public GameScreen gameScreen;
     /**
      * Creates new form RulesScreen
      */
@@ -16,8 +22,6 @@ public class RulesScreen extends javax.swing.JFrame {
         initComponents();
     }
     
-    GameScreen gameScreen;
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -35,14 +39,13 @@ public class RulesScreen extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("RULES");
         setBounds(new java.awt.Rectangle(0, 25, 509, 340));
-        setMinimumSize(new java.awt.Dimension(509, 340));
+        setMinimumSize(new java.awt.Dimension(1000, 500));
         getContentPane().setLayout(null);
 
         back_button.setBackground(new java.awt.Color(204, 204, 204));
         back_button.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         back_button.setText("Back");
         back_button.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        back_button.setBounds(new java.awt.Rectangle(440, 10, 60, 20));
         back_button.setMaximumSize(new java.awt.Dimension(60, 20));
         back_button.setMinimumSize(new java.awt.Dimension(60, 20));
         back_button.setPreferredSize(new java.awt.Dimension(60, 20));
@@ -52,29 +55,35 @@ public class RulesScreen extends javax.swing.JFrame {
             }
         });
         getContentPane().add(back_button);
-        back_button.setBounds(440, 10, 60, 20);
-
-        text_pane.setBounds(new java.awt.Rectangle(10, 38, 485, 260));
+        back_button.setBounds(910, 20, 60, 20);
 
         text_in_pane.setBackground(new java.awt.Color(0, 0, 0));
         text_in_pane.setColumns(20);
         text_in_pane.setFont(new java.awt.Font("Times New Roman", 1, 15)); // NOI18N
         text_in_pane.setForeground(new java.awt.Color(204, 204, 0));
         text_in_pane.setRows(5);
-        text_in_pane.setText("BEAT THE DEALER BY:\n\n- Drawing a hand value that is higher than the dealer’s hand value\n- The dealer drawing a hand value that goes over 21.\n- Drawing a hand value of 21 on your first two cards, when the \n  dealer does not.\n\n\nLOSE TO THE DEALER BY:\n\n- Your hand value exceeds 21.\n- The dealers hand has a greater value than yours at the end of\n  the round");
+        text_in_pane.setText("  \n  BEAT THE DEALER BY:\n\n   - Drawing a hand value that is higher than the dealer’s hand value\n   - The dealer drawing a hand value that goes over 21.\n   - Drawing a hand value of 21 on your first two cards, when the \n     dealer does not.\n\n\n  LOSE TO THE DEALER BY:\n\n   - Your hand value exceeds 21.\n   - The dealers hand has a greater value than yours at the end of\n     the round");
         text_pane.setViewportView(text_in_pane);
 
         getContentPane().add(text_pane);
-        text_pane.setBounds(10, 30, 490, 270);
+        text_pane.setBounds(40, 100, 910, 290);
 
-        bgr_rules.setIcon(new javax.swing.ImageIcon(getClass().getResource("/BlackJackFelt3.png"))); // NOI18N
+        bgr_rules.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sunset.png"))); // NOI18N
         getContentPane().add(bgr_rules);
-        bgr_rules.setBounds(0, 0, 510, 340);
+        bgr_rules.setBounds(0, 0, 1000, 500);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void back_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_back_buttonActionPerformed
+ 
+        if (gameScreen == null){
+            try {
+                gameScreen = new GameScreen();
+            } catch (IOException ex) {
+                Logger.getLogger(RulesScreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         gameScreen.setLocationRelativeTo(null);
         gameScreen.setVisible(true);
         this.setVisible(false);
@@ -106,8 +115,6 @@ public class RulesScreen extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(RulesScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
-
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

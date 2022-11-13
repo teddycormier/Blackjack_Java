@@ -8,7 +8,5 @@
  * @author teddycormier
  */
 public class CardResponse {
-    String code;
     String value;
-    String image;
 }

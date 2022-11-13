@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
-import javax.swing.JOptionPane;
+
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -17,7 +17,6 @@ import javax.swing.JOptionPane;
  * @author teddycormier
  */
 public class DeckResponse {
-    String deck_id;
     CardResponse[] cards;
     
     public static int getCardFromDeck() throws MalformedURLException, IOException{
@@ -44,17 +43,6 @@ public class DeckResponse {
             case "ACE" -> {
                 String val = "1";
                 card_value = val;
-//                String[] options = { "1", "11"};
-//                var selection = JOptionPane.showOptionDialog
-//                (null, "You've drawn an ACE." + "\n" + "Select desired value:", "CHOICE", 0, 2, null, options, options[0]);
-//                    if (selection == 0) {
-//                      String val = "1";
-//                      card_value = val;
-//                    }
-//                    if (selection == 1) { 
-//                      String val = "11";
-//                      card_value = val;
-//                    }
                 }
             default -> {
             }

@@ -21,6 +21,8 @@ public class GameScreen extends javax.swing.JFrame {
      * Creates new form GameScreen
      * @throws java.io.IOException
      */
+    RulesScreen rulesScreen;
+    
     ArrayList<Integer> player_cards = new ArrayList<Integer>();
     ArrayList<Integer> dealer_cards = new ArrayList<Integer>();
     ArrayList<String> card_suits = new ArrayList<String>();
@@ -158,20 +160,22 @@ public class GameScreen extends javax.swing.JFrame {
         initComponents();
         newSetOfCards();
         
+        rulesScreen = new RulesScreen();
+        
         // ----------------
         card_suits.add("H");
         card_suits.add("C");
         card_suits.add("S");
         card_suits.add("D");
         // ----------------
+        card_faces.add("10");
         card_faces.add("J");
         card_faces.add("Q");
         card_faces.add("K");
         // ----------------
+  
     }
     
-    
-       
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -189,11 +193,12 @@ public class GameScreen extends javax.swing.JFrame {
         player_card_3 = new javax.swing.JLabel();
         dealer_card_1 = new javax.swing.JLabel();
         dealer_card_2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GAME");
         setBackground(new java.awt.Color(0, 0, 0));
-        setMinimumSize(new java.awt.Dimension(926, 567));
+        setMinimumSize(new java.awt.Dimension(1000, 500));
         getContentPane().setLayout(null);
 
         stand_button.setBackground(new java.awt.Color(204, 204, 204));
@@ -209,7 +214,7 @@ public class GameScreen extends javax.swing.JFrame {
             }
         });
         getContentPane().add(stand_button);
-        stand_button.setBounds(810, 240, 68, 22);
+        stand_button.setBounds(890, 210, 68, 22);
 
         hit_button.setBackground(new java.awt.Color(204, 204, 204));
         hit_button.setFont(new java.awt.Font("Times New Roman", 0, 13)); // NOI18N
@@ -224,7 +229,7 @@ public class GameScreen extends javax.swing.JFrame {
             }
         });
         getContentPane().add(hit_button);
-        hit_button.setBounds(810, 280, 68, 22);
+        hit_button.setBounds(890, 250, 68, 22);
 
         button_rules.setBackground(new java.awt.Color(204, 204, 204));
         button_rules.setFont(new java.awt.Font("Times New Roman", 3, 12)); // NOI18N
@@ -239,17 +244,31 @@ public class GameScreen extends javax.swing.JFrame {
             }
         });
         getContentPane().add(button_rules);
-        button_rules.setBounds(840, 10, 60, 20);
+        button_rules.setBounds(900, 10, 60, 20);
+
+        player_card_1.setForeground(new java.awt.Color(255, 255, 255));
         getContentPane().add(player_card_1);
         player_card_1.setBounds(60, 390, 80, 30);
+
+        player_card_2.setForeground(new java.awt.Color(255, 255, 255));
         getContentPane().add(player_card_2);
         player_card_2.setBounds(190, 390, 80, 30);
+
+        player_card_3.setForeground(new java.awt.Color(255, 255, 255));
         getContentPane().add(player_card_3);
         player_card_3.setBounds(320, 390, 100, 30);
+
+        dealer_card_1.setForeground(new java.awt.Color(255, 255, 255));
         getContentPane().add(dealer_card_1);
         dealer_card_1.setBounds(50, 30, 100, 30);
+
+        dealer_card_2.setForeground(new java.awt.Color(255, 255, 255));
         getContentPane().add(dealer_card_2);
         dealer_card_2.setBounds(190, 30, 100, 30);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sunset.png"))); // NOI18N
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(0, 0, 1000, 500);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -385,15 +404,16 @@ public class GameScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_hit_buttonActionPerformed
 
     private void button_rulesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_rulesActionPerformed
-//        rulesScreen.setLocationRelativeTo(null);
-//        rulesScreen.setVisible(true);
-//        this.setVisible(false);x
+        rulesScreen.setLocationRelativeTo(null);
+        rulesScreen.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_button_rulesActionPerformed
 
     /**
      * @param args the command line arguments
+     * @throws java.io.IOException
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) throws IOException {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -423,6 +443,7 @@ public class GameScreen extends javax.swing.JFrame {
     private javax.swing.JLabel dealer_card_1;
     private javax.swing.JLabel dealer_card_2;
     private javax.swing.JButton hit_button;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel player_card_1;
     private javax.swing.JLabel player_card_2;
     private javax.swing.JLabel player_card_3;
