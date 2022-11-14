@@ -59,7 +59,8 @@ public class GameScreen extends javax.swing.JFrame {
                 dealer_card2 = dealer_cards.get(1);
             }
             
-            // ---------------------------------------------
+            //------------------------------------------------------------
+            
             int card1 = dealer_cards.get(0);
             String https = "https://deckofcardsapi.com/static/img/";
             int tmp_convert = card1;
@@ -100,7 +101,6 @@ public class GameScreen extends javax.swing.JFrame {
                 icon = new ImageIcon(image);
                 dealer_card_1.setIcon(icon);
             }
-            //------------------------------------------------------------
             
             int card2 = dealer_cards.get(1);
             String https2 = "https://deckofcardsapi.com/static/img/";
@@ -261,6 +261,7 @@ public class GameScreen extends javax.swing.JFrame {
     }
     
     public void getCard() throws IOException{
+        player_card_3.setVisible(true);
         player_cards.add(DeckResponse.getCardFromDeck());
         int card = player_cards.get(2);
         String https = "https://deckofcardsapi.com/static/img/";
