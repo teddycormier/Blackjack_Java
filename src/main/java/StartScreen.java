@@ -62,10 +62,10 @@ public class StartScreen extends javax.swing.JFrame {
             }
         });
         getContentPane().add(start_button);
-        start_button.setBounds(470, 280, 100, 30);
+        start_button.setBounds(450, 230, 100, 30);
 
-        header_background.setBackground(new java.awt.Color(0, 51, 0));
-        header_background.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        header_background.setBackground(new java.awt.Color(0, 0, 0));
+        header_background.setBorder(null);
         header_background.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 header_backgroundActionPerformed(evt);
