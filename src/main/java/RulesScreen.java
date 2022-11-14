@@ -36,7 +36,6 @@ public class RulesScreen extends javax.swing.JFrame {
         text_in_pane = new javax.swing.JTextArea();
         bgr_rules = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("RULES");
         setBounds(new java.awt.Rectangle(0, 25, 509, 340));
         setMinimumSize(new java.awt.Dimension(1000, 500));
@@ -76,16 +75,6 @@ public class RulesScreen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void back_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_back_buttonActionPerformed
- 
-        if (gameScreen == null){
-            try {
-                gameScreen = new GameScreen();
-            } catch (IOException ex) {
-                Logger.getLogger(RulesScreen.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        gameScreen.setLocationRelativeTo(null);
-        gameScreen.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_back_buttonActionPerformed
 

@@ -54,7 +54,7 @@
           <Color blue="cc" green="cc" red="cc" type="rgb"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="2"/>
-        <Property name="text" type="java.lang.String" value="BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - "/>
+        <Property name="text" type="java.lang.String" value="BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - "/>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">

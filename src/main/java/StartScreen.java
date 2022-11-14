@@ -11,14 +11,16 @@ import java.io.IOException;
  * @author teddycormier
  */
 public class StartScreen extends javax.swing.JFrame {
+    GameScreen gameScreen;
     /**
      * Creates new form Start
      */
     public StartScreen() throws IOException{
         initComponents();
-
+        
+        gameScreen = new GameScreen();
     }
-    GameScreen gameScreen = new GameScreen();
+     
     
 
     /**
@@ -48,7 +50,7 @@ public class StartScreen extends javax.swing.JFrame {
         header_label.setFont(new java.awt.Font("Phosphate", 1, 14)); // NOI18N
         header_label.setForeground(new java.awt.Color(204, 204, 204));
         header_label.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        header_label.setText("BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - ");
+        header_label.setText("BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - BLACKJACK - ");
         getContentPane().add(header_label);
         header_label.setBounds(-24, 2, 1070, 10);
 

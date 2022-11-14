@@ -607,8 +607,6 @@ public class GameScreen extends javax.swing.JFrame {
         cleanUp();
     }
     
-
-    
     public GameScreen() throws IOException {
         initComponents();
         newSetOfCards();
@@ -879,7 +877,6 @@ public class GameScreen extends javax.swing.JFrame {
     private void button_rulesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_rulesActionPerformed
         rulesScreen.setLocationRelativeTo(null);
         rulesScreen.setVisible(true);
-        this.setVisible(false);
     }//GEN-LAST:event_button_rulesActionPerformed
 
     /**
