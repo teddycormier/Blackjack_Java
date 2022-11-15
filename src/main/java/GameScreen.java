@@ -504,6 +504,8 @@ public class GameScreen extends javax.swing.JFrame {
         player_card_3 = new javax.swing.JLabel();
         player_card_4 = new javax.swing.JLabel();
         player_card_5 = new javax.swing.JLabel();
+        players_hand_onscreen_text = new javax.swing.JLabel();
+        dealers_hand_onscreen_text1 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -579,23 +581,35 @@ public class GameScreen extends javax.swing.JFrame {
 
         player_card_1.setForeground(new java.awt.Color(255, 255, 255));
         getContentPane().add(player_card_1);
-        player_card_1.setBounds(40, 260, 110, 160);
+        player_card_1.setBounds(40, 270, 110, 160);
 
         player_card_2.setForeground(new java.awt.Color(255, 255, 255));
         getContentPane().add(player_card_2);
-        player_card_2.setBounds(200, 260, 110, 160);
+        player_card_2.setBounds(200, 270, 110, 160);
 
         player_card_3.setForeground(new java.awt.Color(255, 255, 255));
         getContentPane().add(player_card_3);
-        player_card_3.setBounds(360, 260, 110, 160);
+        player_card_3.setBounds(360, 270, 110, 160);
 
         player_card_4.setForeground(new java.awt.Color(255, 255, 255));
         getContentPane().add(player_card_4);
-        player_card_4.setBounds(520, 260, 110, 160);
+        player_card_4.setBounds(520, 270, 110, 160);
 
         player_card_5.setForeground(new java.awt.Color(255, 255, 255));
         getContentPane().add(player_card_5);
-        player_card_5.setBounds(680, 260, 110, 160);
+        player_card_5.setBounds(680, 270, 110, 160);
+
+        players_hand_onscreen_text.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        players_hand_onscreen_text.setForeground(new java.awt.Color(255, 255, 255));
+        players_hand_onscreen_text.setText("PLAYERS HAND");
+        getContentPane().add(players_hand_onscreen_text);
+        players_hand_onscreen_text.setBounds(10, 240, 200, 20);
+
+        dealers_hand_onscreen_text1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        dealers_hand_onscreen_text1.setForeground(new java.awt.Color(255, 255, 255));
+        dealers_hand_onscreen_text1.setText("DEALERS HAND");
+        getContentPane().add(dealers_hand_onscreen_text1);
+        dealers_hand_onscreen_text1.setBounds(10, 10, 200, 21);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sunset.png"))); // NOI18N
         getContentPane().add(jLabel1);
@@ -795,6 +809,7 @@ public class GameScreen extends javax.swing.JFrame {
     private javax.swing.JLabel dealer_card_3;
     private javax.swing.JLabel dealer_card_4;
     private javax.swing.JLabel dealer_card_5;
+    private javax.swing.JLabel dealers_hand_onscreen_text1;
     private javax.swing.JButton hit_button;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel player_card_1;
@@ -802,6 +817,7 @@ public class GameScreen extends javax.swing.JFrame {
     private javax.swing.JLabel player_card_3;
     private javax.swing.JLabel player_card_4;
     private javax.swing.JLabel player_card_5;
+    private javax.swing.JLabel players_hand_onscreen_text;
     private javax.swing.JButton stand_button;
     // End of variables declaration//GEN-END:variables
 }
