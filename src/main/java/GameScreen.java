@@ -27,22 +27,27 @@ public class GameScreen extends javax.swing.JFrame {
      */
     RulesScreen rulesScreen;
     private ImageIcon icon;
-    public boolean playerThirdCard = false;
-    public boolean playerFourthCard = false;
-    public boolean playerFifthCard = false;
-    public boolean dealerThirdCard = false;
-    public boolean dealerFourthCard = false;
-    public boolean dealerFifthCard = false;
-    int player_card = 0;
-    int dealer_card = 0;
+    private boolean playerFirstCard = false;
+    private boolean playerSecondCard = false;
+    private boolean playerThirdCard = false;
+    private boolean playerFourthCard = false;
+    private boolean playerFifthCard = false;
+    private boolean dealerFirstCard = false;
+    private boolean dealerSecondCard = false;
+    private boolean dealerThirdCard = false;
+    private boolean dealerFourthCard = false;
+    private boolean dealerFifthCard = false;
+    private int tmp_player_card = 0;
+    private int tmp_dealer_card = 0;
+    private String https = "https://deckofcardsapi.com/static/img/";
+    private String file_type = ".png";
     
     ArrayList<Integer> player_cards = new ArrayList<Integer>();
     ArrayList<Integer> dealer_cards = new ArrayList<Integer>();
     ArrayList<String> card_suits = new ArrayList<String>();
     ArrayList<String> card_faces = new ArrayList<String>();
     
-    private void newSetOfCards(){
-        
+    private void addSuitsFaces(){
         // ----------------
         card_suits.add("H");
         card_suits.add("C");
@@ -53,103 +58,193 @@ public class GameScreen extends javax.swing.JFrame {
         card_faces.add("Q");
         card_faces.add("K");
         // ----------------
+    }
+    
+    private void shuffleCollections(){
+        Collections.shuffle(card_suits);
+        Collections.shuffle(card_faces);
+    }
+    
+    private void findRightCardD(){
+        if (dealerFirstCard != true){
+            tmp_dealer_card = dealer_cards.get(0);
+            dealerFirstCard = true;
+        }
+        else if (dealerSecondCard != true){
+            tmp_dealer_card = dealer_cards.get(1);
+            dealerSecondCard = true;
+        }
+        else if (dealerThirdCard != true){
+            tmp_dealer_card = dealer_cards.get(2);
+            dealerThirdCard = true;
+        }
+        else if (dealerFourthCard != true){
+            tmp_dealer_card = dealer_cards.get(3);
+            dealerFourthCard = true;
+        }
+        else if (dealerFifthCard != true){
+            tmp_dealer_card = dealer_cards.get(4);
+            dealerFifthCard = true;
+        }
+    }
+    
+    private void setRightIconD(){
+        if (tmp_dealer_card == dealer_cards.get(0)){
+            dealer_card_1.setVisible(true);
+            dealer_card_1.setIcon(icon);
+        }
+        else if (tmp_dealer_card == dealer_cards.get(1)){
+            dealer_card_2.setVisible(true);
+            dealer_card_2.setIcon(icon);
+        }
+        else if (tmp_dealer_card == dealer_cards.get(2)){
+            dealer_card_3.setVisible(true);
+            dealer_card_3.setIcon(icon);
+        }
+        else if (tmp_dealer_card == dealer_cards.get(3)){
+            dealer_card_4.setVisible(true);
+            dealer_card_4.setIcon(icon);
+        }
+        else if (tmp_dealer_card == dealer_cards.get(4)){
+            dealer_card_5.setVisible(true);
+            dealer_card_5.setIcon(icon);
+        }
+    }
+    
+    private void getDealerCard() throws IOException{
+        dealer_cards.add(DeckResponse.getCardFromDeck());
+        findRightCardD();
+        shuffleCollections();
+        if (tmp_dealer_card == 10){
+            String card_num = card_faces.get(0);
+            String card_suit = card_suits.get(0);
+            String total_URL = https + card_num + card_suit + file_type;
+            System.out.println(total_URL);
+            URL url = new URL(total_URL);
+            BufferedImage bufferedImage = ImageIO.read(url);
+            Image image = bufferedImage.getScaledInstance(110, 160, Image.SCALE_DEFAULT);
+            icon = new ImageIcon(image);
+            setRightIconD();
+        }
+        else if ((tmp_dealer_card == 1) || (tmp_dealer_card == 11)){
+            String card_suit = card_suits.get(0);
+            String total_URL = https + "A" + card_suit + file_type;
+            System.out.println(total_URL);
+            URL url = new URL(total_URL);
+            BufferedImage bufferedImage = ImageIO.read(url);
+            Image image = bufferedImage.getScaledInstance(110, 160, Image.SCALE_DEFAULT);
+            icon = new ImageIcon(image);
+            setRightIconD();
+        }
+        else if (tmp_dealer_card < 10){
+            String card_num = String.valueOf(tmp_dealer_card);
+            String card_suit = card_suits.get(0);
+            String total_URL = https + card_num + card_suit + file_type;
+            System.out.println(total_URL);
+            URL url = new URL(total_URL);
+            BufferedImage bufferedImage = ImageIO.read(url);
+            Image image = bufferedImage.getScaledInstance(110, 160, Image.SCALE_DEFAULT);
+            icon = new ImageIcon(image);
+            setRightIconD();
+        }
+    }
+    
+    private void findRightCardP(){
+        if (playerFirstCard != true){
+            tmp_player_card = player_cards.get(0);
+            playerFirstCard = true;
+        }
+        else if (playerSecondCard != true){
+            tmp_player_card = player_cards.get(1);
+            playerSecondCard = true;
+        }
+        else if (playerThirdCard != true){
+            tmp_player_card = player_cards.get(2);
+            playerThirdCard = true;
+        }
+        else if (playerFourthCard != true){
+            tmp_player_card = player_cards.get(3);
+            playerFourthCard = true;
+        }
+        else if (playerFifthCard != true){
+            tmp_player_card = player_cards.get(4);
+            playerFifthCard = true;
+        }
+    }
+    
+    private void setRightIconP(){
+        if (tmp_player_card == player_cards.get(0)){
+            player_card_1.setVisible(true);
+            player_card_1.setIcon(icon);
+        }
+        else if (tmp_player_card == player_cards.get(1)){
+            player_card_2.setVisible(true);
+            player_card_2.setIcon(icon);
+        }
+        else if (tmp_player_card == player_cards.get(2)){
+            player_card_3.setVisible(true);
+            player_card_3.setIcon(icon);
+        }
+        else if (tmp_player_card == player_cards.get(3)){
+            player_card_4.setVisible(true);
+            player_card_4.setIcon(icon);
+        }
+        else if (tmp_player_card == player_cards.get(4)){
+            player_card_5.setVisible(true);
+            player_card_5.setIcon(icon);
+        }
+    }
+    
+    
+    private void getPlayerCard() throws IOException{
+        player_cards.add(DeckResponse.getCardFromDeck());
+        findRightCardP();
+        shuffleCollections();
+        if (tmp_player_card == 10){
+            String card_num = card_faces.get(0);
+            String card_suit = card_suits.get(0);
+            String total_URL = https + card_num + card_suit + file_type;
+            System.out.println(total_URL);
+            URL url = new URL(total_URL);
+            BufferedImage bufferedImage = ImageIO.read(url);
+            Image image = bufferedImage.getScaledInstance(110, 160, Image.SCALE_DEFAULT);
+            icon = new ImageIcon(image);
+            setRightIconP();
+        }
+        else if ((tmp_player_card == 1) || (tmp_player_card == 11)){
+            String card_suit = card_suits.get(0);
+            String total_URL = https + "A" + card_suit + file_type;
+            System.out.println(total_URL);
+            URL url = new URL(total_URL);
+            BufferedImage bufferedImage = ImageIO.read(url);
+            Image image = bufferedImage.getScaledInstance(110, 160, Image.SCALE_DEFAULT);
+            icon = new ImageIcon(image);
+            setRightIconP();
+        }
+        else if (tmp_player_card < 10){
+            String card_num = String.valueOf(tmp_player_card);
+            String card_suit = card_suits.get(0);
+            String total_URL = https + card_num + card_suit + file_type;
+            System.out.println(total_URL);
+            URL url = new URL(total_URL);
+            BufferedImage bufferedImage = ImageIO.read(url);
+            Image image = bufferedImage.getScaledInstance(110, 160, Image.SCALE_DEFAULT);
+            icon = new ImageIcon(image);
+            setRightIconP();
+        }
+    }
+    
+    private void newSetOfCards() throws IOException{
         
-        try {
-            dealer_cards.add(DeckResponse.getCardFromDeck());
-            int dealer_card1 = dealer_cards.get(0);
-            if (dealer_card1 == 1){
+            addSuitsFaces();
+        
+            getDealerCard();
+            if (dealer_cards.get(0) == 1){
                 dealer_cards.set(0, 11);
-                dealer_card1 = dealer_cards.get(0);
             }
-            dealer_cards.add(DeckResponse.getCardFromDeck());
-            int dealer_card2 = dealer_cards.get(1);
-            if ((dealer_card2 == 1) && (dealer_card1 != 11)){
+            getDealerCard();
+            if ((dealer_cards.get(1) == 1) && (dealer_cards.get(0) != 11)){
                 dealer_cards.set(1, 11);
-                dealer_card2 = dealer_cards.get(1);
-            }
-            
-            //------------------------------------------------------------
-            
-            int card1 = dealer_cards.get(0);
-            String https = "https://deckofcardsapi.com/static/img/";
-            int tmp_convert = card1;
-            Collections.shuffle(card_suits);
-            Collections.shuffle(card_faces);
-            if (tmp_convert == 10){
-                String card_num = card_faces.get(0);
-                String card_suit = card_suits.get(0);
-                String file_type = ".png";
-                String total_URL = https + card_num + card_suit + file_type;
-                System.out.println(total_URL);
-                URL url = new URL(total_URL);
-                BufferedImage bufferedImage = ImageIO.read(url);
-                Image image = bufferedImage.getScaledInstance(110, 160, Image.SCALE_DEFAULT);
-                icon = new ImageIcon(image);
-                dealer_card_1.setIcon(icon);
-            }
-            else if ((tmp_convert == 1) || (tmp_convert == 11)){
-                String card_suit = card_suits.get(0);
-                String file_type = ".png";
-                String total_URL = https + "A" + card_suit + file_type;
-                System.out.println(total_URL);
-                URL url = new URL(total_URL);
-                BufferedImage bufferedImage = ImageIO.read(url);
-                Image image = bufferedImage.getScaledInstance(110, 160, Image.SCALE_DEFAULT);
-                icon = new ImageIcon(image);
-                dealer_card_1.setIcon(icon);
-            }
-            else if (tmp_convert < 10){
-                String card_num = String.valueOf(tmp_convert);
-                String card_suit = card_suits.get(0);
-                String file_type = ".png";
-                String total_URL = https + card_num + card_suit + file_type;
-                System.out.println(total_URL);
-                URL url = new URL(total_URL);
-                BufferedImage bufferedImage = ImageIO.read(url);
-                Image image = bufferedImage.getScaledInstance(110, 160, Image.SCALE_DEFAULT);
-                icon = new ImageIcon(image);
-                dealer_card_1.setIcon(icon);
-            }
-            
-            int card2 = dealer_cards.get(1);
-            String https2 = "https://deckofcardsapi.com/static/img/";
-            int tmp_convert2 = card2;
-            Collections.shuffle(card_suits);
-            Collections.shuffle(card_faces);
-            if (tmp_convert2 == 10){
-                String card_num = card_faces.get(0);
-                String card_suit = card_suits.get(0);
-                String file_type = ".png";
-                String total_URL = https2 + card_num + card_suit + file_type;
-                System.out.println(total_URL);
-                URL url = new URL(total_URL);
-                BufferedImage bufferedImage = ImageIO.read(url);
-                Image image = bufferedImage.getScaledInstance(110, 160, Image.SCALE_DEFAULT);
-                icon = new ImageIcon(image);
-                dealer_card_2.setIcon(icon);
-            }
-            else if ((tmp_convert2 == 1) || (tmp_convert2 == 11)){
-                String card_suit = card_suits.get(0);
-                String file_type = ".png";
-                String total_URL = https2 + "A" + card_suit + file_type;
-                System.out.println(total_URL);
-                URL url = new URL(total_URL);
-                BufferedImage bufferedImage = ImageIO.read(url);
-                Image image = bufferedImage.getScaledInstance(110, 160, Image.SCALE_DEFAULT);
-                icon = new ImageIcon(image);
-                dealer_card_2.setIcon(icon);
-            }
-            else if (tmp_convert2 < 10){
-                String card_num = String.valueOf(tmp_convert2);
-                String card_suit = card_suits.get(0);
-                String file_type = ".png";
-                String total_URL = https2 + card_num + card_suit + file_type;
-                System.out.println(total_URL);
-                URL url = new URL(total_URL);
-                BufferedImage bufferedImage = ImageIO.read(url);
-                Image image = bufferedImage.getScaledInstance(110, 160, Image.SCALE_DEFAULT);
-                icon = new ImageIcon(image);
-                dealer_card_2.setIcon(icon);
             }
         
             //----------------------------------------------------------------------
@@ -158,103 +253,15 @@ public class GameScreen extends javax.swing.JFrame {
             for (int number : dealer_cards){
                 dealer_sum += number;
             }
-            System.out.println("Dealer's Starting Cards: " + "\n" + "?" + "\n" + dealer_card2 + "\n" + "Dealer Current Hand Total: " + "?" + "\n");
+            System.out.println("Dealer's Starting Cards: " + "\n" + dealer_cards.get(0) + "\n" + dealer_cards.get(1) + "\n" + "Dealer Current Hand Total: " + dealer_sum + "\n");
             
-            player_cards.add(DeckResponse.getCardFromDeck());
-            int player_card1 = player_cards.get(0);
-            if (player_card1 == 1){
+            getPlayerCard();
+            if (player_cards.get(0) == 1){
                 player_cards.set(0, 11);
-                player_card1 = player_cards.get(0);
             }
-            player_cards.add(DeckResponse.getCardFromDeck());
-            int player_card2 = player_cards.get(1);
-            if ((player_card2 == 1) && (player_card1 != 11)){
+            getPlayerCard();
+            if ((player_cards.get(1) == 1) && (player_cards.get(0) != 11)){
                 player_cards.set(1, 11);
-                player_card2 = player_cards.get(1);
-            }
-            
-            // ---------------------------------------------
-            int card3 = player_cards.get(0);
-            String https3 = "https://deckofcardsapi.com/static/img/";
-            int tmp_convert3 = card3;
-            Collections.shuffle(card_suits);
-            Collections.shuffle(card_faces);
-            if (tmp_convert3 == 10){
-                String card_num = card_faces.get(0);
-                String card_suit = card_suits.get(0);
-                String file_type = ".png";
-                String total_URL = https3 + card_num + card_suit + file_type;
-                System.out.println(total_URL);
-                URL url = new URL(total_URL);
-                BufferedImage bufferedImage = ImageIO.read(url);
-                Image image = bufferedImage.getScaledInstance(110, 160, Image.SCALE_DEFAULT);
-                icon = new ImageIcon(image);
-                player_card_1.setIcon(icon);
-            }
-            else if ((tmp_convert3 == 1) || (tmp_convert3 == 11)){
-                String card_suit = card_suits.get(0);
-                String file_type = ".png";
-                String total_URL = https3 + "A" + card_suit + file_type;
-                System.out.println(total_URL);
-                URL url = new URL(total_URL);
-                BufferedImage bufferedImage = ImageIO.read(url);
-                Image image = bufferedImage.getScaledInstance(110, 160, Image.SCALE_DEFAULT);
-                icon = new ImageIcon(image);
-                player_card_1.setIcon(icon);
-            }
-            else if (tmp_convert3 < 10){
-                String card_num = String.valueOf(tmp_convert3);
-                String card_suit = card_suits.get(0);
-                String file_type = ".png";
-                String total_URL = https3 + card_num + card_suit + file_type;
-                System.out.println(total_URL);
-                URL url = new URL(total_URL);
-                BufferedImage bufferedImage = ImageIO.read(url);
-                Image image = bufferedImage.getScaledInstance(110, 160, Image.SCALE_DEFAULT);
-                icon = new ImageIcon(image);
-                player_card_1.setIcon(icon);
-            }
-            //------------------------------------------------------------
-            
-            int card4 = player_cards.get(1);
-            String https4 = "https://deckofcardsapi.com/static/img/";
-            int tmp_convert4 = card4;
-            Collections.shuffle(card_suits);
-            Collections.shuffle(card_faces);
-            if (tmp_convert4 == 10){
-                String card_num = card_faces.get(0);
-                String card_suit = card_suits.get(0);
-                String file_type = ".png";
-                String total_URL = https4 + card_num + card_suit + file_type;
-                System.out.println(total_URL);
-                URL url = new URL(total_URL);
-                BufferedImage bufferedImage = ImageIO.read(url);
-                Image image = bufferedImage.getScaledInstance(110, 160, Image.SCALE_DEFAULT);
-                icon = new ImageIcon(image);
-                player_card_2.setIcon(icon);
-            }
-            else if ((tmp_convert4 == 1) || (tmp_convert4 == 11)){
-                String card_suit = card_suits.get(0);
-                String file_type = ".png";
-                String total_URL = https4 + "A" + card_suit + file_type;
-                System.out.println(total_URL);
-                URL url = new URL(total_URL);
-                BufferedImage bufferedImage = ImageIO.read(url);
-                Image image = bufferedImage.getScaledInstance(110, 160, Image.SCALE_DEFAULT);
-                icon = new ImageIcon(image);
-                player_card_2.setIcon(icon);
-            }
-            else if (tmp_convert4 < 10){
-                String card_num = String.valueOf(tmp_convert4);
-                String card_suit = card_suits.get(0);
-                String file_type = ".png";
-                String total_URL = https4 + card_num + card_suit + file_type;
-                System.out.println(total_URL);
-                URL url = new URL(total_URL);
-                BufferedImage bufferedImage = ImageIO.read(url);
-                Image image = bufferedImage.getScaledInstance(110, 160, Image.SCALE_DEFAULT);
-                icon = new ImageIcon(image);
-                player_card_2.setIcon(icon);
             }
         
         //----------------------------------------------------------------------
@@ -263,157 +270,17 @@ public class GameScreen extends javax.swing.JFrame {
             for (int number : player_cards){
                 player_sum += number;
             }
-            System.out.println("Player's Starting Cards: " + "\n" + player_card1 + "\n" + player_card2 + "\n" + "Player Current Hand Total: " + player_sum + "\n");
-        } catch (IOException ex) {
-            Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            System.out.println("Player's Starting Cards: " + "\n" + player_cards.get(0) + "\n" + player_cards.get(1) + "\n" + "Player Current Hand Total: " + player_sum + "\n");
     }
     
-    public void findRightCardD(){
-        if (dealerThirdCard != true){
-            dealer_card = dealer_cards.get(2);
-        }
-        else if (dealerFourthCard != true){
-            dealer_card = dealer_cards.get(3);
-        }
-        else if (dealerFifthCard != true){
-            dealer_card = dealer_cards.get(4);
-        }
-    }
-    
-    public void setRightIconD(){
-        if (dealer_card == dealer_cards.get(2)){
-            dealer_card_3.setVisible(true);
-            dealer_card_3.setIcon(icon);
-        }
-        else if (dealer_card == dealer_cards.get(3)){
-            dealer_card_4.setVisible(true);
-            dealer_card_4.setIcon(icon);
-        }
-        else if (dealer_card == dealer_cards.get(4)){
-            dealer_card_5.setVisible(true);
-            dealer_card_5.setIcon(icon);
-        }
-    }
-    
-    public void getDealerCard() throws IOException{
-        dealer_cards.add(DeckResponse.getCardFromDeck());
-        String https = "https://deckofcardsapi.com/static/img/";
-        findRightCardD();
-        Collections.shuffle(card_suits);
-        Collections.shuffle(card_faces);
-        if (dealer_card == 10){
-            String card_num = card_faces.get(0);
-            String card_suit = card_suits.get(0);
-            String file_type = ".png";
-            String total_URL = https + card_num + card_suit + file_type;
-            System.out.println(total_URL);
-            URL url = new URL(total_URL);
-            BufferedImage bufferedImage = ImageIO.read(url);
-            Image image = bufferedImage.getScaledInstance(110, 160, Image.SCALE_DEFAULT);
-            icon = new ImageIcon(image);
-            setRightIconD();
-        }
-        else if ((dealer_card == 1) || (dealer_card == 11)){
-            String card_suit = card_suits.get(0);
-            String file_type = ".png";
-            String total_URL = https + "A" + card_suit + file_type;
-            System.out.println(total_URL);
-            URL url = new URL(total_URL);
-            BufferedImage bufferedImage = ImageIO.read(url);
-            Image image = bufferedImage.getScaledInstance(110, 160, Image.SCALE_DEFAULT);
-            icon = new ImageIcon(image);
-            setRightIconD();
-        }
-        else if (dealer_card < 10){
-            String card_num = String.valueOf(dealer_card);
-            String card_suit = card_suits.get(0);
-            String file_type = ".png";
-            String total_URL = https + card_num + card_suit + file_type;
-            System.out.println(total_URL);
-            URL url = new URL(total_URL);
-            BufferedImage bufferedImage = ImageIO.read(url);
-            Image image = bufferedImage.getScaledInstance(110, 160, Image.SCALE_DEFAULT);
-            icon = new ImageIcon(image);
-            setRightIconD();
-        }
-    }
-    
-    public void findRightCardP(){
-        if (playerThirdCard != true){
-            player_card = player_cards.get(2);
-        }
-        else if (playerFourthCard != true){
-            player_card = player_cards.get(3);
-        }
-        else if (playerFifthCard != true){
-            player_card = player_cards.get(4);
-        }
-    }
-    
-    public void setRightIconP(){
-        if (player_card == player_cards.get(2)){
-            player_card_3.setVisible(true);
-            player_card_3.setIcon(icon);
-        }
-        else if (player_card == player_cards.get(3)){
-            player_card_4.setVisible(true);
-            player_card_4.setIcon(icon);
-        }
-        else if (player_card == player_cards.get(4)){
-            player_card_5.setVisible(true);
-            player_card_5.setIcon(icon);
-        }
-    }
-    
-    public void getPlayerCard() throws IOException{
-        player_cards.add(DeckResponse.getCardFromDeck());
-        String https = "https://deckofcardsapi.com/static/img/";
-        findRightCardP();
-        Collections.shuffle(card_suits);
-        Collections.shuffle(card_faces);
-        if (player_card == 10){
-            String card_num = card_faces.get(0);
-            String card_suit = card_suits.get(0);
-            String file_type = ".png";
-            String total_URL = https + card_num + card_suit + file_type;
-            System.out.println(total_URL);
-            URL url = new URL(total_URL);
-            BufferedImage bufferedImage = ImageIO.read(url);
-            Image image = bufferedImage.getScaledInstance(110, 160, Image.SCALE_DEFAULT);
-            icon = new ImageIcon(image);
-            setRightIconP();
-        }
-        else if ((player_card == 1) || (player_card == 11)){
-            String card_suit = card_suits.get(0);
-            String file_type = ".png";
-            String total_URL = https + "A" + card_suit + file_type;
-            System.out.println(total_URL);
-            URL url = new URL(total_URL);
-            BufferedImage bufferedImage = ImageIO.read(url);
-            Image image = bufferedImage.getScaledInstance(110, 160, Image.SCALE_DEFAULT);
-            icon = new ImageIcon(image);
-            setRightIconP();
-        }
-        else if (player_card < 10){
-            String card_num = String.valueOf(player_card);
-            String card_suit = card_suits.get(0);
-            String file_type = ".png";
-            String total_URL = https + card_num + card_suit + file_type;
-            System.out.println(total_URL);
-            URL url = new URL(total_URL);
-            BufferedImage bufferedImage = ImageIO.read(url);
-            Image image = bufferedImage.getScaledInstance(110, 160, Image.SCALE_DEFAULT);
-            icon = new ImageIcon(image);
-            setRightIconP();
-        }
-    }
-    
-    
-    public void cleanUp(){
+    private void cleanUp(){
+        playerFirstCard = false;
+        playerSecondCard = false;
         playerThirdCard = false;
         playerFourthCard = false;
         playerFifthCard = false;
+        dealerFirstCard = false;
+        dealerSecondCard = false;
         dealerThirdCard = false;
         dealerFourthCard = false;
         dealerFifthCard = false;
@@ -630,28 +497,19 @@ public class GameScreen extends javax.swing.JFrame {
         }
         if (dealer_sum < 17){
             try {
-                if (dealerThirdCard != true){
-                    getDealerCard();
-                    dealerThirdCard = true;
-                }
+                getDealerCard();
                 int dealer_card3 = dealer_cards.get(2);
                 int dealer_sum2 = dealer_sum + dealer_card3;
                 dealer_sum = dealer_sum2;
                 System.out.println("Dealer had to hit." + "\n" + "Dealer new card: " + dealer_card3 + "\n" + "New Dealer Total: " + "\n" + dealer_sum2 + "\n");
                 if (dealer_sum2 < 17){
-                    if (dealerFourthCard != true){
-                        getDealerCard();
-                        dealerFourthCard = true;
-                    }
+                    getDealerCard();
                     int dealer_card4 = dealer_cards.get(3);
                     int dealer_sum3 = dealer_sum2 + dealer_card4;
                     dealer_sum = dealer_sum3;
                     System.out.println("Dealer had to hit." + "\n" + "Dealer new card: " + dealer_card4 + "\n" + "New Dealer Total: " + "\n" + dealer_sum3 + "\n");
                     if (dealer_sum3 < 17){
-                        if (dealerFifthCard != true){
-                            getDealerCard();
-                            dealerFifthCard = true;
-                        }
+                        getDealerCard();
                         int dealer_card5 = dealer_cards.get(4);
                         int dealer_sum4 = dealer_sum3 + dealer_card5;
                         dealer_sum = dealer_sum4;
