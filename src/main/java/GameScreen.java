@@ -38,15 +38,25 @@ public class GameScreen extends javax.swing.JFrame {
     private boolean dealerThirdCard = false;
     private boolean dealerFourthCard = false;
     private boolean dealerFifthCard = false;
+    private boolean playerCard1 = false;
+    private boolean playerCard2 = false;
+    private boolean playerCard3 = false;
+    private boolean playerCard4 = false;
+    private boolean playerCard5 = false;
+    private boolean dealerCard1 = false;
+    private boolean dealerCard2 = false;
+    private boolean dealerCard3 = false;
+    private boolean dealerCard4 = false;
+    private boolean dealerCard5 = false;
     private int tmp_player_card = 0;
     private int tmp_dealer_card = 0;
     private String https = "https://deckofcardsapi.com/static/img/";
     private String file_type = ".png";
     
-    ArrayList<Integer> player_cards = new ArrayList<Integer>();
-    ArrayList<Integer> dealer_cards = new ArrayList<Integer>();
-    ArrayList<String> card_suits = new ArrayList<String>();
-    ArrayList<String> card_faces = new ArrayList<String>();
+    private ArrayList<Integer> player_cards = new ArrayList<Integer>();
+    private ArrayList<Integer> dealer_cards = new ArrayList<Integer>();
+    private ArrayList<String> card_suits = new ArrayList<String>();
+    private ArrayList<String> card_faces = new ArrayList<String>();
     
     private void addSuitsFaces(){
         // ----------------
@@ -87,7 +97,6 @@ public class GameScreen extends javax.swing.JFrame {
     private void createURLandIcon(String card_num, String card_suit) throws IOException{
         try {
             String total_URL = https + card_num + card_suit + file_type;
-            System.out.println(total_URL);
             URL url = new URL(total_URL);
             BufferedImage bufferedImage = ImageIO.read(url);
             Image image = bufferedImage.getScaledInstance(110, 160, Image.SCALE_DEFAULT);
@@ -103,6 +112,7 @@ public class GameScreen extends javax.swing.JFrame {
             dealerFirstCard = true;
         }
         else if (dealerSecondCard != true){
+            
             tmp_dealer_card = dealer_cards.get(1);
             dealerSecondCard = true;
         }
@@ -121,24 +131,29 @@ public class GameScreen extends javax.swing.JFrame {
     }
     
     private void setRightIconD(){
-        if (tmp_dealer_card == dealer_cards.get(0)){
+        if (tmp_dealer_card == dealer_cards.get(0) && (dealerCard1 == false)){
             dealer_card_1.setVisible(true);
+            dealerCard1 = true;
             dealer_card_1.setIcon(icon);
         }
-        else if (tmp_dealer_card == dealer_cards.get(1)){
+        else if (tmp_dealer_card == dealer_cards.get(1) && (dealerCard2 == false)){
             dealer_card_2.setVisible(true);
+            dealerCard2 = true;
             dealer_card_2.setIcon(icon);
         }
-        else if (tmp_dealer_card == dealer_cards.get(2)){
+        else if (tmp_dealer_card == dealer_cards.get(2) && (dealerCard3 == false)){
             dealer_card_3.setVisible(true);
+            dealerCard3 = true;
             dealer_card_3.setIcon(icon);
         }
-        else if (tmp_dealer_card == dealer_cards.get(3)){
+        else if (tmp_dealer_card == dealer_cards.get(3) && (dealerCard4 == false)){
             dealer_card_4.setVisible(true);
+            dealerCard4 = true;
             dealer_card_4.setIcon(icon);
         }
-        else if (tmp_dealer_card == dealer_cards.get(4)){
+        else if (tmp_dealer_card == dealer_cards.get(4) && (dealerCard5 == false)){
             dealer_card_5.setVisible(true);
+            dealerCard5 = true;
             dealer_card_5.setIcon(icon);
         }
     }
@@ -191,24 +206,29 @@ public class GameScreen extends javax.swing.JFrame {
     }
     
     private void setRightIconP(){
-        if (tmp_player_card == player_cards.get(0)){
+        if (tmp_player_card == player_cards.get(0) && (playerCard1 == false)){
             player_card_1.setVisible(true);
+            playerCard1 = true;
             player_card_1.setIcon(icon);
         }
-        else if (tmp_player_card == player_cards.get(1)){
+        else if (tmp_player_card == player_cards.get(1) && (playerCard2 == false)){
             player_card_2.setVisible(true);
+            playerCard2 = true;
             player_card_2.setIcon(icon);
         }
-        else if (tmp_player_card == player_cards.get(2)){
+        else if (tmp_player_card == player_cards.get(2) && (playerCard3 == false)){
             player_card_3.setVisible(true);
+            playerCard3 = true;
             player_card_3.setIcon(icon);
         }
-        else if (tmp_player_card == player_cards.get(3)){
+        else if (tmp_player_card == player_cards.get(3) && (playerCard4 == false)){
             player_card_4.setVisible(true);
+            playerCard4 = true;
             player_card_4.setIcon(icon);
         }
-        else if (tmp_player_card == player_cards.get(4)){
+        else if (tmp_player_card == player_cards.get(4) && (playerCard5 == false)){
             player_card_5.setVisible(true);
+            playerCard5 = true;
             player_card_5.setIcon(icon);
         }
     }
@@ -255,8 +275,6 @@ public class GameScreen extends javax.swing.JFrame {
         
         dealerSum();
 
-        System.out.println("Dealer's Starting Cards: " + "\n" + dealer_cards.get(0) + "\n" + dealer_cards.get(1) + "\n" + "Dealer Current Hand Total: ");
-
         getPlayerCard();
         if (player_cards.get(0) == 1){
             player_cards.set(0, 11);
@@ -267,7 +285,6 @@ public class GameScreen extends javax.swing.JFrame {
         }
         
         playerSum();
-        System.out.println("Player's Starting Cards: " + "\n" + player_cards.get(0) + "\n" + player_cards.get(1) + "\n" + "Player Current Hand Total: ");
     }
     
     private void cleanUp(){
@@ -287,6 +304,16 @@ public class GameScreen extends javax.swing.JFrame {
         dealer_card_3.setVisible(false);
         dealer_card_4.setVisible(false);
         dealer_card_5.setVisible(false);
+        playerCard1 = false;
+        playerCard2 = false;
+        playerCard3 = false;
+        playerCard4 = false;
+        playerCard5 = false;
+        dealerCard1 = false;
+        dealerCard2 = false;
+        dealerCard3 = false;
+        dealerCard4 = false;
+        dealerCard5 = false;
     }
     
     private void newCardsAfterBeatingDealer() throws IOException{
@@ -577,15 +604,8 @@ public class GameScreen extends javax.swing.JFrame {
             Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
         }
             
-        int sum = 0;
-        for (int number : player_cards){
-            sum += number;
-        }
-        System.out.println("Current Cards: ");
-        for (int number : player_cards){
-            System.out.println(number);
-        }
-        System.out.println("Current Hand Total: " + sum + "\n");
+        playerSum();
+        int sum = playerSum();
 
         if (sum == 21)
         {
