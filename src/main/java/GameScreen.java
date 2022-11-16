@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.net.MalformedURLException;
 import java.net.URL;
 import javax.imageio.ImageIO;
 
@@ -65,6 +66,37 @@ public class GameScreen extends javax.swing.JFrame {
         Collections.shuffle(card_faces);
     }
     
+    private int playerSum(){
+        int player_sum = 0;
+        for (int number : player_cards){
+            player_sum += number;
+        }
+        
+        return player_sum;
+    }
+    
+    private int dealerSum(){
+        int dealer_sum = 0;
+        for (int number : dealer_cards){
+            dealer_sum += number;
+        }
+        
+        return dealer_sum;
+    }
+    
+    private void createURLandIcon(String card_num, String card_suit) throws IOException{
+        try {
+            String total_URL = https + card_num + card_suit + file_type;
+            System.out.println(total_URL);
+            URL url = new URL(total_URL);
+            BufferedImage bufferedImage = ImageIO.read(url);
+            Image image = bufferedImage.getScaledInstance(110, 160, Image.SCALE_DEFAULT);
+            icon = new ImageIcon(image);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     private void findRightCardD(){
         if (dealerFirstCard != true){
             tmp_dealer_card = dealer_cards.get(0);
@@ -118,33 +150,19 @@ public class GameScreen extends javax.swing.JFrame {
         if (tmp_dealer_card == 10){
             String card_num = card_faces.get(0);
             String card_suit = card_suits.get(0);
-            String total_URL = https + card_num + card_suit + file_type;
-            System.out.println(total_URL);
-            URL url = new URL(total_URL);
-            BufferedImage bufferedImage = ImageIO.read(url);
-            Image image = bufferedImage.getScaledInstance(110, 160, Image.SCALE_DEFAULT);
-            icon = new ImageIcon(image);
+            createURLandIcon(card_num, card_suit);
             setRightIconD();
         }
         else if ((tmp_dealer_card == 1) || (tmp_dealer_card == 11)){
             String card_suit = card_suits.get(0);
-            String total_URL = https + "A" + card_suit + file_type;
-            System.out.println(total_URL);
-            URL url = new URL(total_URL);
-            BufferedImage bufferedImage = ImageIO.read(url);
-            Image image = bufferedImage.getScaledInstance(110, 160, Image.SCALE_DEFAULT);
-            icon = new ImageIcon(image);
+            String card_num = "A";
+            createURLandIcon(card_num, card_suit);
             setRightIconD();
         }
         else if (tmp_dealer_card < 10){
             String card_num = String.valueOf(tmp_dealer_card);
             String card_suit = card_suits.get(0);
-            String total_URL = https + card_num + card_suit + file_type;
-            System.out.println(total_URL);
-            URL url = new URL(total_URL);
-            BufferedImage bufferedImage = ImageIO.read(url);
-            Image image = bufferedImage.getScaledInstance(110, 160, Image.SCALE_DEFAULT);
-            icon = new ImageIcon(image);
+            createURLandIcon(card_num, card_suit);
             setRightIconD();
         }
     }
@@ -203,74 +221,53 @@ public class GameScreen extends javax.swing.JFrame {
         if (tmp_player_card == 10){
             String card_num = card_faces.get(0);
             String card_suit = card_suits.get(0);
-            String total_URL = https + card_num + card_suit + file_type;
-            System.out.println(total_URL);
-            URL url = new URL(total_URL);
-            BufferedImage bufferedImage = ImageIO.read(url);
-            Image image = bufferedImage.getScaledInstance(110, 160, Image.SCALE_DEFAULT);
-            icon = new ImageIcon(image);
+            createURLandIcon(card_num, card_suit);
             setRightIconP();
         }
         else if ((tmp_player_card == 1) || (tmp_player_card == 11)){
             String card_suit = card_suits.get(0);
-            String total_URL = https + "A" + card_suit + file_type;
-            System.out.println(total_URL);
-            URL url = new URL(total_URL);
-            BufferedImage bufferedImage = ImageIO.read(url);
-            Image image = bufferedImage.getScaledInstance(110, 160, Image.SCALE_DEFAULT);
-            icon = new ImageIcon(image);
+            String card_num = "A";
+            createURLandIcon(card_num, card_suit);
             setRightIconP();
         }
         else if (tmp_player_card < 10){
             String card_num = String.valueOf(tmp_player_card);
             String card_suit = card_suits.get(0);
-            String total_URL = https + card_num + card_suit + file_type;
-            System.out.println(total_URL);
-            URL url = new URL(total_URL);
-            BufferedImage bufferedImage = ImageIO.read(url);
-            Image image = bufferedImage.getScaledInstance(110, 160, Image.SCALE_DEFAULT);
-            icon = new ImageIcon(image);
+            createURLandIcon(card_num, card_suit);
             setRightIconP();
         }
     }
     
     private void newSetOfCards() throws IOException{
+        cleanUp();
+        dealer_cards.clear();
+        player_cards.clear();
+        addSuitsFaces();
+
+        getDealerCard();
+        if (dealer_cards.get(0) == 1){
+            dealer_cards.set(0, 11);
+        }
+        getDealerCard();
+        if ((dealer_cards.get(1) == 1) && (dealer_cards.get(0) != 11)){
+            dealer_cards.set(1, 11);
+        }
         
-            addSuitsFaces();
+        dealerSum();
+
+        System.out.println("Dealer's Starting Cards: " + "\n" + dealer_cards.get(0) + "\n" + dealer_cards.get(1) + "\n" + "Dealer Current Hand Total: ");
+
+        getPlayerCard();
+        if (player_cards.get(0) == 1){
+            player_cards.set(0, 11);
+        }
+        getPlayerCard();
+        if ((player_cards.get(1) == 1) && (player_cards.get(0) != 11)){
+            player_cards.set(1, 11);
+        }
         
-            getDealerCard();
-            if (dealer_cards.get(0) == 1){
-                dealer_cards.set(0, 11);
-            }
-            getDealerCard();
-            if ((dealer_cards.get(1) == 1) && (dealer_cards.get(0) != 11)){
-                dealer_cards.set(1, 11);
-            }
-        
-            //----------------------------------------------------------------------
-            
-            int dealer_sum = 0;
-            for (int number : dealer_cards){
-                dealer_sum += number;
-            }
-            System.out.println("Dealer's Starting Cards: " + "\n" + dealer_cards.get(0) + "\n" + dealer_cards.get(1) + "\n" + "Dealer Current Hand Total: " + dealer_sum + "\n");
-            
-            getPlayerCard();
-            if (player_cards.get(0) == 1){
-                player_cards.set(0, 11);
-            }
-            getPlayerCard();
-            if ((player_cards.get(1) == 1) && (player_cards.get(0) != 11)){
-                player_cards.set(1, 11);
-            }
-        
-        //----------------------------------------------------------------------
-        
-            int player_sum = 0;
-            for (int number : player_cards){
-                player_sum += number;
-            }
-            System.out.println("Player's Starting Cards: " + "\n" + player_cards.get(0) + "\n" + player_cards.get(1) + "\n" + "Player Current Hand Total: " + player_sum + "\n");
+        playerSum();
+        System.out.println("Player's Starting Cards: " + "\n" + player_cards.get(0) + "\n" + player_cards.get(1) + "\n" + "Player Current Hand Total: ");
     }
     
     private void cleanUp(){
@@ -306,9 +303,6 @@ public class GameScreen extends javax.swing.JFrame {
         JOptionPane.showMessageDialog
         (null,"You lost to the dealer", "", JOptionPane.OK_OPTION);
 
-        cleanUp();
-        dealer_cards.clear();
-        player_cards.clear();
         newSetOfCards();
     }
     
@@ -316,9 +310,6 @@ public class GameScreen extends javax.swing.JFrame {
         JOptionPane.showMessageDialog
         (null,"BLACKJACK", "", JOptionPane.OK_OPTION);
 
-        cleanUp();
-        dealer_cards.clear();
-        player_cards.clear();
         newSetOfCards();
     }
     
@@ -326,9 +317,6 @@ public class GameScreen extends javax.swing.JFrame {
         JOptionPane.showMessageDialog
         (null,"DEALER HIT BLACKJACK", "", JOptionPane.OK_OPTION);
 
-        cleanUp();
-        dealer_cards.clear();
-        player_cards.clear();
         newSetOfCards();
     }
     
@@ -336,9 +324,6 @@ public class GameScreen extends javax.swing.JFrame {
         JOptionPane.showMessageDialog
         (null,"It's a push", "", JOptionPane.OK_OPTION);
 
-        cleanUp();
-        dealer_cards.clear();
-        player_cards.clear();
         newSetOfCards();
     }
     
@@ -487,15 +472,10 @@ public class GameScreen extends javax.swing.JFrame {
 
     private void stand_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stand_buttonActionPerformed
 
-        int player_sum = 0;
-        for (int number : player_cards){
-            player_sum += number;
-        }
-        int dealer_sum = 0;
-        for (int number: dealer_cards){
-            dealer_sum += number;
-        }
-        if (dealer_sum < 17){
+        playerSum();
+        dealerSum();
+        int dealer_sum = dealerSum();
+        if (dealerSum() < 17){
             try {
                 getDealerCard();
                 int dealer_card3 = dealer_cards.get(2);
@@ -520,7 +500,7 @@ public class GameScreen extends javax.swing.JFrame {
                 Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        if (player_sum == 21)
+        if (playerSum() == 21)
         {
             try {
                 newCardsAfterPlayerHitBlackjack();
@@ -536,7 +516,7 @@ public class GameScreen extends javax.swing.JFrame {
                 Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        else if ((dealer_sum == player_sum))
+        else if ((dealer_sum == playerSum()))
         {
             try {
                newCardsAfterPush();
@@ -544,7 +524,7 @@ public class GameScreen extends javax.swing.JFrame {
                 Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        else if ((dealer_sum > 21) && (player_sum <= 21))
+        else if ((dealer_sum > 21) && (playerSum() <= 21))
         {
             try {
                 newCardsAfterBeatingDealer();
@@ -552,7 +532,7 @@ public class GameScreen extends javax.swing.JFrame {
                 Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        else if ((player_sum < 21) && (dealer_sum < 21) && (player_sum > dealer_sum))
+        else if ((playerSum() < 21) && (dealer_sum < 21) && (playerSum() > dealer_sum))
         {
             try {
                 newCardsAfterBeatingDealer();
@@ -560,7 +540,7 @@ public class GameScreen extends javax.swing.JFrame {
                 Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        else if ((dealer_sum < 21) && (player_sum < 21) && (dealer_sum > player_sum))
+        else if ((dealer_sum < 21) && (playerSum() < 21) && (dealer_sum > playerSum()))
         {
             try { 
                 newCardsAfterLosingToDealer();
@@ -568,7 +548,7 @@ public class GameScreen extends javax.swing.JFrame {
                 Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        else if ((player_sum > 21) && (dealer_sum <= 21))
+        else if ((playerSum() > 21) && (dealer_sum <= 21))
         {
             try {
                 newCardsAfterLosingToDealer();
