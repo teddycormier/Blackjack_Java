@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import javax.imageio.ImageIO;
@@ -48,9 +49,13 @@ public class GameScreen extends javax.swing.JFrame {
     private boolean dealerCard3 = false;
     private boolean dealerCard4 = false;
     private boolean dealerCard5 = false;
+    private boolean closedHanded = false;
     private int tmp_player_card = 0;
     private int tmp_dealer_card = 0;
+    private int dealer_score = 0;
+    private int player_score = 0;
     private String https = "https://deckofcardsapi.com/static/img/";
+    private String closed_handed_icon = "/Users/teddycormier/NetBeansProjects/Blackjack/src/main/resources/backcard.png";
     private String file_type = ".png";
     
     private ArrayList<Integer> player_cards = new ArrayList<Integer>();
@@ -69,6 +74,16 @@ public class GameScreen extends javax.swing.JFrame {
         card_faces.add("Q");
         card_faces.add("K");
         // ----------------
+    }
+    
+    private void dealerScoreChange(){
+        dealer_score = dealer_score + 1;
+        dealer_wins.setText(Integer.toString(dealer_score));
+    }
+    
+    private void playerScoreChange(){
+        player_score = player_score + 1;
+        player_wins.setText(Integer.toString(player_score));
     }
     
     private void shuffleCollections(){
@@ -112,7 +127,6 @@ public class GameScreen extends javax.swing.JFrame {
             dealerFirstCard = true;
         }
         else if (dealerSecondCard != true){
-            
             tmp_dealer_card = dealer_cards.get(1);
             dealerSecondCard = true;
         }
@@ -233,7 +247,6 @@ public class GameScreen extends javax.swing.JFrame {
         }
     }
     
-    
     private void getPlayerCard() throws IOException{
         player_cards.add(DeckResponse.getCardFromDeck());
         findRightCardP();
@@ -313,43 +326,85 @@ public class GameScreen extends javax.swing.JFrame {
         dealerCard2 = false;
         dealerCard3 = false;
         dealerCard4 = false;
-        dealerCard5 = false;
+        dealerCard5 = false;   
     }
     
     private void newCardsAfterBeatingDealer() throws IOException{
-        JOptionPane.showMessageDialog
-        (null,"You beat the dealer", "", JOptionPane.OK_OPTION);
+        if(closedHanded == true){
+            closed_handed_card.setVisible(false);
+            JOptionPane.showMessageDialog
+            (null,"You beat the dealer", "", JOptionPane.OK_OPTION);
+            closed_handed_card.setVisible(true);
+        }
+        else {
+            JOptionPane.showMessageDialog
+            (null,"You beat the dealer", "", JOptionPane.OK_OPTION);
+        }
 
-        cleanUp();
-        dealer_cards.clear();
-        player_cards.clear();
+        playerScoreChange();
         newSetOfCards();
     }
     
     private void newCardsAfterLosingToDealer() throws IOException{
-        JOptionPane.showMessageDialog
-        (null,"You lost to the dealer", "", JOptionPane.OK_OPTION);
-
+        if(closedHanded == true){
+            closed_handed_card.setVisible(false);
+            JOptionPane.showMessageDialog
+            (null,"You lost to the dealer", "", JOptionPane.OK_OPTION);
+            closed_handed_card.setVisible(true);
+        }
+        else{
+            JOptionPane.showMessageDialog
+            (null,"You lost to the dealer", "", JOptionPane.OK_OPTION);
+        }
+        
+        dealerScoreChange();
         newSetOfCards();
     }
     
     private void newCardsAfterPlayerHitBlackjack() throws IOException{
-        JOptionPane.showMessageDialog
-        (null,"BLACKJACK", "", JOptionPane.OK_OPTION);
+        if(closedHanded == true){
+            closed_handed_card.setVisible(false);
+            JOptionPane.showMessageDialog
+            (null,"BLACKJACK", "", JOptionPane.OK_OPTION);
+            closed_handed_card.setVisible(true);
+        }
+        else{
+            JOptionPane.showMessageDialog
+            (null,"BLACKJACK", "", JOptionPane.OK_OPTION);
+        }
 
+        playerScoreChange();
         newSetOfCards();
     }
     
     private void newCardsAfterDealerHitBlackjack() throws IOException{
-        JOptionPane.showMessageDialog
-        (null,"DEALER HIT BLACKJACK", "", JOptionPane.OK_OPTION);
+        if(closedHanded == true){
+            closed_handed_card.setVisible(false);
+            JOptionPane.showMessageDialog
+            (null,"DEALER HIT BLACKJACK", "", JOptionPane.OK_OPTION);
+            closed_handed_card.setVisible(true);
+        }
+        else{
+            JOptionPane.showMessageDialog
+            (null,"DEALER HIT BLACKJACK", "", JOptionPane.OK_OPTION);
+        }
 
+        dealerScoreChange();
         newSetOfCards();
     }
     
-    private void newCardsAfterPush() throws IOException{
-        JOptionPane.showMessageDialog
-        (null,"It's a push", "", JOptionPane.OK_OPTION);
+    private void newCardsAfterPush() throws IOException{  
+        if(closedHanded == true){
+            closed_handed_card.setVisible(false);
+            JOptionPane.showMessageDialog
+            (null,"It's a push", "", JOptionPane.OK_OPTION);
+            closed_handed_card.setVisible(true);
+        }
+        else{
+            JOptionPane.showMessageDialog
+            (null,"It's a push", "", JOptionPane.OK_OPTION);
+        }
+
 
         newSetOfCards();
     }
@@ -370,9 +425,10 @@ public class GameScreen extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        closed_handed_card = new javax.swing.JLabel();
         stand_button = new javax.swing.JButton();
         hit_button = new javax.swing.JButton();
-        button_rules = new javax.swing.JButton();
+        closed_handed = new javax.swing.JButton();
         dealer_card_1 = new javax.swing.JLabel();
         dealer_card_2 = new javax.swing.JLabel();
         dealer_card_3 = new javax.swing.JLabel();
@@ -385,13 +441,22 @@ public class GameScreen extends javax.swing.JFrame {
         player_card_5 = new javax.swing.JLabel();
         players_hand_onscreen_text = new javax.swing.JLabel();
         dealers_hand_onscreen_text1 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        dealer_wins_to_change = new javax.swing.JLabel();
+        dealer_wins = new javax.swing.JLabel();
+        player_wins_label = new javax.swing.JLabel();
+        player_wins = new javax.swing.JLabel();
+        button_rules1 = new javax.swing.JButton();
+        background_label = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GAME");
         setBackground(new java.awt.Color(0, 0, 0));
         setMinimumSize(new java.awt.Dimension(1000, 500));
         getContentPane().setLayout(null);
+
+        closed_handed_card.setForeground(new java.awt.Color(255, 255, 255));
+        getContentPane().add(closed_handed_card);
+        closed_handed_card.setBounds(40, 40, 110, 160);
 
         stand_button.setBackground(new java.awt.Color(204, 204, 204));
         stand_button.setFont(new java.awt.Font("Times New Roman", 0, 13)); // NOI18N
@@ -423,20 +488,20 @@ public class GameScreen extends javax.swing.JFrame {
         getContentPane().add(hit_button);
         hit_button.setBounds(890, 250, 68, 22);
 
-        button_rules.setBackground(new java.awt.Color(204, 204, 204));
-        button_rules.setFont(new java.awt.Font("Times New Roman", 3, 12)); // NOI18N
-        button_rules.setText("Rules");
-        button_rules.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        button_rules.setMaximumSize(new java.awt.Dimension(30, 30));
-        button_rules.setMinimumSize(new java.awt.Dimension(30, 30));
-        button_rules.setPreferredSize(new java.awt.Dimension(30, 30));
-        button_rules.addActionListener(new java.awt.event.ActionListener() {
+        closed_handed.setBackground(new java.awt.Color(204, 204, 204));
+        closed_handed.setFont(new java.awt.Font("Times New Roman", 3, 12)); // NOI18N
+        closed_handed.setText("Play Closed Handed");
+        closed_handed.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        closed_handed.setMaximumSize(new java.awt.Dimension(30, 30));
+        closed_handed.setMinimumSize(new java.awt.Dimension(30, 30));
+        closed_handed.setPreferredSize(new java.awt.Dimension(30, 30));
+        closed_handed.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_rulesActionPerformed(evt);
+                closed_handedActionPerformed(evt);
             }
         });
-        getContentPane().add(button_rules);
-        button_rules.setBounds(900, 10, 60, 20);
+        getContentPane().add(closed_handed);
+        closed_handed.setBounds(780, 10, 110, 20);
 
         dealer_card_1.setForeground(new java.awt.Color(255, 255, 255));
         getContentPane().add(dealer_card_1);
@@ -490,9 +555,48 @@ public class GameScreen extends javax.swing.JFrame {
         getContentPane().add(dealers_hand_onscreen_text1);
         dealers_hand_onscreen_text1.setBounds(10, 10, 200, 21);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sunset.png"))); // NOI18N
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(0, 0, 1000, 500);
+        dealer_wins_to_change.setFont(new java.awt.Font("Times New Roman", 3, 14)); // NOI18N
+        dealer_wins_to_change.setForeground(new java.awt.Color(255, 255, 255));
+        dealer_wins_to_change.setText("WINS");
+        getContentPane().add(dealer_wins_to_change);
+        dealer_wins_to_change.setBounds(890, 80, 40, 20);
+
+        dealer_wins.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
+        dealer_wins.setForeground(new java.awt.Color(255, 255, 255));
+        dealer_wins.setText("0");
+        getContentPane().add(dealer_wins);
+        dealer_wins.setBounds(900, 120, 60, 50);
+
+        player_wins_label.setFont(new java.awt.Font("Times New Roman", 3, 14)); // NOI18N
+        player_wins_label.setForeground(new java.awt.Color(255, 255, 255));
+        player_wins_label.setText("WINS");
+        getContentPane().add(player_wins_label);
+        player_wins_label.setBounds(890, 320, 40, 20);
+
+        player_wins.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
+        player_wins.setForeground(new java.awt.Color(255, 255, 255));
+        player_wins.setText("0");
+        getContentPane().add(player_wins);
+        player_wins.setBounds(910, 360, 60, 50);
+
+        button_rules1.setBackground(new java.awt.Color(204, 204, 204));
+        button_rules1.setFont(new java.awt.Font("Times New Roman", 3, 12)); // NOI18N
+        button_rules1.setText("Rules");
+        button_rules1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        button_rules1.setMaximumSize(new java.awt.Dimension(30, 30));
+        button_rules1.setMinimumSize(new java.awt.Dimension(30, 30));
+        button_rules1.setPreferredSize(new java.awt.Dimension(30, 30));
+        button_rules1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_rules1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(button_rules1);
+        button_rules1.setBounds(900, 10, 60, 20);
+
+        background_label.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sunset.png"))); // NOI18N
+        getContentPane().add(background_label);
+        background_label.setBounds(0, 0, 1000, 500);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -508,19 +612,16 @@ public class GameScreen extends javax.swing.JFrame {
                 int dealer_card3 = dealer_cards.get(2);
                 int dealer_sum2 = dealer_sum + dealer_card3;
                 dealer_sum = dealer_sum2;
-                System.out.println("Dealer had to hit." + "\n" + "Dealer new card: " + dealer_card3 + "\n" + "New Dealer Total: " + "\n" + dealer_sum2 + "\n");
                 if (dealer_sum2 < 17){
                     getDealerCard();
                     int dealer_card4 = dealer_cards.get(3);
                     int dealer_sum3 = dealer_sum2 + dealer_card4;
                     dealer_sum = dealer_sum3;
-                    System.out.println("Dealer had to hit." + "\n" + "Dealer new card: " + dealer_card4 + "\n" + "New Dealer Total: " + "\n" + dealer_sum3 + "\n");
                     if (dealer_sum3 < 17){
                         getDealerCard();
                         int dealer_card5 = dealer_cards.get(4);
                         int dealer_sum4 = dealer_sum3 + dealer_card5;
                         dealer_sum = dealer_sum4;
-                        System.out.println("Dealer had to hit." + "\n" + "Dealer new card: " + dealer_card5 + "\n" + "New Dealer Total: " + "\n" + dealer_sum4 + "\n");
                     }
                 }
             } catch (IOException ex) {
@@ -626,10 +727,29 @@ public class GameScreen extends javax.swing.JFrame {
         
     }//GEN-LAST:event_hit_buttonActionPerformed
 
-    private void button_rulesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_rulesActionPerformed
+    private void closed_handedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closed_handedActionPerformed
+        try {
+            BufferedImage img = ImageIO.read(new File("/Users/teddycormier/NetBeansProjects/Blackjack/src/main/resources/backcard.png"));
+            Image image = img.getScaledInstance(110, 160, Image.SCALE_DEFAULT);
+            ImageIcon icon = new ImageIcon(img);
+            if (closedHanded == false){
+                closedHanded = true;
+                closed_handed_card.setVisible(true);
+                closed_handed_card.setIcon(icon);
+            }
+            else if (closedHanded == true){
+                closed_handed_card.setVisible(false);
+                closedHanded = false;
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_closed_handedActionPerformed
+
+    private void button_rules1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_rules1ActionPerformed
         rulesScreen.setLocationRelativeTo(null);
         rulesScreen.setVisible(true);
-    }//GEN-LAST:event_button_rulesActionPerformed
+    }//GEN-LAST:event_button_rules1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -661,20 +781,26 @@ public class GameScreen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton button_rules;
+    private javax.swing.JLabel background_label;
+    private javax.swing.JButton button_rules1;
+    private javax.swing.JButton closed_handed;
+    private javax.swing.JLabel closed_handed_card;
     private javax.swing.JLabel dealer_card_1;
     private javax.swing.JLabel dealer_card_2;
     private javax.swing.JLabel dealer_card_3;
     private javax.swing.JLabel dealer_card_4;
     private javax.swing.JLabel dealer_card_5;
+    private javax.swing.JLabel dealer_wins;
+    private javax.swing.JLabel dealer_wins_to_change;
     private javax.swing.JLabel dealers_hand_onscreen_text1;
     private javax.swing.JButton hit_button;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel player_card_1;
     private javax.swing.JLabel player_card_2;
     private javax.swing.JLabel player_card_3;
     private javax.swing.JLabel player_card_4;
     private javax.swing.JLabel player_card_5;
+    private javax.swing.JLabel player_wins;
+    private javax.swing.JLabel player_wins_label;
     private javax.swing.JLabel players_hand_onscreen_text;
     private javax.swing.JButton stand_button;
     // End of variables declaration//GEN-END:variables
