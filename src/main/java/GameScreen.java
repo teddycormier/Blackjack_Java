@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 import javax.imageio.ImageIO;
 
 /*
@@ -53,6 +54,11 @@ public class GameScreen extends javax.swing.JFrame {
     private int tmp_dealer_card = 0;
     private int dealer_score = 0;
     private int player_score = 0;
+    private String you_win_png = "youwin.png";
+    private String push_png = "push.png";
+    private String you_lost_png = "youjustlost.png";
+    private String you_hit_blackjack_png = "blackjack.png";
+    private String directory = "/Users/teddycormier/NetBeansProjects/Blackjack/src/main/resources/";
     private String https = "https://deckofcardsapi.com/static/img/";
     private String closed_handed_icon = "/Users/teddycormier/NetBeansProjects/Blackjack/src/main/resources/backcard.png";
     private String file_type = ".png";
@@ -124,6 +130,14 @@ public class GameScreen extends javax.swing.JFrame {
         }
     }
     
+    private Image messageIcon(String image_file) throws IOException{
+        
+            BufferedImage img = ImageIO.read(new File(directory + image_file));
+            Image image = img.getScaledInstance(180, 180, Image.SCALE_DEFAULT);
+            
+            return image;
+    }
+    
     private void findRightCardD(){
         if (dealerFirstCard != true){
             tmp_dealer_card = dealer_cards.get(0);
@@ -147,7 +161,7 @@ public class GameScreen extends javax.swing.JFrame {
         }
     }
     
-    private void setRightIconD(){
+    private void setRightIconD() throws InterruptedException{
         if (tmp_dealer_card == dealer_cards.get(0) && (dealerCard1 == false)){
             dealer_card_1.setVisible(true);
             dealerCard1 = true;
@@ -175,7 +189,7 @@ public class GameScreen extends javax.swing.JFrame {
         }
     }
     
-    private void getDealerCard() throws IOException{
+    private void getDealerCard() throws IOException, InterruptedException{
         dealer_cards.add(DeckResponse.getCardFromDeck());
         findRightCardD();
         shuffleCollections();
@@ -250,7 +264,7 @@ public class GameScreen extends javax.swing.JFrame {
         }
     }
     
-    private void getPlayerCard() throws IOException{
+    private void getPlayerCard() throws IOException, InterruptedException{
         player_cards.add(DeckResponse.getCardFromDeck());
         findRightCardP();
         shuffleCollections();
@@ -274,7 +288,7 @@ public class GameScreen extends javax.swing.JFrame {
         }
     }
     
-    private void newSetOfCards() throws IOException{
+    private void newSetOfCards() throws IOException, InterruptedException{
         
         cleanUp();
         dealer_cards.clear();
@@ -333,87 +347,130 @@ public class GameScreen extends javax.swing.JFrame {
         dealerCard5 = false;   
     }
     
-        private void newCardsAfterBeatingDealer() throws IOException{
+    private void newCardsAfterBeatingDealer() throws IOException, InterruptedException{
         if(StartScreen.closedHanded == true){
-            closed_handed_card.setVisible(false);
-            JOptionPane.showMessageDialog
-            (null,"You beat the dealer", "", JOptionPane.OK_OPTION);
-            closed_handed_card.setVisible(true);
+            if (playerSum() > dealerSum()){
+                closed_handed_card.setVisible(false);
+                JOptionPane.showMessageDialog
+                (null,"You beat the dealer. You had a higher total.", "YOU WIN", JOptionPane.INFORMATION_MESSAGE, 
+                        new ImageIcon(messageIcon(you_win_png)));
+                closed_handed_card.setVisible(true);
+            }
+            else if (dealerSum() > 21){
+                closed_handed_card.setVisible(false);
+                JOptionPane.showMessageDialog
+                (null,"You beat the dealer. The dealer busted.", "YOU WIN", JOptionPane.INFORMATION_MESSAGE, 
+                        new ImageIcon(messageIcon(you_win_png)));
+                closed_handed_card.setVisible(true);
+            }
         }
         else {
-            JOptionPane.showMessageDialog
-            (null,"You beat the dealer", "", JOptionPane.OK_OPTION);
+            if (playerSum() > dealerSum()){
+                JOptionPane.showMessageDialog
+                (null,"You beat the dealer. You had a higher total.", "YOU WIN", JOptionPane.INFORMATION_MESSAGE, 
+                        new ImageIcon(messageIcon(you_win_png)));
+            }
+            else if (dealerSum() > 21){
+                JOptionPane.showMessageDialog
+                (null,"You beat the dealer. The dealer busted.", "YOU WIN", JOptionPane.INFORMATION_MESSAGE, 
+                        new ImageIcon(messageIcon(you_win_png)));
+            }
         }
 
         playerScoreChange();
         newSetOfCards();
     }
     
-    private void newCardsAfterLosingToDealer() throws IOException{
+    private void newCardsAfterLosingToDealer() throws IOException, InterruptedException{
         if(StartScreen.closedHanded == true){
-            closed_handed_card.setVisible(false);
-            JOptionPane.showMessageDialog
-            (null,"You lost to the dealer", "", JOptionPane.OK_OPTION);
-            closed_handed_card.setVisible(true);
+            if (dealerSum() > playerSum()){
+                closed_handed_card.setVisible(false);
+                JOptionPane.showMessageDialog
+                (null,"You lost to the dealer. The dealer had a higher total.", "YOU LOSE", JOptionPane.INFORMATION_MESSAGE, 
+                        new ImageIcon(messageIcon(you_lost_png)));
+                closed_handed_card.setVisible(true);
+            }
+            else if (playerSum() > 21){
+                closed_handed_card.setVisible(false);
+                JOptionPane.showMessageDialog
+                (null,"You lost to the dealer. You busted.", "YOU LOSE", JOptionPane.INFORMATION_MESSAGE, 
+                        new ImageIcon(messageIcon(you_lost_png)));
+                closed_handed_card.setVisible(true);
+            }
+            
         }
         else{
-            JOptionPane.showMessageDialog
-            (null,"You lost to the dealer", "", JOptionPane.OK_OPTION);
+            if (dealerSum() > playerSum()){
+                JOptionPane.showMessageDialog
+                (null,"You lost to the dealer. The dealer had a higher total.", "YOU LOSE", JOptionPane.INFORMATION_MESSAGE, 
+                        new ImageIcon(messageIcon(you_lost_png)));
+            }
+            else if (playerSum() > 21){
+                JOptionPane.showMessageDialog
+                (null,"You lost to the dealer. You busted.", "YOU LOSE", JOptionPane.INFORMATION_MESSAGE, 
+                        new ImageIcon(messageIcon(you_lost_png)));
+            }
         }
         
         dealerScoreChange();
         newSetOfCards();
     }
     
-    private void newCardsAfterPlayerHitBlackjack() throws IOException{
+    private void newCardsAfterPlayerHitBlackjack() throws IOException, InterruptedException{
         if(StartScreen.closedHanded == true){
             closed_handed_card.setVisible(false);
             JOptionPane.showMessageDialog
-            (null,"BLACKJACK", "", JOptionPane.OK_OPTION);
+            (null,"BLACKJACK", "YOU WIN", JOptionPane.INFORMATION_MESSAGE, 
+                    new ImageIcon(messageIcon(you_hit_blackjack_png)));
             closed_handed_card.setVisible(true);
         }
         else{
             JOptionPane.showMessageDialog
-            (null,"BLACKJACK", "", JOptionPane.OK_OPTION);
+            (null,"BLACKJACK", "YOU WIN", JOptionPane.INFORMATION_MESSAGE, 
+                    new ImageIcon(messageIcon(you_hit_blackjack_png)));
         }
 
         playerScoreChange();
         newSetOfCards();
     }
     
-    private void newCardsAfterDealerHitBlackjack() throws IOException{
+    private void newCardsAfterDealerHitBlackjack() throws IOException, InterruptedException{
         if(StartScreen.closedHanded == true){
             closed_handed_card.setVisible(false);
             JOptionPane.showMessageDialog
-            (null,"DEALER HIT BLACKJACK", "", JOptionPane.OK_OPTION);
+            (null,"DEALER HIT BLACKJACK", "DEALER WINS", JOptionPane.INFORMATION_MESSAGE, 
+                    new ImageIcon(messageIcon(you_lost_png)));
             closed_handed_card.setVisible(true);
         }
         else{
             JOptionPane.showMessageDialog
-            (null,"DEALER HIT BLACKJACK", "", JOptionPane.OK_OPTION);
+            (null,"DEALER HIT BLACKJACK", "DEALER WINS", JOptionPane.INFORMATION_MESSAGE, 
+                    new ImageIcon(messageIcon(you_lost_png)));
         }
 
         dealerScoreChange();
         newSetOfCards();
     }
     
-    private void newCardsAfterPush() throws IOException{  
+    private void newCardsAfterPush() throws IOException, InterruptedException{
         if(StartScreen.closedHanded == true){
             closed_handed_card.setVisible(false);
             JOptionPane.showMessageDialog
-            (null,"It's a push", "", JOptionPane.OK_OPTION);
+            (null,"It's a push", "PUSH", JOptionPane.INFORMATION_MESSAGE, 
+                    new ImageIcon(messageIcon(push_png)));
             closed_handed_card.setVisible(true);
         }
         else{
             JOptionPane.showMessageDialog
-            (null,"It's a push", "", JOptionPane.OK_OPTION);
+            (null,"It's a push", "PUSH", JOptionPane.INFORMATION_MESSAGE, 
+                    new ImageIcon(messageIcon(push_png)));
         }
 
 
         newSetOfCards();
     }
     
-    public GameScreen() throws IOException {
+    public GameScreen() throws IOException, InterruptedException {
         
         initComponents();
         
@@ -552,9 +609,9 @@ public class GameScreen extends javax.swing.JFrame {
 
         dealer_wins_to_change.setFont(new java.awt.Font("Times New Roman", 3, 14)); // NOI18N
         dealer_wins_to_change.setForeground(new java.awt.Color(255, 255, 255));
-        dealer_wins_to_change.setText("LOSES");
+        dealer_wins_to_change.setText("LOSSES");
         getContentPane().add(dealer_wins_to_change);
-        dealer_wins_to_change.setBounds(890, 80, 50, 20);
+        dealer_wins_to_change.setBounds(890, 80, 60, 20);
 
         dealer_wins.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
         dealer_wins.setForeground(new java.awt.Color(255, 255, 255));
@@ -653,6 +710,8 @@ public class GameScreen extends javax.swing.JFrame {
                 }
             } catch (IOException ex) {
                 Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         if (playerSum() == 21)
@@ -660,6 +719,8 @@ public class GameScreen extends javax.swing.JFrame {
             try {
                 newCardsAfterPlayerHitBlackjack();
             } catch (IOException ex) {
+                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
                 Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -669,6 +730,8 @@ public class GameScreen extends javax.swing.JFrame {
                 newCardsAfterDealerHitBlackjack();
             } catch (IOException ex) {
                 Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         else if ((dealer_sum == playerSum()))
@@ -676,6 +739,8 @@ public class GameScreen extends javax.swing.JFrame {
             try {
                newCardsAfterPush();
             } catch (IOException ex) {
+                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
                 Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -685,6 +750,8 @@ public class GameScreen extends javax.swing.JFrame {
                 newCardsAfterBeatingDealer();
             } catch (IOException ex) {
                 Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         else if ((playerSum() < 21) && (dealer_sum < 21) && (playerSum() > dealer_sum))
@@ -692,6 +759,8 @@ public class GameScreen extends javax.swing.JFrame {
             try {
                 newCardsAfterBeatingDealer();
             } catch (IOException ex) {
+                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
                 Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -701,6 +770,8 @@ public class GameScreen extends javax.swing.JFrame {
                 newCardsAfterLosingToDealer();
             } catch (IOException ex) {
                 Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         else if ((playerSum() > 21) && (dealer_sum <= 21))
@@ -708,6 +779,8 @@ public class GameScreen extends javax.swing.JFrame {
             try {
                 newCardsAfterLosingToDealer();
             } catch (IOException ex) {
+                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
                 Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -730,6 +803,8 @@ public class GameScreen extends javax.swing.JFrame {
             }
         } catch (IOException ex) {
             Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
         }
             
         playerSum();
@@ -741,6 +816,8 @@ public class GameScreen extends javax.swing.JFrame {
                 newCardsAfterPlayerHitBlackjack();
             } catch (IOException ex) {
                 Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         if (sum > 21)
@@ -748,6 +825,8 @@ public class GameScreen extends javax.swing.JFrame {
             try {
                 newCardsAfterLosingToDealer();
             } catch (IOException ex) {
+                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
                 Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
