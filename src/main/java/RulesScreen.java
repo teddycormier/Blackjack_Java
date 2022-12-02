@@ -38,6 +38,7 @@ public class RulesScreen extends javax.swing.JFrame {
 
         setTitle("RULES");
         setBounds(new java.awt.Rectangle(0, 25, 509, 340));
+        setMaximumSize(new java.awt.Dimension(1000, 500));
         setMinimumSize(new java.awt.Dimension(1000, 500));
         getContentPane().setLayout(null);
 
@@ -45,6 +46,7 @@ public class RulesScreen extends javax.swing.JFrame {
         back_button.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         back_button.setText("Back");
         back_button.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        back_button.setBounds(new java.awt.Rectangle(900, 10, 60, 20));
         back_button.setMaximumSize(new java.awt.Dimension(60, 20));
         back_button.setMinimumSize(new java.awt.Dimension(60, 20));
         back_button.setPreferredSize(new java.awt.Dimension(60, 20));
@@ -54,7 +56,7 @@ public class RulesScreen extends javax.swing.JFrame {
             }
         });
         getContentPane().add(back_button);
-        back_button.setBounds(910, 20, 60, 20);
+        back_button.setBounds(900, 10, 60, 20);
 
         text_in_pane.setBackground(new java.awt.Color(0, 0, 0));
         text_in_pane.setColumns(20);

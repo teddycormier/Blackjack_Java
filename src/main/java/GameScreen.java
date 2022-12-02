@@ -49,7 +49,6 @@ public class GameScreen extends javax.swing.JFrame {
     private boolean dealerCard3 = false;
     private boolean dealerCard4 = false;
     private boolean dealerCard5 = false;
-    private boolean closedHanded = false;
     private int tmp_player_card = 0;
     private int tmp_dealer_card = 0;
     private int dealer_score = 0;
@@ -97,6 +96,8 @@ public class GameScreen extends javax.swing.JFrame {
             player_sum += number;
         }
         
+        player_sum_total.setText(Integer.toString(player_sum));
+        
         return player_sum;
     }
     
@@ -105,6 +106,8 @@ public class GameScreen extends javax.swing.JFrame {
         for (int number : dealer_cards){
             dealer_sum += number;
         }
+        
+        dealer_sum_total.setText(Integer.toString(dealer_sum));
         
         return dealer_sum;
     }
@@ -272,6 +275,7 @@ public class GameScreen extends javax.swing.JFrame {
     }
     
     private void newSetOfCards() throws IOException{
+        
         cleanUp();
         dealer_cards.clear();
         player_cards.clear();
@@ -329,8 +333,8 @@ public class GameScreen extends javax.swing.JFrame {
         dealerCard5 = false;   
     }
     
-    private void newCardsAfterBeatingDealer() throws IOException{
-        if(closedHanded == true){
+        private void newCardsAfterBeatingDealer() throws IOException{
+        if(StartScreen.closedHanded == true){
             closed_handed_card.setVisible(false);
             JOptionPane.showMessageDialog
             (null,"You beat the dealer", "", JOptionPane.OK_OPTION);
@@ -346,7 +350,7 @@ public class GameScreen extends javax.swing.JFrame {
     }
     
     private void newCardsAfterLosingToDealer() throws IOException{
-        if(closedHanded == true){
+        if(StartScreen.closedHanded == true){
             closed_handed_card.setVisible(false);
             JOptionPane.showMessageDialog
             (null,"You lost to the dealer", "", JOptionPane.OK_OPTION);
@@ -362,7 +366,7 @@ public class GameScreen extends javax.swing.JFrame {
     }
     
     private void newCardsAfterPlayerHitBlackjack() throws IOException{
-        if(closedHanded == true){
+        if(StartScreen.closedHanded == true){
             closed_handed_card.setVisible(false);
             JOptionPane.showMessageDialog
             (null,"BLACKJACK", "", JOptionPane.OK_OPTION);
@@ -378,7 +382,7 @@ public class GameScreen extends javax.swing.JFrame {
     }
     
     private void newCardsAfterDealerHitBlackjack() throws IOException{
-        if(closedHanded == true){
+        if(StartScreen.closedHanded == true){
             closed_handed_card.setVisible(false);
             JOptionPane.showMessageDialog
             (null,"DEALER HIT BLACKJACK", "", JOptionPane.OK_OPTION);
@@ -394,7 +398,7 @@ public class GameScreen extends javax.swing.JFrame {
     }
     
     private void newCardsAfterPush() throws IOException{  
-        if(closedHanded == true){
+        if(StartScreen.closedHanded == true){
             closed_handed_card.setVisible(false);
             JOptionPane.showMessageDialog
             (null,"It's a push", "", JOptionPane.OK_OPTION);
@@ -410,7 +414,9 @@ public class GameScreen extends javax.swing.JFrame {
     }
     
     public GameScreen() throws IOException {
+        
         initComponents();
+        
         newSetOfCards();
         
         rulesScreen = new RulesScreen();
@@ -428,7 +434,6 @@ public class GameScreen extends javax.swing.JFrame {
         closed_handed_card = new javax.swing.JLabel();
         stand_button = new javax.swing.JButton();
         hit_button = new javax.swing.JButton();
-        closed_handed = new javax.swing.JButton();
         dealer_card_1 = new javax.swing.JLabel();
         dealer_card_2 = new javax.swing.JLabel();
         dealer_card_3 = new javax.swing.JLabel();
@@ -444,13 +449,18 @@ public class GameScreen extends javax.swing.JFrame {
         dealer_wins_to_change = new javax.swing.JLabel();
         dealer_wins = new javax.swing.JLabel();
         player_wins_label = new javax.swing.JLabel();
+        dealer_sum_label = new javax.swing.JLabel();
+        dealer_sum_total = new javax.swing.JLabel();
         player_wins = new javax.swing.JLabel();
+        player_sum_label = new javax.swing.JLabel();
+        player_sum_total = new javax.swing.JLabel();
         button_rules1 = new javax.swing.JButton();
         background_label = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("GAME");
+        setTitle("BLACKJACK");
         setBackground(new java.awt.Color(0, 0, 0));
+        setMaximumSize(new java.awt.Dimension(1000, 500));
         setMinimumSize(new java.awt.Dimension(1000, 500));
         getContentPane().setLayout(null);
 
@@ -487,21 +497,6 @@ public class GameScreen extends javax.swing.JFrame {
         });
         getContentPane().add(hit_button);
         hit_button.setBounds(890, 250, 68, 22);
-
-        closed_handed.setBackground(new java.awt.Color(204, 204, 204));
-        closed_handed.setFont(new java.awt.Font("Times New Roman", 3, 12)); // NOI18N
-        closed_handed.setText("Play Closed Handed");
-        closed_handed.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        closed_handed.setMaximumSize(new java.awt.Dimension(30, 30));
-        closed_handed.setMinimumSize(new java.awt.Dimension(30, 30));
-        closed_handed.setPreferredSize(new java.awt.Dimension(30, 30));
-        closed_handed.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                closed_handedActionPerformed(evt);
-            }
-        });
-        getContentPane().add(closed_handed);
-        closed_handed.setBounds(780, 10, 110, 20);
 
         dealer_card_1.setForeground(new java.awt.Color(255, 255, 255));
         getContentPane().add(dealer_card_1);
@@ -547,7 +542,7 @@ public class GameScreen extends javax.swing.JFrame {
         players_hand_onscreen_text.setForeground(new java.awt.Color(255, 255, 255));
         players_hand_onscreen_text.setText("PLAYERS HAND");
         getContentPane().add(players_hand_onscreen_text);
-        players_hand_onscreen_text.setBounds(10, 240, 200, 20);
+        players_hand_onscreen_text.setBounds(10, 240, 150, 20);
 
         dealers_hand_onscreen_text1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         dealers_hand_onscreen_text1.setForeground(new java.awt.Color(255, 255, 255));
@@ -557,15 +552,18 @@ public class GameScreen extends javax.swing.JFrame {
 
         dealer_wins_to_change.setFont(new java.awt.Font("Times New Roman", 3, 14)); // NOI18N
         dealer_wins_to_change.setForeground(new java.awt.Color(255, 255, 255));
-        dealer_wins_to_change.setText("WINS");
+        dealer_wins_to_change.setText("LOSES");
         getContentPane().add(dealer_wins_to_change);
-        dealer_wins_to_change.setBounds(890, 80, 40, 20);
+        dealer_wins_to_change.setBounds(890, 80, 50, 20);
 
         dealer_wins.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
         dealer_wins.setForeground(new java.awt.Color(255, 255, 255));
         dealer_wins.setText("0");
+        dealer_wins.setAlignmentY(0.0F);
+        dealer_wins.setBounds(new java.awt.Rectangle(905, 120, 60, 50));
+        dealer_wins.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         getContentPane().add(dealer_wins);
-        dealer_wins.setBounds(900, 120, 60, 50);
+        dealer_wins.setBounds(905, 120, 60, 50);
 
         player_wins_label.setFont(new java.awt.Font("Times New Roman", 3, 14)); // NOI18N
         player_wins_label.setForeground(new java.awt.Color(255, 255, 255));
@@ -573,11 +571,37 @@ public class GameScreen extends javax.swing.JFrame {
         getContentPane().add(player_wins_label);
         player_wins_label.setBounds(890, 320, 40, 20);
 
+        dealer_sum_label.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        dealer_sum_label.setForeground(new java.awt.Color(255, 255, 255));
+        dealer_sum_label.setText("| SUM : ");
+        getContentPane().add(dealer_sum_label);
+        dealer_sum_label.setBounds(160, 10, 70, 21);
+
+        dealer_sum_total.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        dealer_sum_total.setForeground(new java.awt.Color(255, 255, 255));
+        dealer_sum_total.setText("0");
+        getContentPane().add(dealer_sum_total);
+        dealer_sum_total.setBounds(230, 10, 70, 21);
+
         player_wins.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
         player_wins.setForeground(new java.awt.Color(255, 255, 255));
         player_wins.setText("0");
+        player_wins.setAlignmentY(0.0F);
+        player_wins.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         getContentPane().add(player_wins);
         player_wins.setBounds(910, 360, 60, 50);
+
+        player_sum_label.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        player_sum_label.setForeground(new java.awt.Color(255, 255, 255));
+        player_sum_label.setText("| SUM : ");
+        getContentPane().add(player_sum_label);
+        player_sum_label.setBounds(160, 240, 70, 21);
+
+        player_sum_total.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        player_sum_total.setForeground(new java.awt.Color(255, 255, 255));
+        player_sum_total.setText("0");
+        getContentPane().add(player_sum_total);
+        player_sum_total.setBounds(230, 240, 70, 21);
 
         button_rules1.setBackground(new java.awt.Color(204, 204, 204));
         button_rules1.setFont(new java.awt.Font("Times New Roman", 3, 12)); // NOI18N
@@ -612,16 +636,19 @@ public class GameScreen extends javax.swing.JFrame {
                 int dealer_card3 = dealer_cards.get(2);
                 int dealer_sum2 = dealer_sum + dealer_card3;
                 dealer_sum = dealer_sum2;
+                dealer_sum_total.setText(Integer.toString(dealer_sum));
                 if (dealer_sum2 < 17){
                     getDealerCard();
                     int dealer_card4 = dealer_cards.get(3);
                     int dealer_sum3 = dealer_sum2 + dealer_card4;
                     dealer_sum = dealer_sum3;
+                    dealer_sum_total.setText(Integer.toString(dealer_sum));
                     if (dealer_sum3 < 17){
                         getDealerCard();
                         int dealer_card5 = dealer_cards.get(4);
                         int dealer_sum4 = dealer_sum3 + dealer_card5;
                         dealer_sum = dealer_sum4;
+                        dealer_sum_total.setText(Integer.toString(dealer_sum));
                     }
                 }
             } catch (IOException ex) {
@@ -727,25 +754,6 @@ public class GameScreen extends javax.swing.JFrame {
         
     }//GEN-LAST:event_hit_buttonActionPerformed
 
-    private void closed_handedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closed_handedActionPerformed
-        try {
-            BufferedImage img = ImageIO.read(new File("/Users/teddycormier/NetBeansProjects/Blackjack/src/main/resources/backcard.png"));
-            Image image = img.getScaledInstance(110, 160, Image.SCALE_DEFAULT);
-            ImageIcon icon = new ImageIcon(img);
-            if (closedHanded == false){
-                closedHanded = true;
-                closed_handed_card.setVisible(true);
-                closed_handed_card.setIcon(icon);
-            }
-            else if (closedHanded == true){
-                closed_handed_card.setVisible(false);
-                closedHanded = false;
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_closed_handedActionPerformed
-
     private void button_rules1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_rules1ActionPerformed
         rulesScreen.setLocationRelativeTo(null);
         rulesScreen.setVisible(true);
@@ -783,13 +791,14 @@ public class GameScreen extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel background_label;
     private javax.swing.JButton button_rules1;
-    private javax.swing.JButton closed_handed;
-    private javax.swing.JLabel closed_handed_card;
+    public javax.swing.JLabel closed_handed_card;
     private javax.swing.JLabel dealer_card_1;
     private javax.swing.JLabel dealer_card_2;
     private javax.swing.JLabel dealer_card_3;
     private javax.swing.JLabel dealer_card_4;
     private javax.swing.JLabel dealer_card_5;
+    public javax.swing.JLabel dealer_sum_label;
+    public javax.swing.JLabel dealer_sum_total;
     private javax.swing.JLabel dealer_wins;
     private javax.swing.JLabel dealer_wins_to_change;
     private javax.swing.JLabel dealers_hand_onscreen_text1;
@@ -799,6 +808,8 @@ public class GameScreen extends javax.swing.JFrame {
     private javax.swing.JLabel player_card_3;
     private javax.swing.JLabel player_card_4;
     private javax.swing.JLabel player_card_5;
+    public javax.swing.JLabel player_sum_label;
+    public javax.swing.JLabel player_sum_total;
     private javax.swing.JLabel player_wins;
     private javax.swing.JLabel player_wins_label;
     private javax.swing.JLabel players_hand_onscreen_text;

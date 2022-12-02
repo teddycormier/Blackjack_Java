@@ -1,5 +1,12 @@
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -12,6 +19,7 @@ import java.io.IOException;
  */
 public class StartScreen extends javax.swing.JFrame {
     GameScreen gameScreen;
+    public static boolean closedHanded = false;
     /**
      * Creates new form Start
      */
@@ -34,7 +42,8 @@ public class StartScreen extends javax.swing.JFrame {
 
         jColorChooser1 = new javax.swing.JColorChooser();
         header_label = new javax.swing.JLabel();
-        start_button = new javax.swing.JButton();
+        open_handed_button = new javax.swing.JButton();
+        closed_handed_button = new javax.swing.JButton();
         header_background = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
@@ -43,6 +52,7 @@ public class StartScreen extends javax.swing.JFrame {
         setBackground(new java.awt.Color(0, 0, 0));
         setBounds(new java.awt.Rectangle(0, 25, 505, 340));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setMaximumSize(new java.awt.Dimension(1000, 500));
         setMinimumSize(new java.awt.Dimension(1000, 500));
         setSize(new java.awt.Dimension(1000, 500));
         getContentPane().setLayout(null);
@@ -54,17 +64,32 @@ public class StartScreen extends javax.swing.JFrame {
         getContentPane().add(header_label);
         header_label.setBounds(-24, 2, 1070, 10);
 
-        start_button.setBackground(new java.awt.Color(204, 204, 204));
-        start_button.setFont(new java.awt.Font("Times New Roman", 0, 8)); // NOI18N
-        start_button.setText("CLICK HERE TO START");
-        start_button.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        start_button.addActionListener(new java.awt.event.ActionListener() {
+        open_handed_button.setBackground(new java.awt.Color(204, 204, 204));
+        open_handed_button.setFont(new java.awt.Font("Times New Roman", 0, 8)); // NOI18N
+        open_handed_button.setText("PLAY OPEN HANDED");
+        open_handed_button.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        open_handed_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                start_buttonActionPerformed(evt);
+                open_handed_buttonActionPerformed(evt);
             }
         });
-        getContentPane().add(start_button);
-        start_button.setBounds(450, 230, 100, 30);
+        getContentPane().add(open_handed_button);
+        open_handed_button.setBounds(450, 230, 100, 30);
+
+        closed_handed_button.setBackground(new java.awt.Color(204, 204, 204));
+        closed_handed_button.setFont(new java.awt.Font("Times New Roman", 0, 8)); // NOI18N
+        closed_handed_button.setText("PLAY CLOSED HANDED");
+        closed_handed_button.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        closed_handed_button.setMaximumSize(new java.awt.Dimension(30, 30));
+        closed_handed_button.setMinimumSize(new java.awt.Dimension(30, 30));
+        closed_handed_button.setPreferredSize(new java.awt.Dimension(30, 30));
+        closed_handed_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closed_handed_buttonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(closed_handed_button);
+        closed_handed_button.setBounds(450, 270, 100, 30);
 
         header_background.setBackground(new java.awt.Color(0, 0, 0));
         header_background.setBorder(null);
@@ -84,18 +109,40 @@ public class StartScreen extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void start_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_start_buttonActionPerformed
+    private void open_handed_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_open_handed_buttonActionPerformed
 
-    gameScreen.setLocationRelativeTo(null);
-    gameScreen.setVisible(true);
+        gameScreen.setLocationRelativeTo(null);
+        gameScreen.setVisible(true);
 
-    this.setVisible(false);
-    // TODO add your handling code here:
-    }//GEN-LAST:event_start_buttonActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_open_handed_buttonActionPerformed
 
     private void header_backgroundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_header_backgroundActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_header_backgroundActionPerformed
+
+    private void closed_handed_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closed_handed_buttonActionPerformed
+        StartScreen.closedHanded = true;
+        
+        gameScreen.dealer_sum_label.setVisible(false);
+        gameScreen.dealer_sum_total.setVisible(false);
+        gameScreen.player_sum_label.setVisible(false);
+        gameScreen.player_sum_total.setVisible(false);
+        
+        try {
+            BufferedImage img = ImageIO.read(new File("/Users/teddycormier/NetBeansProjects/Blackjack/src/main/resources/backcard.png"));
+            Image image = img.getScaledInstance(110, 160, Image.SCALE_DEFAULT);
+            ImageIcon icon = new ImageIcon(img);
+            gameScreen.closed_handed_card.setVisible(true);
+            gameScreen.closed_handed_card.setIcon(icon);
+        } catch (IOException ex) {
+            Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        gameScreen.setLocationRelativeTo(null);
+        gameScreen.setVisible(true);
+
+        this.setVisible(false);
+    }//GEN-LAST:event_closed_handed_buttonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -138,10 +185,11 @@ public class StartScreen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton closed_handed_button;
     private javax.swing.JButton header_background;
     private javax.swing.JLabel header_label;
     private javax.swing.JColorChooser jColorChooser1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JButton start_button;
+    private javax.swing.JButton open_handed_button;
     // End of variables declaration//GEN-END:variables
 }
