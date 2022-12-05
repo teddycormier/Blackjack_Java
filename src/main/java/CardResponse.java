@@ -8,5 +8,5 @@
  * @author teddycormier
  */
 public class CardResponse {
-    String value;
+    String value;  
 }

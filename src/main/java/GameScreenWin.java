@@ -23,12 +23,12 @@ import javax.imageio.ImageIO;
  *
  * @author teddycormier
  */
-public class GameScreen extends javax.swing.JFrame {
+public class GameScreenWin extends javax.swing.JFrame {
     /**
      * Creates new form GameScreen
      * @throws java.io.IOException
      */
-    RulesScreen rulesScreen;
+    RulesScreenWin rulesScreen;
     private ImageIcon icon;
     private boolean playerFirstCard = false;
     private boolean playerSecondCard = false;
@@ -126,7 +126,7 @@ public class GameScreen extends javax.swing.JFrame {
             Image image = bufferedImage.getScaledInstance(110, 160, Image.SCALE_DEFAULT);
             icon = new ImageIcon(image);
         } catch (MalformedURLException ex) {
-            Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GameScreenWin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -348,7 +348,7 @@ public class GameScreen extends javax.swing.JFrame {
     }
     
     private void newCardsAfterBeatingDealer() throws IOException, InterruptedException{
-        if(StartScreen.closedHanded == true){
+        if(StartScreenWin.closedHanded == true){
             if (playerSum() > dealerSum()){
                 closed_handed_card.setVisible(false);
                 JOptionPane.showMessageDialog
@@ -382,7 +382,7 @@ public class GameScreen extends javax.swing.JFrame {
     }
     
     private void newCardsAfterLosingToDealer() throws IOException, InterruptedException{
-        if(StartScreen.closedHanded == true){
+        if(StartScreenWin.closedHanded == true){
             if (dealerSum() > playerSum()){
                 closed_handed_card.setVisible(false);
                 JOptionPane.showMessageDialog
@@ -417,7 +417,7 @@ public class GameScreen extends javax.swing.JFrame {
     }
     
     private void newCardsAfterPlayerHitBlackjack() throws IOException, InterruptedException{
-        if(StartScreen.closedHanded == true){
+        if(StartScreenWin.closedHanded == true){
             closed_handed_card.setVisible(false);
             JOptionPane.showMessageDialog
             (null,"BLACKJACK", "YOU WIN", JOptionPane.INFORMATION_MESSAGE, 
@@ -435,7 +435,7 @@ public class GameScreen extends javax.swing.JFrame {
     }
     
     private void newCardsAfterDealerHitBlackjack() throws IOException, InterruptedException{
-        if(StartScreen.closedHanded == true){
+        if(StartScreenWin.closedHanded == true){
             closed_handed_card.setVisible(false);
             JOptionPane.showMessageDialog
             (null,"DEALER HIT BLACKJACK", "DEALER WINS", JOptionPane.INFORMATION_MESSAGE, 
@@ -453,7 +453,7 @@ public class GameScreen extends javax.swing.JFrame {
     }
     
     private void newCardsAfterPush() throws IOException, InterruptedException{
-        if(StartScreen.closedHanded == true){
+        if(StartScreenWin.closedHanded == true){
             closed_handed_card.setVisible(false);
             JOptionPane.showMessageDialog
             (null,"It's a push", "PUSH", JOptionPane.INFORMATION_MESSAGE, 
@@ -470,13 +470,13 @@ public class GameScreen extends javax.swing.JFrame {
         newSetOfCards();
     }
     
-    public GameScreen() throws IOException, InterruptedException {
+    public GameScreenWin() throws IOException, InterruptedException {
         
         initComponents();
         
         newSetOfCards();
         
-        rulesScreen = new RulesScreen();
+        rulesScreen = new RulesScreenWin();
     }
     
     /**
@@ -709,9 +709,9 @@ public class GameScreen extends javax.swing.JFrame {
                     }
                 }
             } catch (IOException ex) {
-                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(GameScreenWin.class.getName()).log(Level.SEVERE, null, ex);
             } catch (InterruptedException ex) {
-                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(GameScreenWin.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         if (playerSum() == 21)
@@ -719,9 +719,9 @@ public class GameScreen extends javax.swing.JFrame {
             try {
                 newCardsAfterPlayerHitBlackjack();
             } catch (IOException ex) {
-                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(GameScreenWin.class.getName()).log(Level.SEVERE, null, ex);
             } catch (InterruptedException ex) {
-                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(GameScreenWin.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         else if (dealer_sum == 21)
@@ -729,9 +729,9 @@ public class GameScreen extends javax.swing.JFrame {
             try {
                 newCardsAfterDealerHitBlackjack();
             } catch (IOException ex) {
-                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(GameScreenWin.class.getName()).log(Level.SEVERE, null, ex);
             } catch (InterruptedException ex) {
-                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(GameScreenWin.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         else if ((dealer_sum == playerSum()))
@@ -739,9 +739,9 @@ public class GameScreen extends javax.swing.JFrame {
             try {
                newCardsAfterPush();
             } catch (IOException ex) {
-                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(GameScreenWin.class.getName()).log(Level.SEVERE, null, ex);
             } catch (InterruptedException ex) {
-                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(GameScreenWin.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         else if ((dealer_sum > 21) && (playerSum() <= 21))
@@ -749,9 +749,9 @@ public class GameScreen extends javax.swing.JFrame {
             try {
                 newCardsAfterBeatingDealer();
             } catch (IOException ex) {
-                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(GameScreenWin.class.getName()).log(Level.SEVERE, null, ex);
             } catch (InterruptedException ex) {
-                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(GameScreenWin.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         else if ((playerSum() < 21) && (dealer_sum < 21) && (playerSum() > dealer_sum))
@@ -759,9 +759,9 @@ public class GameScreen extends javax.swing.JFrame {
             try {
                 newCardsAfterBeatingDealer();
             } catch (IOException ex) {
-                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(GameScreenWin.class.getName()).log(Level.SEVERE, null, ex);
             } catch (InterruptedException ex) {
-                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(GameScreenWin.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         else if ((dealer_sum < 21) && (playerSum() < 21) && (dealer_sum > playerSum()))
@@ -769,9 +769,9 @@ public class GameScreen extends javax.swing.JFrame {
             try { 
                 newCardsAfterLosingToDealer();
             } catch (IOException ex) {
-                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(GameScreenWin.class.getName()).log(Level.SEVERE, null, ex);
             } catch (InterruptedException ex) {
-                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(GameScreenWin.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         else if ((playerSum() > 21) && (dealer_sum <= 21))
@@ -779,9 +779,9 @@ public class GameScreen extends javax.swing.JFrame {
             try {
                 newCardsAfterLosingToDealer();
             } catch (IOException ex) {
-                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(GameScreenWin.class.getName()).log(Level.SEVERE, null, ex);
             } catch (InterruptedException ex) {
-                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(GameScreenWin.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_stand_buttonActionPerformed
@@ -802,9 +802,9 @@ public class GameScreen extends javax.swing.JFrame {
                 playerFifthCard = true;
             }
         } catch (IOException ex) {
-            Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GameScreenWin.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InterruptedException ex) {
-            Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GameScreenWin.class.getName()).log(Level.SEVERE, null, ex);
         }
             
         playerSum();
@@ -815,9 +815,9 @@ public class GameScreen extends javax.swing.JFrame {
             try {
                 newCardsAfterPlayerHitBlackjack();
             } catch (IOException ex) {
-                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(GameScreenWin.class.getName()).log(Level.SEVERE, null, ex);
             } catch (InterruptedException ex) {
-                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(GameScreenWin.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         if (sum > 21)
@@ -825,9 +825,9 @@ public class GameScreen extends javax.swing.JFrame {
             try {
                 newCardsAfterLosingToDealer();
             } catch (IOException ex) {
-                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(GameScreenWin.class.getName()).log(Level.SEVERE, null, ex);
             } catch (InterruptedException ex) {
-                Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(GameScreenWin.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         
@@ -856,14 +856,15 @@ public class GameScreen extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GameScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GameScreenWin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GameScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GameScreenWin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GameScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GameScreenWin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GameScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GameScreenWin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
     }
 

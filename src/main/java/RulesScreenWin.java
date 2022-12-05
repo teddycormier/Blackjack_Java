@@ -13,12 +13,12 @@ import java.util.logging.Logger;
  *
  * @author teddycormier
  */
-public class RulesScreen extends javax.swing.JFrame {
-    public GameScreen gameScreen;
+public class RulesScreenWin extends javax.swing.JFrame {
+    public GameScreenWin gameScreen;
     /**
      * Creates new form RulesScreen
      */
-    public RulesScreen() {
+    public RulesScreenWin() {
         initComponents();
     }
     
@@ -38,7 +38,6 @@ public class RulesScreen extends javax.swing.JFrame {
 
         setTitle("RULES");
         setBounds(new java.awt.Rectangle(0, 25, 509, 340));
-        setMaximumSize(new java.awt.Dimension(1000, 500));
         setMinimumSize(new java.awt.Dimension(1000, 500));
         getContentPane().setLayout(null);
 
@@ -97,14 +96,15 @@ public class RulesScreen extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(RulesScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RulesScreenWin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(RulesScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RulesScreenWin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(RulesScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RulesScreenWin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(RulesScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RulesScreenWin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
     }
 

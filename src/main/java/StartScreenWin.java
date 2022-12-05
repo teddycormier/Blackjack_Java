@@ -17,16 +17,20 @@ import javax.swing.ImageIcon;
  *
  * @author teddycormier
  */
-public class StartScreen extends javax.swing.JFrame {
-    GameScreen gameScreen;
+public class StartScreenWin extends javax.swing.JFrame {
+    GameScreenWin gameScreen;
     public static boolean closedHanded = false;
     /**
      * Creates new form Start
      */
-    public StartScreen() throws IOException{
+    public StartScreenWin() throws IOException{
         initComponents();
         
-        gameScreen = new GameScreen();
+        try {
+            gameScreen = new GameScreenWin();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(StartScreenWin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
      
     
@@ -52,7 +56,6 @@ public class StartScreen extends javax.swing.JFrame {
         setBackground(new java.awt.Color(0, 0, 0));
         setBounds(new java.awt.Rectangle(0, 25, 505, 340));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setMaximumSize(new java.awt.Dimension(1000, 500));
         setMinimumSize(new java.awt.Dimension(1000, 500));
         setSize(new java.awt.Dimension(1000, 500));
         getContentPane().setLayout(null);
@@ -122,7 +125,7 @@ public class StartScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_header_backgroundActionPerformed
 
     private void closed_handed_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closed_handed_buttonActionPerformed
-        StartScreen.closedHanded = true;
+        StartScreenWin.closedHanded = true;
         
         gameScreen.dealer_sum_label.setVisible(false);
         gameScreen.dealer_sum_total.setVisible(false);
@@ -136,7 +139,7 @@ public class StartScreen extends javax.swing.JFrame {
             gameScreen.closed_handed_card.setVisible(true);
             gameScreen.closed_handed_card.setIcon(icon);
         } catch (IOException ex) {
-            Logger.getLogger(GameScreen.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GameScreenWin.class.getName()).log(Level.SEVERE, null, ex);
         }
         gameScreen.setLocationRelativeTo(null);
         gameScreen.setVisible(true);
@@ -161,14 +164,22 @@ public class StartScreen extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(StartScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StartScreenWin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(StartScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StartScreenWin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(StartScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StartScreenWin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(StartScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StartScreenWin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -179,7 +190,7 @@ public class StartScreen extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        StartScreen window = new StartScreen();
+        StartScreenWin window = new StartScreenWin();
         window.setLocationRelativeTo(null);
         window.setVisible(true);
     }
