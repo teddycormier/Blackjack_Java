@@ -1,27 +1,25 @@
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+// Window for the RulesScreen
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author teddycormier
  */
 public class RulesScreenWin extends javax.swing.JFrame {
+
     public GameScreenWin gameScreen;
+
     /**
      * Creates new form RulesScreen
      */
     public RulesScreenWin() {
         initComponents();
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

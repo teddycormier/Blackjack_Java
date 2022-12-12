@@ -1,4 +1,5 @@
 
+// Window for the start screen
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -12,28 +13,29 @@ import javax.swing.ImageIcon;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author teddycormier
  */
 public class StartScreenWin extends javax.swing.JFrame {
+
     GameScreenWin gameScreen;
     public static boolean closedHanded = false;
+
     /**
      * Creates new form Start
+     *
+     * @throws java.io.IOException
      */
-    public StartScreenWin() throws IOException{
+    public StartScreenWin() throws IOException {
         initComponents();
-        
+
         try {
             gameScreen = new GameScreenWin();
         } catch (InterruptedException ex) {
             Logger.getLogger(StartScreenWin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-     
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -126,13 +128,14 @@ public class StartScreenWin extends javax.swing.JFrame {
 
     private void closed_handed_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closed_handed_buttonActionPerformed
         StartScreenWin.closedHanded = true;
-        
+
         gameScreen.dealer_sum_label.setVisible(false);
         gameScreen.dealer_sum_total.setVisible(false);
         gameScreen.player_sum_label.setVisible(false);
         gameScreen.player_sum_total.setVisible(false);
-        
+
         try {
+            // https://www.geeksforgeeks.org/java-io-bufferedreader-class-java/
             BufferedImage img = ImageIO.read(new File("/Users/teddycormier/NetBeansProjects/Blackjack/src/main/resources/backcard.png"));
             Image image = img.getScaledInstance(110, 160, Image.SCALE_DEFAULT);
             ImageIcon icon = new ImageIcon(img);
@@ -149,6 +152,7 @@ public class StartScreenWin extends javax.swing.JFrame {
 
     /**
      * @param args the command line arguments
+     * @throws java.io.IOException
      */
     public static void main(String args[]) throws IOException {
         /* Set the Nimbus look and feel */
