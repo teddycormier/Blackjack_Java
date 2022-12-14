@@ -1,4 +1,5 @@
 
+// Teddy Cormier
 // Window for the game screen
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class GameScreenWin extends javax.swing.JFrame {
      *
      * @throws java.io.IOException
      */
-    RulesScreenWin rulesScreen;
+    public RulesScreenWin rulesScreen;
     private ImageIcon icon;
     private boolean playerFirstCard = false;
     private boolean playerSecondCard = false;
@@ -418,11 +419,11 @@ public class GameScreenWin extends javax.swing.JFrame {
     private void newCardsAfterPush() throws IOException, InterruptedException {
         if (StartScreenWin.closedHanded == true) {
             closed_handed_card.setVisible(false);
-            JOptionPane.showMessageDialog(null, "It's a push", "PUSH", JOptionPane.INFORMATION_MESSAGE,
+            JOptionPane.showMessageDialog(null, "It's a push. You and the dealer had the same total.", "PUSH", JOptionPane.INFORMATION_MESSAGE,
                     new ImageIcon(messageIcon(push_png)));
             closed_handed_card.setVisible(true);
         } else {
-            JOptionPane.showMessageDialog(null, "It's a push", "PUSH", JOptionPane.INFORMATION_MESSAGE,
+            JOptionPane.showMessageDialog(null, "It's a push. You and the dealer had the same total.", "PUSH", JOptionPane.INFORMATION_MESSAGE,
                     new ImageIcon(messageIcon(push_png)));
         }
 

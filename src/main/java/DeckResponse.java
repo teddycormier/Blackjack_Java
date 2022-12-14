@@ -1,4 +1,5 @@
 
+// Teddy Cormier
 // DeckResponse -- get a card from the API and get its value
 import com.google.gson.Gson;
 import java.io.BufferedReader;
@@ -18,7 +19,7 @@ import java.net.URL;
  */
 public class DeckResponse {
 
-    CardResponse[] cards;
+    private CardResponse[] cards;
 
     // getting cards from API
     public static int getCardFromDeck() throws MalformedURLException, IOException {

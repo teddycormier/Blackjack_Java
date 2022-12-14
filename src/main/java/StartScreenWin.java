@@ -1,4 +1,5 @@
 
+// Teddy Cormier
 // Window for the start screen
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -19,7 +20,7 @@ import javax.swing.ImageIcon;
  */
 public class StartScreenWin extends javax.swing.JFrame {
 
-    GameScreenWin gameScreen;
+    public GameScreenWin gameScreen;
     public static boolean closedHanded = false;
 
     /**
