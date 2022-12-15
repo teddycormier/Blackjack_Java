@@ -55,7 +55,7 @@ public class GameScreenWin extends javax.swing.JFrame {
     private final ArrayList<String> card_suits = new ArrayList<String>();
     private final ArrayList<String> card_faces = new ArrayList<String>();
     private final JLabel[] player_card_labels = new JLabel[5];
-     private final JLabel[] dealer_card_labels = new JLabel[5];
+    private final JLabel[] dealer_card_labels = new JLabel[5];
 
     private void addSuitsFaces() {
         // ----------------
@@ -138,21 +138,11 @@ public class GameScreenWin extends javax.swing.JFrame {
     }
 
     private void setRightIconD() throws InterruptedException {
-        if (tmp_dealer_card == dealer_cards.get(0) && (!dealer_card_1.isVisible())) {
-            dealer_card_1.setVisible(true);
-            dealer_card_1.setIcon(icon);
-        } else if (tmp_dealer_card == dealer_cards.get(1) && (!dealer_card_2.isShowing())) {
-            dealer_card_2.setVisible(true);
-            dealer_card_2.setIcon(icon);
-        } else if (tmp_dealer_card == dealer_cards.get(2) && (!dealer_card_3.isShowing())) {
-            dealer_card_3.setVisible(true);
-            dealer_card_3.setIcon(icon);
-        } else if (tmp_dealer_card == dealer_cards.get(3) && (!dealer_card_4.isShowing())) {
-            dealer_card_4.setVisible(true);
-            dealer_card_4.setIcon(icon);
-        } else if (tmp_dealer_card == dealer_cards.get(4) && (!dealer_card_5.isShowing())) {
-            dealer_card_5.setVisible(true);
-            dealer_card_5.setIcon(icon);
+        for (int i = 0; i < dealer_cards.size(); i++) {
+            if (tmp_dealer_card == dealer_cards.get(i) && (!dealer_card_labels[i].isVisible())) {
+                dealer_card_labels[i].setVisible(true);
+                dealer_card_labels[i].setIcon(icon);
+            }
         }
     }
 
@@ -184,21 +174,11 @@ public class GameScreenWin extends javax.swing.JFrame {
     }
 
     private void setRightIconP() {
-        if (tmp_player_card == player_cards.get(0) && (!player_card_1.isVisible())) {
-            player_card_1.setVisible(true);
-            player_card_1.setIcon(icon);
-        } else if (tmp_player_card == player_cards.get(1) && (!player_card_2.isShowing())) {
-            player_card_2.setVisible(true);
-            player_card_2.setIcon(icon);
-        } else if (tmp_player_card == player_cards.get(2) && (!player_card_3.isShowing())) {
-            player_card_3.setVisible(true);
-            player_card_3.setIcon(icon);
-        } else if (tmp_player_card == player_cards.get(3) && (!player_card_4.isShowing())) {
-            player_card_4.setVisible(true);
-            player_card_4.setIcon(icon);
-        } else if (tmp_player_card == player_cards.get(4) && (!player_card_5.isShowing())) {
-            player_card_5.setVisible(true);
-            player_card_5.setIcon(icon);
+        for (int i = 0; i < player_cards.size(); i++) {
+            if (tmp_player_card == player_cards.get(i) && (!player_card_labels[i].isVisible())) {
+                player_card_labels[i].setVisible(true);
+                player_card_labels[i].setIcon(icon);
+            }
         }
     }
 
@@ -377,7 +357,7 @@ public class GameScreenWin extends javax.swing.JFrame {
     public GameScreenWin() throws IOException, InterruptedException {
 
         initComponents();
-        
+
         addAllLabels();
 
         newSetOfCards();
@@ -677,8 +657,7 @@ public class GameScreenWin extends javax.swing.JFrame {
     }//GEN-LAST:event_stand_buttonActionPerformed
 
     private void hit_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hit_buttonActionPerformed
-        
-        
+
         try {
             getPlayerCard();
 
