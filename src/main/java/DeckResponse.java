@@ -20,11 +20,12 @@ import java.net.URL;
 public class DeckResponse {
 
     private CardResponse[] cards;
+    private static final String url = "https://www.deckofcardsapi.com/api/deck/new/draw/?count=1";
+    public static Gson gson = new Gson();
 
     // getting cards from API
     public static int getCardFromDeck() throws MalformedURLException, IOException {
-        Gson gson = new Gson();
-        URL cardsAPI = new URL("https://www.deckofcardsapi.com/api/deck/new/draw/?count=1");
+        URL cardsAPI = new URL(url);
         BufferedReader in = new BufferedReader(new InputStreamReader(cardsAPI.openStream()));
         DeckResponse loadedItem = gson.fromJson(in, DeckResponse.class);
         String card_value = loadedItem.cards[0].value;
