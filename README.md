@@ -11,7 +11,7 @@ You need to have the Java Development Kit (JDK) installed on your computer. You 
 To install the game, simply clone or download the repository to your local machine.
 
 Copy code:
-git clone https://github.com/<your-username>/blackjack-game-java.git
+git clone https://github.com/teddycormier/blackjack-game-java.git
 After downloading the repository, open a new project in NetBeans, navigate to the main window, right click, and hit "run".
 
 ## Gameplay
